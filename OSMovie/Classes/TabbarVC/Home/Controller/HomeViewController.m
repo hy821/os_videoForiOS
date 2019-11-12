@@ -110,13 +110,8 @@ TYPagerControllerDelegate>
         if (self.categoryArr.count==0) {
             self.reloadBtn.hidden = NO;
         }else {
-            //推荐 6 //短视频 5 //电影 2 //电视剧 1 //综艺 3 //动漫 4 //游戏 7
-            
-            [self.categoryArr enumerateObjectsUsingBlock:^(HomeCategoryModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([obj.categoryID isEqualToString:@"7"]) {  //游戏
-                    [self.categoryArr removeObject:obj];
-                }
-            }];
+            [USERDEFAULTS setObject:self.categoryArr.firstObject.audit forKey:isCK];
+            [USERDEFAULTS synchronize];
             
             self.tabBar.layout.cellWidth = ScreenWidth/self.categoryArr.count;
             self.reloadBtn.hidden = YES;
@@ -126,31 +121,8 @@ TYPagerControllerDelegate>
     } failure:^(SSRequest *request, NSString *errorMsg) {
         SSDissMissAllGifHud(self.view, NO);
         SSMBToast(errorMsg, self.view);
-        //失败的话, 查看是否有存储的, 有的话, 取出来用
-        [self getPageBarCategory];
+        self.reloadBtn.hidden = NO;
     }];
-}
-
-#pragma mark - 查看是否有存储的, 有的话, 取出来用
-- (void)getPageBarCategory {
-    if ([USERDEFAULTS objectForKey:HomeCategoryDic]) {
-        NSDictionary *dic = [USERDEFAULTS objectForKey:HomeCategoryDic];
-        self.categoryArr = [HomeCategoryModel mj_objectArrayWithKeyValuesArray:dic];
-        if (self.categoryArr.count==0) {
-            _reloadBtn.hidden = NO;
-        }else {
-            [self.categoryArr enumerateObjectsUsingBlock:^(HomeCategoryModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([obj.categoryID isEqualToString:@"7"]) {  //游戏
-                    [self.categoryArr removeObject:obj];
-                }
-            }];
-            _tabBar.layout.cellWidth = ScreenWidth/self.categoryArr.count;
-            _reloadBtn.hidden = YES;
-            [self reloadData];
-        }
-    }else {
-        _reloadBtn.hidden = NO;
-    }
 }
 
 - (void)addTabPageBar {

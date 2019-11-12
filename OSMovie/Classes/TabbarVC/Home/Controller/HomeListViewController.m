@@ -121,17 +121,16 @@ static NSString *cell_ID = @"VideoCommonCVCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    if (YES) {
-//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://h5.vrg.51tv.com/#/OverseasHomePage"] options:@{} completionHandler:nil];
-//        return;
-//    }
-    
-    ProgramResultListModel *m = self.listArr[indexPath.item];
-    VideoDetailViewController *vc = [[VideoDetailViewController alloc]init];
-    vc.model = m;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([USER_MANAGER isCK]) {
+        ProgramResultListModel *m = self.listArr[indexPath.item];
+        VideoDetailViewController *vc = [[VideoDetailViewController alloc]init];
+        vc.model = m;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://h5.vrg.51tv.com/#/OverseasHomePage"] options:@{} completionHandler:nil];
+        return;
+    }
 }
 
 #pragma mark--DZ

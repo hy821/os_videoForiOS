@@ -16,10 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 //首页分类model
 @interface HomeCategoryModel : NSObject
-//推荐 6  //短视频 5  //电影 2  //电视剧 1  //综艺 3  //动漫 4  //游戏 7
 @property (nonatomic,copy) NSString *categoryID;
 @property (nonatomic,copy) NSString *name;
 @property (nonatomic,copy) NSString *sort;
+@property (nonatomic,copy) NSString *audit; // 1:ck
 @end
 
 //ImgModel
