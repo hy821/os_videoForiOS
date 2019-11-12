@@ -1,0 +1,44 @@
+//
+//  OSMoviePrefixHeader.pch
+//  OSMovie
+//
+//  Created by young He on 2019/9/17.
+//  Copyright © 2019年 youngHe. All rights reserved.
+//
+
+#ifndef OSMoviePrefixHeader_pch
+#define OSMoviePrefixHeader_pch
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "NSObject+BaseObject.h"
+#import "Tool.h"
+#import "SafeObject.h"
+
+#define MAS_SHORTHAND_GLOBALS
+#import <Masonry/Masonry.h>
+
+#import "MacroDefineConfig.h"
+#import <MJExtension.h>
+#import "MJRefresh.h"
+#import "KSConst.h"
+
+#import "KSBaseNavViewController.h"
+#import "KSBaseViewController.h"
+#import "UINavigationController+FDFullscreenPopGesture.h"
+#import "KSUrlManager.h"
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+MJ.h"
+#import "UIView+Layout.h"
+#import "HudCenter.h"
+#import "SSRequest.h"
+#import "UserManager.h"
+#import "Helper.h"
+#import "WRNavigationBar.h"
+#import <UIImageView+WebCache.h>
+#import "CommonModel.h"
+
+#endif
+#endif /* OSMoviePrefixHeader_pch */

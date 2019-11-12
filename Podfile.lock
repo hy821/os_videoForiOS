@@ -1,0 +1,81 @@
+PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - DZNEmptyDataSet (1.8.1)
+  - FLAnimatedImage (1.0.12)
+  - M80AttributedLabel (1.6.3)
+  - Masonry (1.0.2)
+  - MJExtension (3.2.0)
+  - pop (1.0.7)
+  - RealReachability (1.3.0):
+    - RealReachability/Connection (= 1.3.0)
+    - RealReachability/Ping (= 1.3.0)
+  - RealReachability/Connection (1.3.0)
+  - RealReachability/Ping (1.3.0)
+  - SDWebImage (4.4.7):
+    - SDWebImage/Core (= 4.4.7)
+  - SDWebImage/Core (4.4.7)
+  - zhPopupController (0.1.9)
+
+DEPENDENCIES:
+  - AFNetworking
+  - DZNEmptyDataSet
+  - FLAnimatedImage
+  - M80AttributedLabel (~> 1.6.3)
+  - Masonry (~> 1.0.2)
+  - MJExtension
+  - pop (from `https://github.com/facebook/pop.git`, commit `203464a89dcf2e15b1ebdd53eb1f82e7d077460c`)
+  - RealReachability
+  - SDWebImage (~> 4.4.2)
+  - zhPopupController (~> 0.1.8)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - DZNEmptyDataSet
+    - FLAnimatedImage
+    - M80AttributedLabel
+    - Masonry
+    - MJExtension
+    - RealReachability
+    - SDWebImage
+    - zhPopupController
+
+EXTERNAL SOURCES:
+  pop:
+    :commit: 203464a89dcf2e15b1ebdd53eb1f82e7d077460c
+    :git: https://github.com/facebook/pop.git
+
+CHECKOUT OPTIONS:
+  pop:
+    :commit: 203464a89dcf2e15b1ebdd53eb1f82e7d077460c
+    :git: https://github.com/facebook/pop.git
+
+SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MJExtension: e22bed65fdcd38e957242982b7384f2984c9088e
+  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  RealReachability: eae9c58d2db52fadd8e1cba4b5d4c028454fbc47
+  SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
+  zhPopupController: 7fb66c3c20c41c3b8d26cabe087e6dc9a0799ba7
+
+PODFILE CHECKSUM: ddc87030c3f214880dd05753bd199e1523b2401c
+
+COCOAPODS: 1.5.3
