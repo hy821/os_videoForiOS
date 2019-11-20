@@ -38,8 +38,7 @@
 - (NSString*)getAppPubChannel;
 
 - (void)loginSuccess;
-- (BOOL)isCK;
-
+- (NSString*)isCK;
 
 /** 短视频交互: 赞 踩 */
 - (void)shortVideoInteractWithPar:(NSDictionary *)par success:(void (^)(id))success failure:(void (^)(NSString *))failure;

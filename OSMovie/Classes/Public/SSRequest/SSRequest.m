@@ -1,9 +1,9 @@
 //
 //  SSRequest.m
-//  SmallStuff
+//  Osss
 //
 //  Created by Hy on 2017/3/29.
-//  Copyright © 2017年 yuhuimin. All rights reserved.
+//  Copyright © 2019年    asdfghjkl. All rights reserved.
 //
 
 #import "SSRequest.h"
@@ -83,13 +83,11 @@ static SSRequest *ssrequest = nil;
         self.sessionManager.responseSerializer = JsonSerializer;
         
         NSString *requestUrlString = SSStr([USER_MANAGER serverAddress], URLString);
-        //local
-    //    requestUrlString = SSStr(@"http://10.0.0.19:8082/", URLString);
-
+        
         self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
         self.sessionManager.requestSerializer.timeoutInterval = 10.f;
         [self.sessionManager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-        [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:NO] forHTTPHeaderField:@"User-Agent"];
+        [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:NO] forHTTPHeaderField:@"UserAgent"];
         
         [self.sessionManager GET:requestUrlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             long long endTime = [Tool getCurrentTimeMillsNum];
@@ -129,7 +127,7 @@ static SSRequest *ssrequest = nil;
     self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.requestSerializer.timeoutInterval = 10.f;
     [self.sessionManager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:YES] forHTTPHeaderField:@"User-Agent"];
+    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:YES] forHTTPHeaderField:@"UserAgent"];
     
     [self.sessionManager GET:requestUrlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -171,11 +169,8 @@ static SSRequest *ssrequest = nil;
 
     self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.requestSerializer.timeoutInterval = 10.f;
-    if ([URLString isEqualToString:CheckInAppPurchaseUrl]) {
-        self.sessionManager.requestSerializer.timeoutInterval = 20.f;
-    }
     [self.sessionManager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:NO] forHTTPHeaderField:@"User-Agent"];
+    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:NO] forHTTPHeaderField:@"UserAgent"];
         
     [self.sessionManager POST:requestUrlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -218,7 +213,7 @@ static SSRequest *ssrequest = nil;
     self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.requestSerializer.timeoutInterval = 10.f;
     [self.sessionManager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:YES] forHTTPHeaderField:@"User-Agent"];
+    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:YES] forHTTPHeaderField:@"UserAgent"];
     
     [self.sessionManager POST:requestUrlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         long long endTime = [Tool getCurrentTimeMillsNum];
@@ -397,14 +392,19 @@ static SSRequest *ssrequest = nil;
 }
 
 - (NSString *)getUserAgentStrWithUrlStr:(NSString *)urlStr IsLogin:(BOOL)isLogin {
-
-    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-    NSString *ver = [infoDic objectForKey:@"CFBundleShortVersionString"];
-    //正确的: osTypeId:01
-    //改成osTypeId:02试试
-    NSString *ua = [NSString stringWithFormat:@"%@ ks2/%@ (agent:s;channel:%@;credential:%@;deviceId:%@;osTypeId:01;detailInfo:iOS;simTypeId:%@;netTypeId:%@;deviceTypeId:02;osVersion:%@;token:%@)",[USER_MANAGER getUserAgent],[USER_MANAGER getVersionStr],[USER_MANAGER getAppPubChannel],[USER_MANAGER getCredential],[USER_MANAGER getUUID],[USER_MANAGER getSimType],[USER_MANAGER getNetWorkType],ver,[self getTokenWithUrlStr:urlStr IsLogin:isLogin]];
+//Old
+//    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+//    NSString *ver = [infoDic objectForKey:@"CFBundleShortVersionString"];
+//    //正确的: osTypeId:01
+//    //改成osTypeId:02试试
+//    NSString *ua = [NSString stringWithFormat:@"%@ ks2/%@ (agent:s;channel:%@;credential:%@;deviceId:%@;osTypeId:01;detailInfo:iOS;simTypeId:%@;netTypeId:%@;deviceTypeId:02;osVersion:%@;token:%@)",[USER_MANAGER getUserAgent],[USER_MANAGER getVersionStr],[USER_MANAGER getAppPubChannel],[USER_MANAGER getCredential],[USER_MANAGER getUUID],[USER_MANAGER getSimType],[USER_MANAGER getNetWorkType],ver,[self getTokenWithUrlStr:urlStr IsLogin:isLogin]];
     
+ //Temp
+    NSString *userID = [USER_MANAGER getUserID];
+    NSString *ua = [NSString stringWithFormat:@"%@@1.0.0@02@official",userID];
+    SSLog(@"--->ua:  %@",ua);
     return ua;
+    
 }
 
 - (NSString *)getTokenWithUrlStr:(NSString *)urlStr IsLogin:(BOOL)isLogin {

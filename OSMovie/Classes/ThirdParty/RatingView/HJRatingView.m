@@ -3,7 +3,7 @@
 //  HJRatingViewDemo
 //
 //  Created by WHJ on 2017/11/10.
-//  Copyright © 2017年 WHJ. All rights reserved.
+//  Copyright © 2019年 WHJ. All rights reserved.
 //
 
 #import "HJRatingView.h"

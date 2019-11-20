@@ -32,17 +32,11 @@
         make.top.right.equalTo(self);
     }];
     
-    UIImageView *img = [[UIImageView alloc]initWithImage:Image_Named(@"ic_popup_film")];
-    [self addSubview:img];
-    [img mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self);
-        make.centerY.equalTo(self).offset(-self.sizeH(15));
-    }];
-    
-    UIImageView *imgAnimation = [[UIImageView alloc]initWithImage:Image_Named(@"ic_popup_animationfilm")];
+    UIImageView *imgAnimation = [[UIImageView alloc]initWithImage:Image_Named(@"ic_popup_film")];
     [self addSubview:imgAnimation];
     [imgAnimation mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(img);
+        make.centerX.equalTo(self);
+        make.centerY.equalTo(self).offset(-self.sizeH(15));
     }];
     
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation"];

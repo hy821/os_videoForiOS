@@ -1,9 +1,7 @@
 //
 //  LoginViewController.m
-//  MagicVideo
 //
-//  Created by young He on 2019/9/18.
-//  Copyright © 2019年 youngHe. All rights reserved.
+//    Created by Rb on 2019/9/18.
 //
 
 #import "LoginViewController.h"
@@ -29,7 +27,7 @@
 }
 
 - (void)initUI {
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = ThemeColor;
     
     UILabel *titleLab = [UILabel labelWithTitle:@"邮箱登录" font:15 textColor:KCOLOR(@"#DC4E0F") textAlignment:1];
     [self.view addSubview:titleLab];
@@ -46,12 +44,15 @@
         make.left.equalTo(self.view).offset(self.sizeW(15));
     }];
     
-    UIImageView *mainIV = [[UIImageView alloc]initWithImage:Image_Named(@"img_logo")];
+    UIImageView *mainIV = [[UIImageView alloc]initWithImage:Image_Named(@"logo")];
+    mainIV.layer.masksToBounds = YES;
+    mainIV.layer.cornerRadius = self.sizeW(15);
     [self.view addSubview:mainIV];
     
     [mainIV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.equalTo(titleLab.mas_bottom).offset(self.sizeH(48));
+        make.width.height.equalTo(self.sizeW(100));
     }];
     
     LoginTextField *emailTF = [[LoginTextField alloc]initWithPlaceholder:@"请输入邮箱" andStyle:Email_Type];
@@ -65,7 +66,7 @@
     [self.view addSubview:emailTF];
     self.emailTF = emailTF;
     [self.emailTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mainIV.mas_bottom).offset(self.sizeH(65));
+        make.top.equalTo(mainIV.mas_bottom).offset(self.sizeH(30));
         make.left.equalTo(self.view).offset(self.sizeW(55));
         make.right.equalTo(self.view).offset(self.sizeW(-55));
         make.height.mas_equalTo(self.sizeH(46));
@@ -86,8 +87,8 @@
     loginBtn.titleLabel.font = Font_Size(16);
     [loginBtn setTitleColor:White_Color forState:UIControlStateNormal];
     [loginBtn setTitleColor:White_Color forState:UIControlStateSelected];
-    [loginBtn setBackgroundColor:KCOLOR(@"#D96139") forState:UIControlStateNormal];
-    [loginBtn setBackgroundColor:KCOLOR(@"#D96139") forState:UIControlStateHighlighted];
+    [loginBtn setBackgroundColor:Orange_ThemeColor forState:UIControlStateNormal];
+    [loginBtn setBackgroundColor:Orange_ThemeColor forState:UIControlStateHighlighted];
     loginBtn.layer.masksToBounds = YES;
     loginBtn.layer.cornerRadius = self.sizeH(23);
     [loginBtn addTarget:self action:@selector(loginBtnAction) forControlEvents:UIControlEventTouchUpInside];

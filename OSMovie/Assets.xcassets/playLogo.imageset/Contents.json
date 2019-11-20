@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_movie_play@2x.png",
+      "filename" : "playLogo.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_movie_play@3x.png",
+      "filename" : "playLogo-1.png",
       "scale" : "3x"
     }
   ],

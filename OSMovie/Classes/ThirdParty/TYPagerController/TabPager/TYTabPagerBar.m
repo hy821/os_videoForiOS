@@ -3,7 +3,7 @@
 //  TYPagerControllerDemo
 //
 //  Created by tany on 2017/7/13.
-//  Copyright © 2017年 tany. All rights reserved.
+//  Copyright © 2019年 tany. All rights reserved.
 //
 
 #import "TYTabPagerBar.h"

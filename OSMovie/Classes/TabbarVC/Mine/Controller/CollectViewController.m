@@ -61,43 +61,43 @@ static NSString * const cellID = @"CollectAndHistoryCell";
     if (isAnimation) {
         SSGifShow(MainWindow, @"加载中");
     }
-    NSDictionary *dic = @{
-                          @"cursor" : self.cursor,
-                          @"size" : @(PageCount_Normal)
-                          };
-    [[SSRequest request]GET:MyCollectionListUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
-        
-        if (isAnimation) {
-            SSDissMissAllGifHud(MainWindow, YES);
-        }
-        
-        self.isNetError = SSNetNormal_state;
-        [self.mainTableView.mj_header endRefreshing];
-        
-        if([self.cursor isEqualToString:@"-1"] && (self.dataArr.count>0)) {
-            [self.dataArr removeAllObjects];
-        }
-        
-        NSArray *arr = [ProgramResultListModel mj_objectArrayWithKeyValuesArray:response[@"data"]];
-        
-        [self.dataArr addObjectsFromArray:arr];
-        
-        if (arr.count == 0) {
-            [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
-        }else {
-            [self.mainTableView.mj_footer endRefreshing];
-        }
-        
-        [self.mainTableView reloadData];
-        
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+//    NSDictionary *dic = @{
+//                          @"cursor" : self.cursor,
+//                          @"size" : @(PageCount_Normal)
+//                          };
+//    [[SSRequest request]GET:MyCollectionListUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+//
+//        if (isAnimation) {
+//            SSDissMissAllGifHud(MainWindow, YES);
+//        }
+//
+//        self.isNetError = SSNetNormal_state;
+//        [self.mainTableView.mj_header endRefreshing];
+//
+//        if([self.cursor isEqualToString:@"-1"] && (self.dataArr.count>0)) {
+//            [self.dataArr removeAllObjects];
+//        }
+//
+//        NSArray *arr = [ProgramResultListModel mj_objectArrayWithKeyValuesArray:response[@"data"]];
+//
+//        [self.dataArr addObjectsFromArray:arr];
+//
+//        if (arr.count == 0) {
+//            [self.mainTableView.mj_footer endRefreshingWithNoMoreData];
+//        }else {
+//            [self.mainTableView.mj_footer endRefreshing];
+//        }
+//
+//        [self.mainTableView reloadData];
+//
+//    } failure:^(SSRequest *request, NSString *errorMsg) {
         if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
-        SSMBToast(errorMsg, MainWindow);
+//        SSMBToast(errorMsg, MainWindow);
         self.isNetError = SSNetError_state;
         [self.mainTableView reloadData];
         [self.mainTableView.mj_header endRefreshing];
         [self.mainTableView.mj_footer endRefreshing];
-    }];
+//    }];
 }
 
 - (void)getCollectionMsg {
@@ -235,13 +235,13 @@ static NSString * const cellID = @"CollectAndHistoryCell";
                 [parArr addObject:dic];
             }];
             
-            //   ignore
-            [[SSRequest request]POST:DeleteCollectionListUrl parameters:parArr success:^(SSRequest *request, id response) {
-                
-            } failure:^(SSRequest *request, NSString *errorMsg) {
-                SSMBToast(errorMsg, MainWindow);
-                
-            }];
+//            //   ignore
+//            [[SSRequest request]POST:DeleteCollectionListUrl parameters:parArr success:^(SSRequest *request, id response) {
+//                
+//            } failure:^(SSRequest *request, NSString *errorMsg) {
+//                SSMBToast(errorMsg, MainWindow);
+//                
+//            }];
             
         }
         

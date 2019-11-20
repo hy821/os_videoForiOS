@@ -1,7 +1,6 @@
 //
 //  KSConst.h
 //
-//  存放常量
 
 #import <Foundation/Foundation.h>
 

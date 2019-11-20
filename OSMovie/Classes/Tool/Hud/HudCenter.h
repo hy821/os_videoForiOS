@@ -2,7 +2,7 @@
 //  HudCenter.h
 //
 //  Created by Hy on 2017/3/29.
-//  Copyright © 2017年 yuhuimin. All rights reserved.
+//  Copyright © 2019年    asdfghjkl. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

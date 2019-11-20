@@ -25,7 +25,7 @@
         self.backgroundColor = [UIColor whiteColor];
         
         self.plusItem = [[UIButton alloc] init];
-        self.plusItem.adjustsImageWhenHighlighted = NO; // 去除选择时高亮
+        self.plusItem.adjustsImageWhenHighlighted = NO; 
         [self.plusItem setBackgroundImage:[UIImage imageNamed:@"tab_Sign"] forState:UIControlStateNormal];
         [self addSubview:self.plusItem];
     }

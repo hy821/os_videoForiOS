@@ -2,15 +2,13 @@
 //  AppDelegate.m
 //  OSMovie
 //
-//  Created by young He on 2019/10/28.
-//  Copyright © 2019 youngHe. All rights reserved.
+//    Created by Rb on 2019/10/28.
+
 //
 
 #import "AppDelegate.h"
-#import "AppDelegate+LoginRequest.h"
 #import <WebKit/WebKit.h>
 #import "UIImage+Extension.h"
-#import "RealReachability.h"
 
 @interface AppDelegate ()
 
@@ -103,6 +101,13 @@
                             g_App.tabBarVC =  (KSTabBarController*)rootViewController;
                         }
                     }];
+}
+
+- (void)updateUserAgent {
+    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectZero];
+    NSString *userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    [USERDEFAULTS setObject:userAgent forKey:@"webUserAgent"];
+    [USERDEFAULTS synchronize];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

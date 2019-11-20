@@ -2,8 +2,8 @@
 //  CommonModel.h
 //  OSMovie
 //
-//  Created by young He on 2019/10/30.
-//  Copyright © 2019 youngHe. All rights reserved.
+//    Created by Rb on 2019/10/30.
+
 //
 
 #import <Foundation/Foundation.h>

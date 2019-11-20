@@ -2,8 +2,8 @@
 //  UIImage+ZipSizeAndLength.m
 //  CatEntertainment
 //
-//  Created by 闵玉辉 on 2018/5/22.
-//  Copyright © 2018年 闵玉辉. All rights reserved.
+//  Created by     on 2018/5/22.
+//  Copyright © 2018年    . All rights reserved.
 //
 
 #import "UIImage+ZipSizeAndLength.h"

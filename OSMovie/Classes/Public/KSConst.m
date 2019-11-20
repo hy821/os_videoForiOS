@@ -1,7 +1,6 @@
 //
 //  KSConst.m
 //
-//  存放常量
 
 #import "KSConst.h"
 

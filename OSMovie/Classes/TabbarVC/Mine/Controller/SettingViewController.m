@@ -10,7 +10,6 @@
 #import "NSObject+ClearCrash.h"
 #import "LEEAlert.h"
 #import "LCActionSheet.h"
-#import "AppDelegate+LoginRequest.h"
 #import <zhPopupController.h>
 #import "UIButton+Category.h"
 #import "KSBaseWebViewController.h"

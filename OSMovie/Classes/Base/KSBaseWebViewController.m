@@ -55,6 +55,7 @@ WKScriptMessageHandler>
     }
     self.navigationItem.leftBarButtonItem = self.backItem;
     self.fd_prefersNavigationBarHidden = self.isNavBarHidden;
+    self.fd_interactivePopDisabled = YES;
 }
 
 - (void)willChangeStatusBarFrame:(NSNotification*)notification {
@@ -82,13 +83,12 @@ WKScriptMessageHandler>
         [self.view addSubview:self.wkWeb];
         [self.wkWeb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view).offset([self contentOffset]);
+            make.top.equalTo(self.view).offset(self.isNavBarHidden?[UIApplication sharedApplication].statusBarFrame.size.height :[self contentOffset]);
         }];
     }
 
     [self.view addSubview:self.showErrorView];
     self.showErrorView.hidden = YES;
-    self.showErrorView.backgroundColor = [UIColor whiteColor];
     [self.showErrorView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.equalTo(self.view);
     }];
@@ -154,15 +154,12 @@ WKScriptMessageHandler>
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if(!self.isFirstAppear)
-    {
+    if(!self.isFirstAppear) {
         return;
     }
-    if([self.wkWeb canGoBack]&&self.isNavBarHidden&&(self.navigationController.isNavigationBarHidden))
-    {
+    if([self.wkWeb canGoBack]&&self.isNavBarHidden&&(self.navigationController.isNavigationBarHidden)) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
 }
@@ -298,6 +295,7 @@ WKScriptMessageHandler>
 -(UIView *)showErrorView {
     if(_showErrorView == nil) {
         _showErrorView = [[UIView alloc]init];
+        _showErrorView.backgroundColor = [UIColor whiteColor];
         [_showErrorView addSubview:self.errorIV];
         [_showErrorView addSubview:self.errorLab];
         [self.errorIV mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -422,15 +420,18 @@ WKScriptMessageHandler>
 }
 @end
 
-@implementation WeakScriptMessageDelegate
 
-- (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate {
-    self = [super init];
-    if (self) {_scriptDelegate = scriptDelegate;}
-    return self;
-}
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];
-}
-@end
+//
+//@implementation WeakScriptMessageDelegate
+//
+//- (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate {
+//    self = [super init];
+//    if (self) {_scriptDelegate = scriptDelegate;}
+//    return self;
+//}
+//
+//- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+//    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];
+//}
+//@end

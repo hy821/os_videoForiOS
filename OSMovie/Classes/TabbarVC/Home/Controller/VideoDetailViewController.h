@@ -2,8 +2,8 @@
 //  VideoDetailViewController.h
 //  OSMovie
 //
-//  Created by young He on 2019/10/31.
-//  Copyright © 2019 youngHe. All rights reserved.
+//    Created by Rb on 2019/10/31.
+
 //
 
 #import "KSBaseViewController.h"

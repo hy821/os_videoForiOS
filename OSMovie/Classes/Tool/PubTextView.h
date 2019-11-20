@@ -1,9 +1,9 @@
 //
 //  PubTextView.h
-//  SmallStuff
+//  Osss
 //
-//  Created by 闵玉辉 on 17/4/1.
-//  Copyright © 2017年 yuhuimin. All rights reserved.
+//  Created by     on 17/4/1.
+//  Copyright © 2019年    asdfghjkl. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

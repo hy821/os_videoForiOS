@@ -1,9 +1,9 @@
 //
 //  HorizenButton.m
-//  SmallStuff
+//  Osss
 //
 //  Created by Hy on 2017/3/30.
-//  Copyright © 2017年 yuhuimin. All rights reserved.
+//  Copyright © 2019年    asdfghjkl. All rights reserved.
 //
 
 #import "HorizenButton.h"

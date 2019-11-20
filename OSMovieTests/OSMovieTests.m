@@ -2,8 +2,8 @@
 //  OSMovieTests.m
 //  OSMovieTests
 //
-//  Created by young He on 2019/10/28.
-//  Copyright © 2019 youngHe. All rights reserved.
+//    Created by Rb on 2019/10/28.
+
 //
 
 #import <XCTest/XCTest.h>

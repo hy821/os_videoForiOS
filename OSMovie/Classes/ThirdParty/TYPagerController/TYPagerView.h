@@ -3,7 +3,7 @@
 //  TYPagerControllerDemo
 //
 //  Created by tany on 2017/7/5.
-//  Copyright © 2017年 tanyang. All rights reserved.
+//  Copyright © 2019年 tanyang. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

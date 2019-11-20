@@ -3,7 +3,7 @@
 //  HJTabViewControllerDemo
 //
 //  Created by haijiao on 2017/6/26.
-//  Copyright © 2017年 olinone. All rights reserved.
+//  Copyright © 2019年 olinone. All rights reserved.
 //
 
 #import "HJTabViewControllerPlugin_Base.h"

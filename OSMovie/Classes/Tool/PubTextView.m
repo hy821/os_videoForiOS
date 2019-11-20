@@ -1,9 +1,8 @@
 //
 //  PubTextView.m
-//  SmallStuff
+//  Osss
 //
-//  Created by 闵玉辉 on 17/4/1.
-//  Copyright © 2017年 yuhuimin. All rights reserved.
+//  Copyright © 2019年    asdfghjkl. All rights reserved.
 //
 
 #define MAX_LIMIT_NUMS 50  // 来限制最大输入只能50个字符

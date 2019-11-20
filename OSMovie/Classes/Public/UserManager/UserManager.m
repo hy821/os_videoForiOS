@@ -8,14 +8,6 @@
 #import "AFNetworkReachabilityManager.h"
 #import "LoginViewController.h"
 #import "LEEAlert.h"
-
-//#import <SystemConfiguration/CaptiveNetwork.h>
-//#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-//#import <CoreTelephony/CTCarrier.h>
-//#import "sys/utsname.h"
-//#import <AdSupport/AdSupport.h>
-
-#import "AppDelegate+LoginRequest.h"
 #import "MineViewController.h"
 
 @implementation UserManager
@@ -85,12 +77,12 @@
     return YES;
 }
 
--(BOOL)isCK {
+-(NSString*)isCK {
     NSString *isIR = [USERDEFAULTS objectForKey:isCK];
-    if (isIR) {
-        return [isIR boolValue];
+    if (isIR && isIR.length>0) {
+        return isIR;
     }else {
-        return YES;
+        return @"";
     }
 }
 

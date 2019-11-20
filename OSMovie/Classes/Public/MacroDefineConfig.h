@@ -106,7 +106,7 @@
 
 /** 常用颜色 */
 #define Orange_ThemeColor           KCOLOR(@"#FF5C3E")  //主橙色
-#define ThemeColor           KCOLOR(@"#ffcc00")  //主题颜色
+#define ThemeColor           KCOLOR(@"#ec3a4e")  //主题颜色
 #define Black_Color           [UIColor blackColor]
 #define Blue_Color            [UIColor blueColor]
 #define Brown_Color           [UIColor brownColor]

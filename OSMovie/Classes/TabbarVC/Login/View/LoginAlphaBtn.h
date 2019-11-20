@@ -1,9 +1,7 @@
 //
 //  LoginAlphaBtn.h
-//  MagicVideo
 //
-//  Created by young He on 2019/9/19.
-//  Copyright © 2019年 youngHe. All rights reserved.
+//    Created by Rb on 2019/9/19.
 //
 
 #import <UIKit/UIKit.h>

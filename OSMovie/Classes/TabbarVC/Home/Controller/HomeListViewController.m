@@ -2,8 +2,8 @@
 //  HomeListViewController.m
 //  OSMovie
 //
-//  Created by young He on 2019/10/31.
-//  Copyright © 2019 youngHe. All rights reserved.
+//    Created by Rb on 2019/10/31.
+
 //
 
 #import "HomeListViewController.h"
@@ -11,6 +11,7 @@
 #import "VideoCommonCVCell.h"
 #import "VideoDetailViewController.h"
 #import "MYHRocketHeader.h"
+#import "KSBaseWebViewController.h"
 
 @interface HomeListViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -121,15 +122,20 @@ static NSString *cell_ID = @"VideoCommonCVCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([USER_MANAGER isCK]) {
+    NSString *ck = [USER_MANAGER isCK];
+    if (ck.length>0) {
+        KSBaseWebViewController *vc = [[KSBaseWebViewController alloc]init];
+        vc.webType = WKType;
+        vc.isNavBarHidden = YES;
+        vc.bannerUrl = ck;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }else {
         ProgramResultListModel *m = self.listArr[indexPath.item];
         VideoDetailViewController *vc = [[VideoDetailViewController alloc]init];
         vc.model = m;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
-    }else {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://h5.vrg.51tv.com/#/OverseasHomePage"] options:@{} completionHandler:nil];
-        return;
     }
 }
 

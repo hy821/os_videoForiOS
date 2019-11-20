@@ -42,7 +42,6 @@
 		60AE117A23696EBF00DD2743 /* KSConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FAB23696EBF00DD2743 /* KSConst.m */; };
 		60AE117B23696EBF00DD2743 /* SSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FAD23696EBF00DD2743 /* SSRequest.m */; };
 		60AE117F23696EBF00DD2743 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FBB23696EBF00DD2743 /* UserManager.m */; };
-		60AE118123696EBF00DD2743 /* AppDelegate+LoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FC223696EBF00DD2743 /* AppDelegate+LoginRequest.m */; };
 		60AE118223696EBF00DD2743 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FC323696EBF00DD2743 /* AppDelegate.m */; };
 		60AE118923696EBF00DD2743 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FD723696EBF00DD2743 /* UIScrollView+MJRefresh.m */; };
 		60AE118A23696EBF00DD2743 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0FD823696EBF00DD2743 /* MJRefreshConst.m */; };
@@ -172,7 +171,7 @@
 		47CB3FE118917DF8FCC455DC /* Pods-OSMovie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSMovie.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSMovie/Pods-OSMovie.release.xcconfig"; sourceTree = "<group>"; };
 		6010551A2373CA2700A015C2 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		6010551B2373CA2700A015C2 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
-		605FC6592366B56C0076F32A /* OSMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		605FC6592366B56C0076F32A /* 蜜桃.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蜜桃.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		605FC6662366B56C0076F32A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		605FC6682366B56E0076F32A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		605FC66B2366B56E0076F32A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -243,9 +242,7 @@
 		60AE0FBB23696EBF00DD2743 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		60AE0FBC23696EBF00DD2743 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		60AE0FC123696EBF00DD2743 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		60AE0FC223696EBF00DD2743 /* AppDelegate+LoginRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+LoginRequest.m"; sourceTree = "<group>"; };
 		60AE0FC323696EBF00DD2743 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		60AE0FC423696EBF00DD2743 /* AppDelegate+LoginRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+LoginRequest.h"; sourceTree = "<group>"; };
 		60AE0FD723696EBF00DD2743 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		60AE0FD823696EBF00DD2743 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
 		60AE0FD923696EBF00DD2743 /* UIScrollView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+MJExtension.h"; sourceTree = "<group>"; };
@@ -500,7 +497,7 @@
 		605FC65A2366B56C0076F32A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				605FC6592366B56C0076F32A /* OSMovie.app */,
+				605FC6592366B56C0076F32A /* 蜜桃.app */,
 				605FC6742366B56E0076F32A /* OSMovieTests.xctest */,
 				605FC67F2366B56E0076F32A /* OSMovieUITests.xctest */,
 			);
@@ -663,8 +660,6 @@
 			children = (
 				60AE0FC123696EBF00DD2743 /* AppDelegate.h */,
 				60AE0FC323696EBF00DD2743 /* AppDelegate.m */,
-				60AE0FC423696EBF00DD2743 /* AppDelegate+LoginRequest.h */,
-				60AE0FC223696EBF00DD2743 /* AppDelegate+LoginRequest.m */,
 			);
 			path = Appdelegate;
 			sourceTree = "<group>";
@@ -1230,7 +1225,7 @@
 			);
 			name = OSMovie;
 			productName = OSMovie;
-			productReference = 605FC6592366B56C0076F32A /* OSMovie.app */;
+			productReference = 605FC6592366B56C0076F32A /* 蜜桃.app */;
 			productType = "com.apple.product-type.application";
 		};
 		605FC6732366B56E0076F32A /* OSMovieTests */ = {
@@ -1453,7 +1448,6 @@
 				60AE11DF23696EBF00DD2743 /* SNLoading.m in Sources */,
 				60AE119923696EBF00DD2743 /* MJRefreshHeader.m in Sources */,
 				605FC66F2366B56E0076F32A /* main.m in Sources */,
-				60AE118123696EBF00DD2743 /* AppDelegate+LoginRequest.m in Sources */,
 				60AE11FD23696EC000DD2743 /* TYTabPagerBar.m in Sources */,
 				60FB6F0A2372CD3900796A32 /* NewGuessLikeCVCell.m in Sources */,
 				60FE4FB9237146EE00BE4C41 /* ErrorReportViewController.m in Sources */,
@@ -1691,7 +1685,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ShangHaiYoudu.OSMovie;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "蜜桃";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1720,7 +1714,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ShangHaiYoudu.OSMovie;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "蜜桃";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1741,7 +1735,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ShangHaiYoudu.OSMovieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSMovie.app/OSMovie";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/蜜桃.app/蜜桃";
 			};
 			name = Debug;
 		};
@@ -1761,7 +1755,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ShangHaiYoudu.OSMovieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSMovie.app/OSMovie";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/蜜桃.app/蜜桃";
 			};
 			name = Release;
 		};

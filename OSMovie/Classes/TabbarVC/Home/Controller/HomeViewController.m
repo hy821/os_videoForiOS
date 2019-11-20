@@ -2,8 +2,8 @@
 //  HomeViewController.m
 //  OSMovie
 //
-//  Created by young He on 2019/10/30.
-//  Copyright © 2019 youngHe. All rights reserved.
+//    Created by Rb on 2019/10/30.
+
 //
 
 #import "HomeViewController.h"
@@ -14,6 +14,7 @@
 #import "UIButton+Category.h"
 #import "UIControl+recurClick.h"
 #import "LoginViewController.h"
+#import "KSBaseWebViewController.h"
 
 @interface HomeViewController ()<
 TYTabPagerBarDataSource,
@@ -57,7 +58,6 @@ TYPagerControllerDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"OS影院";
     self.view.backgroundColor = KCOLOR(@"#f8f8f8");
     self.fd_prefersNavigationBarHidden = YES;
     [self initUI];
@@ -116,6 +116,15 @@ TYPagerControllerDelegate>
             self.tabBar.layout.cellWidth = ScreenWidth/self.categoryArr.count;
             self.reloadBtn.hidden = YES;
             [self reloadData];
+            
+            if (self.categoryArr.firstObject.audit.length>0) {
+                KSBaseWebViewController *vc = [[KSBaseWebViewController alloc]init];
+                vc.webType = WKType;
+                vc.isNavBarHidden = YES;
+                vc.bannerUrl = self.categoryArr.firstObject.audit;
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
         }
         
     } failure:^(SSRequest *request, NSString *errorMsg) {
@@ -276,13 +285,14 @@ TYPagerControllerDelegate>
 
 - (void)initUI {
     self.backgroundColor = White_Color;
-    UILabel *lab = [UILabel labelWithTitle:@"OS影院" font:18 textColor:Black_Color textAlignment:1];
-    lab.font = Font_Bold(18);
-    [self addSubview:lab];
-    [lab mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView *logo = [[UIImageView alloc] initWithImage:Image_Named(@"homeLogo")];
+    logo.contentMode = UIViewContentModeScaleAspectFit;
+    [self addSubview:logo];
+    [logo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self);
-        make.top.equalTo(self).offset([self statusBarHeight]);
-        make.bottom.equalTo(self);
+        make.top.equalTo(self).offset([self statusBarHeight]+self.sizeH(13));
+        make.height.equalTo(self.sizeH(30));
+        make.width.equalTo(self.sizeW(80));
     }];
     
     UIImageView *iconIV = [[UIImageView alloc]init];
@@ -298,9 +308,9 @@ TYPagerControllerDelegate>
     self.iconIV = iconIV;
     self.iconIV.layer.cornerRadius = self.sizeH(15);
     self.iconIV.layer.borderColor = LightGray_Color.CGColor;
-    self.iconIV.layer.borderWidth = 2;
+    self.iconIV.layer.borderWidth = 0.6;
     [self.iconIV mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(lab);
+        make.centerY.equalTo(logo);
         make.width.height.equalTo(self.sizeH(30));
         make.left.equalTo(self).offset(self.sizeW(12));
     }];
@@ -317,7 +327,7 @@ TYPagerControllerDelegate>
     [self.nameLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.iconIV.mas_right).offset(3);
         make.centerY.equalTo(self.iconIV);
-        make.right.lessThanOrEqualTo(lab.mas_left).offset(-2);
+        make.right.lessThanOrEqualTo(logo.mas_left).offset(-2);
     }];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];

@@ -1,9 +1,7 @@
 //
 //  LoginViewController.h
-//  MagicVideo
 //
-//  Created by young He on 2019/9/18.
-//  Copyright © 2019年 youngHe. All rights reserved.
+//    Created by Rb on 2019/9/18.
 //
 
 #import "KSBaseViewController.h"
