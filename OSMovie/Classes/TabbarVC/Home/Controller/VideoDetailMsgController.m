@@ -219,7 +219,7 @@
                               @"size" : @(1000),
                               @"si" : self.modelCommon.siCurrent
                               };
-        [[SSRequest request]GET:AllEpisodeIntroUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+        [[ABSRequest request]GET:AllEpisodeIntroUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
             
             SSDissMissAllGifHud(MainWindow, YES);
 
@@ -229,7 +229,7 @@
             }];
             [self showAllEpisodeView];
             
-        } failure:^(SSRequest *request, NSString *errorMsg) {
+        } failure:^(ABSRequest *request, NSString *errorMsg) {
             SSDissMissAllGifHud(MainWindow, YES);
             
             [self showAllEpisodeView];
@@ -317,7 +317,7 @@
                           @"index" : @(0),
                           @"si" : self.modelCommon.siCurrent,  //来源 默认传
                           };
-    [[SSRequest request]GET:VideoDetail_NumberOfEpisodeUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+    [[ABSRequest request]GET:VideoDetail_NumberOfEpisodeUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
         
         SSLog(@"EpisodeArrayMsgModel:%@",response);
         self.episodeDataArray = [MediaTipResultModel mj_objectArrayWithKeyValuesArray:response[@"data"]];
@@ -326,7 +326,7 @@
         [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:2 inSection:0],nil] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
         
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
         SSMBToast(errorMsg, MainWindow);
     }];
 }

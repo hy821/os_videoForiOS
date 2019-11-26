@@ -16,6 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - DZNEmptyDataSet (1.8.1)
   - FLAnimatedImage (1.0.12)
+  - GZIP (1.2.3)
   - M80AttributedLabel (1.6.3)
   - Masonry (1.0.2)
   - MJExtension (3.2.0)
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - AFNetworking
   - DZNEmptyDataSet
   - FLAnimatedImage
+  - GZIP (~> 1.2)
   - M80AttributedLabel (~> 1.6.3)
   - Masonry (~> 1.0.2)
   - MJExtension
@@ -47,6 +49,7 @@ SPEC REPOS:
     - AFNetworking
     - DZNEmptyDataSet
     - FLAnimatedImage
+    - GZIP
     - M80AttributedLabel
     - Masonry
     - MJExtension
@@ -68,6 +71,7 @@ SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  GZIP: af5c90ef903776a7e9afe6ebebd794a84a2929d4
   M80AttributedLabel: d06543195d3e451d2ea62ad76d04aa9cea7661d4
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: e22bed65fdcd38e957242982b7384f2984c9088e
@@ -76,6 +80,6 @@ SPEC CHECKSUMS:
   SDWebImage: c10d14a8883ebd89664f02a422006f66a85c0c5d
   zhPopupController: 7fb66c3c20c41c3b8d26cabe087e6dc9a0799ba7
 
-PODFILE CHECKSUM: ddc87030c3f214880dd05753bd199e1523b2401c
+PODFILE CHECKSUM: 2f352fb1b61bcb46645b85864a29018b4cdbf75c
 
 COCOAPODS: 1.5.3

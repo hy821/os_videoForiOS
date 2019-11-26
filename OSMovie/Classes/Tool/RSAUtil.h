@@ -3,9 +3,9 @@
 //  Encryption
 //
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
-@interface RSAUtil : KSBaseViewController
+@interface RSAUtil : OOSBaseViewController
 
 //公钥加密时调用类方法：
 // return base64 encoded string

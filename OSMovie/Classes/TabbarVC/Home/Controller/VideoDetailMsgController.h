@@ -2,7 +2,7 @@
 //  VideoDetailMsgController.h
 //
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 @interface VideoDetailMsgController : UITableViewController
 - (void)loadDataWithCommonModel:(VDCommonModel*)model isOff:(BOOL)isOff;
 @property (nonatomic,copy) void(^loadDataBlock)(void);

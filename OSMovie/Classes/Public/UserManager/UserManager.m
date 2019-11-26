@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "LEEAlert.h"
 #import "MineViewController.h"
+#import "SimulateIDFA.h"
 
 @implementation UserManager
 
@@ -26,7 +27,6 @@
     }return self;
 }
 
-// 判断是否登录
 -(BOOL)isLogin {
     NSString *login = [USERDEFAULTS objectForKey:@"isLogin"];
     if(login && [login intValue]>0) {
@@ -49,13 +49,11 @@
     [NOTIFICATION postNotificationName:RefreshUserMsgNoti object:nil];
 }
 
-//UserID
 - (NSString *)getUserID {
     NSString * userID = [USERDEFAULTS objectForKey:[USER_ID copy]];
     return userID ? userID : @"";
 }
 
-//用户头像UrlString
 -(NSString *)getUserIcon {
   return [self isLogin] ? @"user_icon" : @"";
 }
@@ -70,9 +68,6 @@
     [SelectVC pushViewController:login animated:YES];
 }
 
-//是否是测试服
-//YES测试服
-//NO正式服
 -(BOOL)isDevStatus {
     return YES;
 }
@@ -86,17 +81,14 @@
     }
 }
 
-//服务器地址, 非登录类接口
 -(NSString*)serverAddress {
     return [self isDevStatus] ? DevServerURL_Normal : ServerURL_Normal;
 }
 
-//服务器地址, 登录类接口
 -(NSString*)serverAddressWithLogin {
     return [self isDevStatus] ? DevServerURL_Login : ServerURL_Login;
 }
 
-//获取User-Agent
 -(NSString*)getUserAgent {
     if([USERDEFAULTS objectForKey:@"webUserAgent"]) {
         return [USERDEFAULTS objectForKey:@"webUserAgent"];
@@ -109,7 +101,6 @@
     }
 }
 
-//获取版本号
 - (NSString *)getVersionStr {
     NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
     return infoDic[@"CFBundleShortVersionString"];
@@ -127,55 +118,21 @@
     return @"01";
 }
 
-//获取证书--->拼接token用
 - (NSString *)getCredential {
     NSString *cre = [USERDEFAULTS objectForKey:[CREDENTIAL copy]];
     return cre ? cre : @"";
 }
 
-//获取设备序列号
 - (NSString*)getUUID {
     return @"lajdhaksdasdfhaksdfhlkads";
 }
 
-//获取手机型号
 - (NSString*)getDeviceName {
     return @"iPhone X";
 }
 
-//应用发布渠道
 - (NSString*)getAppPubChannel {
     return @"AppStore";
-}
-
-/** 短视频交互: 赞 踩 */
--(void)shortVideoInteractWithPar:(NSDictionary *)par success:(void (^)(id))success failure:(void (^)(NSString *))failure {
-    [[SSRequest request]POST:ShortVideoInterationUrl parameters:par.mutableCopy success:^(SSRequest *request, id response) {
-        
-        SSLog(@"%@",response);
-        if(success) {
-            success(response);
-        }
-    } failure:^(SSRequest *request, NSString *errorMsg) {
-        if(failure) {
-            failure(errorMsg);
-        }
-    }];
-}
-
-/** 视频收藏, 取消收藏 */
-- (void)videoCollectionWithPar:(NSDictionary *)par andIsCollection:(BOOL)isCollection success:(void (^)(id))success failure:(void (^)(NSString *))failure {
-    [[SSRequest request]POST:isCollection ? VideoCollectUrl : VideoCancelCollectUrl parameters:par.mutableCopy success:^(SSRequest *request, id response) {
-        
-        SSLog(@"%@",response);
-        if(success) {
-            success(response);
-        }
-    } failure:^(SSRequest *request, NSString *errorMsg) {
-        if(failure) {
-            failure(errorMsg);
-        }
-    }];
 }
 
 // (单位毫秒)  当前时间 + (上次请求开始请求时的时间 - 上次请求成功时的时间)
@@ -196,6 +153,31 @@
 
 -(NSString*)publicKeyWithLogin {
     return [self isDevStatus] ? DevPUBLIC_KEY_Login : PUBLIC_KEY_Login;
+}
+
+- (NSString *)getIDFA {
+    NSString *idfaSave =[USERDEFAULTS objectForKey:@"IDFA_Creat"];
+    if(idfaSave && idfaSave.length>0) {
+        return idfaSave;
+    }else {
+        NSString *idfa = [SimulateIDFA createSimulateIDFA];
+        [USERDEFAULTS setObject:idfa forKey:@"IDFA_Creat"];
+        [USERDEFAULTS synchronize];
+        return idfa;
+    }
+}
+
+- (void)callBackAdvWithUrls:(NSArray*)urls {
+    if (urls.count==0) {
+        return;
+    }
+    for (NSString *url in urls) {
+        [[ABSRequest request]AdvReportGET:url success:^(ABSRequest *request, id response) {
+            
+        } failure:^(ABSRequest *request, NSString *errorMsg) {
+            
+        }];
+    }
 }
 
 @end

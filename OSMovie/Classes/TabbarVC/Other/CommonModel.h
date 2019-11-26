@@ -2,7 +2,7 @@
 //  CommonModel.h
 //  OSMovie
 //
-//    Created by Rb on 2019/10/30.
+//    Created by Rb_Developer on 2019/10/30.
 
 //
 
@@ -54,8 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *diversityId;
 @property (nonatomic,copy) NSString *mediaId;
 @property (nonatomic,copy) NSString *mediaIndex;
-@property (nonatomic,copy) NSString *originLink;  //直接播放url
-@property (nonatomic,strong) SecretInfoModel *secretInfo;  //??
+@property (nonatomic,copy) NSString *originLink;
+@property (nonatomic,strong) SecretInfoModel *secretInfo;
 
 @property (nonatomic,copy) NSString *title;
 @property (nonatomic,copy) NSString *trailer;  //是否是预告片
@@ -286,6 +286,30 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString * title;
 @property (nonatomic,assign) CGFloat cellHeight;
 - (void)refreshData; 
+@end
+
+@interface AdmetaModel : NSObject
+@property (nonatomic,copy) NSString *src;
+@property (nonatomic,copy) NSString *creative_type;
+@property (nonatomic,copy) NSString *ad_id;
+@property (nonatomic,assign) NSInteger action_type;
+@property (nonatomic,copy) NSString *action_url;
+@property (nonatomic,copy) NSString *deeplink_url;
+
+@property (nonatomic,copy) NSArray *deeplink_murl;
+
+@property (nonatomic,copy) NSString *title;
+@property (nonatomic,copy) NSString *desc;
+@property (nonatomic,copy) NSString *adlogo_url;
+@property (nonatomic,copy) NSString *icon_url;
+
+@property (nonatomic,copy) NSArray *image_urls;
+@property (nonatomic,copy) NSArray *show_murls;
+@property (nonatomic,copy) NSArray *click_murls;
+@property (nonatomic,copy) NSArray *dstart_murls;
+@property (nonatomic,copy) NSArray *dend_murls;
+@property (nonatomic,copy) NSArray *install_murls;
+@property (nonatomic,copy) NSArray *inend_murls;
 @end
 
 NS_ASSUME_NONNULL_END

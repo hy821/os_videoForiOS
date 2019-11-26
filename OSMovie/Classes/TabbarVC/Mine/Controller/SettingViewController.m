@@ -12,7 +12,7 @@
 #import "LCActionSheet.h"
 #import <zhPopupController.h>
 #import "UIButton+Category.h"
-#import "KSBaseWebViewController.h"
+#import "OOSBaseWebViewController.h"
 #import <UIImageView+WebCache.h>
 
 @interface SettingViewController ()<UITableViewDelegate,UITableViewDataSource>

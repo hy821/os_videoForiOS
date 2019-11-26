@@ -2,15 +2,18 @@
 //  AppDelegate.m
 //  OSMovie
 //
-//    Created by Rb on 2019/10/28.
+//    Created by Rb_Developer on 2019/10/28.
 
 //
 
 #import "AppDelegate.h"
 #import <WebKit/WebKit.h>
 #import "UIImage+Extension.h"
+#import "RealReachability.h"
+#import "SplashScreenView.h"
 
 @interface AppDelegate ()
+@property (nonatomic,strong) AdmetaModel *advModel;
 
 @end
 
@@ -21,10 +24,13 @@
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor blackColor];
     
-    KSTabBarController *tabBar = [[KSTabBarController alloc]init];
+    OOSTabBarController *tabBar = [[OOSTabBarController alloc]init];
     self.window.rootViewController = tabBar;
     self.tabBarVC = tabBar;
+    
+    [GLobalRealReachability startNotifier];
 
+    [self getHosts];
     [self configNavBar];
     [self updateUserAgent];
     [self.window makeKeyAndVisible];
@@ -49,17 +55,12 @@
     [barItem setTitleTextAttributes:itemAttrs forState:UIControlStateHighlighted];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     
-    //设置系统默认返回按钮颜色
     [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
     [[UINavigationBar appearance] setShadowImage:[UIImage createImageWithColor:UIColorRGB(233, 233, 233)]];
     [[UITabBar appearance] setBackgroundImage:[UIImage createImageWithColor:[UIColor whiteColor]]];
-    // 设置导航栏默认的背景颜色
     [WRNavigationBar wr_setDefaultNavBarBarTintColor:[UIColor whiteColor]];
-    // 设置导航栏所有按钮的默认颜色
     [WRNavigationBar wr_setDefaultNavBarTintColor:KCOLOR(@"#333333")];
-    // 设置导航栏标题默认颜色
     [WRNavigationBar wr_setDefaultNavBarTitleColor:KCOLOR(@"#333333")];
-    // 统一设置状态栏样式
     [WRNavigationBar wr_setDefaultStatusBarStyle:UIStatusBarStyleDefault];
     [WRNavigationBar wr_setDefaultNavBarShadowImageHidden:NO];
     if (@available(iOS 11.0, *)) {
@@ -76,13 +77,10 @@
     }
 }
 
-- (void)restoreRootViewController:(UIViewController *)rootViewController
-{
+- (void)restoreRootViewController:(UIViewController *)rootViewController {
     [self.window.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
     typedef void (^Animation)(void);
     UIWindow* window = self.window;
-    
     rootViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     Animation animation = ^{
         BOOL oldState = [UIView areAnimationsEnabled];
@@ -90,17 +88,20 @@
         window.rootViewController = rootViewController;
         [UIView setAnimationsEnabled:oldState];
     };
-    
-    [UIView transitionWithView:window
-                      duration:0.8f
-                       options:UIViewAnimationOptionTransitionFlipFromLeft
-                    animations:animation
-                    completion:^(BOOL finished) {
-                        if(finished)
-                        {
-                            g_App.tabBarVC =  (KSTabBarController*)rootViewController;
-                        }
-                    }];
+    [UIView transitionWithView:window duration:0.8f options:UIViewAnimationOptionTransitionFlipFromLeft animations:animation completion:^(BOOL finished) {
+        if(finished) {
+            g_App.tabBarVC =  (OOSTabBarController*)rootViewController;
+        }
+    }];
+}
+
+- (void)getHosts {
+    [[ABSRequest request] getNetWorkAddWithSuccess:^(ABSRequest *request, id response) {
+        SSLog(@"--->Host:%@",response);
+        [self getSplashAdvMsg];
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
+        SSLog(@"--->HostError:%@",errorMsg);
+    }];
 }
 
 - (void)updateUserAgent {
@@ -135,5 +136,27 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (void)getSplashAdvMsg {
+       
+    [[ABSRequest request]getAdvDataWithPositionID:@"225946" success:^(ABSRequest *request, id response) {
+        SSLog(@"advData--->%@",response);
+        if(response) {
+            AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];
+            self.advModel = m;
+            [self showApiSplashAdv];
+        }
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
+        SSLog(@"advError--->%@",errorMsg);
+    }];
+}
+
+- (void)showApiSplashAdv {
+    [USER_MANAGER callBackAdvWithUrls:self.advModel.show_murls];
+    SplashScreenView *advertiseView = [[SplashScreenView alloc] initWithFrame:self.window.bounds];
+    advertiseView.advModel = self.advModel;
+    [advertiseView showSplashScreenWithTime:3 andImgUrl:self.advModel.image_urls.firstObject];
+}
+
 
 @end

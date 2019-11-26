@@ -4,7 +4,7 @@
 
 #import "LoginTextField.h"
 #import "UIImage+Extension.h"
-#import "SSRequest.h"
+#import "ABSRequest.h"
 #import "UILabel+Category.h"
 #import "LoginAlphaBtn.h"
 
@@ -331,24 +331,6 @@
             [self timeStart];
             [self.textField becomeFirstResponder];
         });
-        
-
-//        NSDictionary *dic = @{@"phone" : self.mobileText,
-//                              @"ts": @([Tool getCurrentTimeSecsNum])
-//        };
-//
-//        NSString *signStr = [NSString stringWithFormat:@"%@%@%@",self.mobileText,[Tool getCurrentTimeSecsString],KEY_SKEY];
-//        SSGifShow(MainWindow, @"加载中");
-//        [[SSRequest request] POSTAboutLogin:GetPhoneCodeUrl parameters:dic.mutableCopy signString:signStr success:^(SSRequest *request, NSDictionary *response) {
-//
-//            SSDissMissAllGifHud(MainWindow, YES);
-//            [self timeStart];
-//            [self.textField becomeFirstResponder];
-//
-//        } failure:^(SSRequest *request, NSString *errorMsg) {
-//            SSDissMissAllGifHud(MainWindow, YES);
-//            SSMBToast(errorMsg, MainWindow);
-//        }];
     }
 }
 

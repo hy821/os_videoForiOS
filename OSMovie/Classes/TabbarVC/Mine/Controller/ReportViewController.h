@@ -3,9 +3,9 @@
 //
 
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
-@interface ReportViewController : KSBaseViewController
+@interface ReportViewController : OOSBaseViewController
 
 @property (nonatomic,strong)  VDCommonModel *model;
 

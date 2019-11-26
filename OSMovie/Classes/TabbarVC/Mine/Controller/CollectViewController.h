@@ -3,8 +3,8 @@
 //
 
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
-@interface CollectViewController : KSBaseViewController
+@interface CollectViewController : OOSBaseViewController
 
 @end

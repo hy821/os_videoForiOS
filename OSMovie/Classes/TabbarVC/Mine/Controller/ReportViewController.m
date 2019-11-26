@@ -6,7 +6,7 @@
 #import "ReportViewController.h"
 #import "ReportCell.h"
 #import "UIButton+Category.h"
-#import "KSBaseWebViewController.h"
+#import "OOSBaseWebViewController.h"
 
 @interface ReportViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView *mainTableView;
@@ -72,12 +72,12 @@ static NSString * const cellID = @"ReportCell";
                               @"programId" : programIdStr,
                               @"reasons" : selectArr
                               };
-        [[SSRequest request]POST:ReportUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+        [[ABSRequest request]POST:ReportUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
             SSMBToast(@"举报成功",MainWindow);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
-        } failure:^(SSRequest *request, NSString *errorMsg) {
+        } failure:^(ABSRequest *request, NSString *errorMsg) {
             SSMBToast(errorMsg, MainWindow);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
@@ -88,7 +88,7 @@ static NSString * const cellID = @"ReportCell";
 }
 
 - (void)goToH5Report {
-    KSBaseWebViewController *webView = [[KSBaseWebViewController alloc]init];
+    OOSBaseWebViewController *webView = [[OOSBaseWebViewController alloc]init];
     webView.webType = WKType;
     webView.bannerUrl = @"http://www.shjbzx.cn/";
     [self.navigationController pushViewController:webView animated:YES];

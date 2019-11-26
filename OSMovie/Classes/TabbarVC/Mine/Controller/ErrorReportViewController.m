@@ -6,7 +6,7 @@
 #import "ErrorReportViewController.h"
 #import "ErrorReportCell.h"
 #import "UIButton+Category.h"
-#import "KSBaseWebViewController.h"
+#import "OOSBaseWebViewController.h"
 #import "PubTextView.h"
 #import "UILabel+Category.h"
 

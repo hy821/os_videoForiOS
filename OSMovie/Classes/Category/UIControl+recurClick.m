@@ -1,9 +1,8 @@
 //
 //  UIControl+recurClick.m
-//  主要解决按钮的重复点击问题
 //
-//  Created by King on 16/9/2.
-//  Copyright © 2016年 King. All rights reserved.
+//  Created by Lff on 16/9/12.
+//  Copyright © 2016年 Lff. All rights reserved.
 //
 
 #import "UIControl+recurClick.h"

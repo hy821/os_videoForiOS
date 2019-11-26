@@ -213,7 +213,6 @@ typedef void(^LCActionSheetDidDismissHandler)(LCActionSheet *actionSheet, NSInte
 
 /**
  Add----nsdictionary  //一个字典, 传过来, 第几个按钮, 显示什么detailStr
- 
  @{@"index" : @(0~n)
       @"subText" : @"hhh"
  }

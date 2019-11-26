@@ -1,14 +1,14 @@
 //
 //  LoginViewController.h
 //
-//    Created by Rb on 2019/9/18.
+//    Created by Rb_Developer on 2019/9/18.
 //
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LoginViewController : KSBaseViewController
+@interface LoginViewController : OOSBaseViewController
 
 @end
 

@@ -1,7 +1,7 @@
 //
 //  OSMoviePrefixHeader.pch
 //
-//    Created by Rb on 2019/9/17.
+//    Created by Rb_Developer on 2019/9/17.
 //
 
 #ifndef OSMoviePrefixHeader_pch
@@ -21,17 +21,17 @@
 #import "MacroDefineConfig.h"
 #import <MJExtension.h>
 #import "MJRefresh.h"
-#import "KSConst.h"
+#import "ABFunSConst.h"
 
-#import "KSBaseNavViewController.h"
-#import "KSBaseViewController.h"
+#import "OOSBaseNavViewController.h"
+#import "OOSBaseViewController.h"
 #import "UINavigationController+FDFullscreenPopGesture.h"
-#import "KSUrlManager.h"
+#import "ABSUrlManager.h"
 #import "MBProgressHUD.h"
 #import "MBProgressHUD+MJ.h"
 #import "UIView+Layout.h"
 #import "HudCenter.h"
-#import "SSRequest.h"
+#import "ABSRequest.h"
 #import "UserManager.h"
 #import "Helper.h"
 #import "WRNavigationBar.h"

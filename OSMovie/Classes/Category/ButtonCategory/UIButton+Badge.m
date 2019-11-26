@@ -1,9 +1,5 @@
 //
 //  UIButton+Badge.m
-//  ZhongRenBang-New
-//
-//  Created by 晓天 on 2017/5/6.
-//  Copyright © 2019年 XJ. All rights reserved.
 //
 
 #import "UIButton+Badge.h"

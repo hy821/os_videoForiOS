@@ -3,11 +3,12 @@
 //
 
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
-@interface ErrorReportViewController : KSBaseViewController
+@interface ErrorReportViewController : OOSBaseViewController
 
-@property (nonatomic,copy) void(^backSVDetailBlock)(void);  //从短视频详情页进来时, 且短视频页player是带进去的, 需要block告知updatePlayer
+@property (nonatomic,copy) void(^backSVDetailBlock)(void);
+//从短视频详情页进来时, 且短视频页player是带进去的, 需要block告知updatePlayer
 
 @end
 

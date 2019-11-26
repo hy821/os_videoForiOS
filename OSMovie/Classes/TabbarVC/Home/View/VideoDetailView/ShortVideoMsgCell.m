@@ -117,15 +117,19 @@
 }
 
 - (void)collectAction:(VerticalButton *)sender {
-    NSDictionary *dic = @{@"assetType" : self.model.type,
-                          @"programId" : self.model.idForModel
-                          };
-    [USER_MANAGER videoCollectionWithPar:dic andIsCollection:!sender.isSelected success:^(id response) {
-        sender.selected = !sender.selected;
-        [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
-    } failure:^(NSString *errMsg) {
-        SSMBToast(errMsg, MainWindow);
-    }];
+
+    sender.selected = !sender.selected;
+    [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
+    
+//    NSDictionary *dic = @{@"assetType" : self.model.type,
+//                          @"programId" : self.model.idForModel
+//                          };
+//    [USER_MANAGER videoCollectionWithPar:dic andIsCollection:!sender.isSelected success:^(id response) {
+//        sender.selected = !sender.selected;
+//        [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
+//    } failure:^(NSString *errMsg) {
+//        SSMBToast(errMsg, MainWindow);
+//    }];
 }
 
 - (void)awakeFromNib {

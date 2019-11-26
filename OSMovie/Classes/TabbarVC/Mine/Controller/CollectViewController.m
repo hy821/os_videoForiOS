@@ -65,7 +65,7 @@ static NSString * const cellID = @"CollectAndHistoryCell";
 //                          @"cursor" : self.cursor,
 //                          @"size" : @(PageCount_Normal)
 //                          };
-//    [[SSRequest request]GET:MyCollectionListUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+//    [[ABSRequest request]GET:MyCollectionListUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
 //
 //        if (isAnimation) {
 //            SSDissMissAllGifHud(MainWindow, YES);
@@ -90,7 +90,7 @@ static NSString * const cellID = @"CollectAndHistoryCell";
 //
 //        [self.mainTableView reloadData];
 //
-//    } failure:^(SSRequest *request, NSString *errorMsg) {
+//    } failure:^(ABSRequest *request, NSString *errorMsg) {
         if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
 //        SSMBToast(errorMsg, MainWindow);
         self.isNetError = SSNetError_state;
@@ -236,9 +236,9 @@ static NSString * const cellID = @"CollectAndHistoryCell";
             }];
             
 //            //   ignore
-//            [[SSRequest request]POST:DeleteCollectionListUrl parameters:parArr success:^(SSRequest *request, id response) {
+//            [[ABSRequest request]POST:DeleteCollectionListUrl parameters:parArr success:^(ABSRequest *request, id response) {
 //                
-//            } failure:^(SSRequest *request, NSString *errorMsg) {
+//            } failure:^(ABSRequest *request, NSString *errorMsg) {
 //                SSMBToast(errorMsg, MainWindow);
 //                
 //            }];

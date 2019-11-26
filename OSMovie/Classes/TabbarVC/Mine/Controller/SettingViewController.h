@@ -3,9 +3,9 @@
 //
 
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
-@interface SettingViewController : KSBaseViewController
+@interface SettingViewController : OOSBaseViewController
 
 @end
 

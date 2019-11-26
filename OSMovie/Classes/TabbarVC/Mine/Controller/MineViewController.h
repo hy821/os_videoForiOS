@@ -2,15 +2,15 @@
 //  MineViewController.h
 //  OSMovie
 //
-//    Created by Rb on 2019/10/30.
+//    Created by Rb_Developer on 2019/10/30.
 
 //
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MineViewController : KSBaseViewController
+@interface MineViewController : OOSBaseViewController
 
 @end
 

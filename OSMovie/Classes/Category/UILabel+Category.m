@@ -1,7 +1,7 @@
 //
 //  UILabel+Category.m
 //
-//  Created by Hy on 16/8/26.
+//  Created by Lff_OsDeveloper on 16/8/26.
 //  Copyright © 2016年 XJ. All rights reserved.
 //
 

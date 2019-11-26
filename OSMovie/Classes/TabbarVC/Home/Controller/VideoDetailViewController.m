@@ -9,7 +9,7 @@
 #import "HJTabViewControllerPlugin_TabViewBar.h"
 #import "HJDefaultTabViewBar.h"
 #import "LCActionSheet.h"
-#import "KSBaseWebViewController.h"
+#import "OOSBaseWebViewController.h"
 #import <zhPopupController.h>
 #import "LEEAlert.h"
 #import "UIControl+recurClick.h"
@@ -130,7 +130,7 @@ LCActionSheetDelegate>
     dispatch_group_enter(_group);
     if (isAnimation) {SSGifShow(MainWindow, @"加载中");}
     NSDictionary *dic = @{@"pt" : self.pt ? self.pt : @"",@"pi" : self.pi ? self.pi : @""};
-    [[SSRequest request]GET:VideoDetail_CommonUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+    [[ABSRequest request]GET:VideoDetail_CommonUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
         if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
         self.modelCommon = [VDCommonModel mj_objectWithKeyValues:response[@"data"]];
         self.isOff = !self.modelCommon;
@@ -148,7 +148,7 @@ LCActionSheetDelegate>
             dispatch_group_leave(_group);
         }
         
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
         if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
         SSMBToast(errorMsg, MainWindow);
         self.isOff = NO;  //请求失败, 不是下架, 要显示网络失败
@@ -159,10 +159,10 @@ LCActionSheetDelegate>
 - (void)loadYouLikeData {
     dispatch_group_enter(_group);
     NSDictionary *dic = @{@"si" : self.pt ? self.pt : @"", @"id" : self.pi ? self.pi : @"", @"size" : @(6)};
-    [[SSRequest request]GET:VideoDetail_GuessULikeUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+    [[ABSRequest request]GET:VideoDetail_GuessULikeUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
         self.likeDataArray = [ProgramResultListModel mj_objectArrayWithKeyValuesArray:response[@"data"]];
         dispatch_group_leave(_group);
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
         SSMBToast(errorMsg, MainWindow);
         dispatch_group_leave(_group);
     }];
@@ -175,11 +175,11 @@ LCActionSheetDelegate>
                           @"index" : @(0),
                           @"si" : si,  //来源 默认传
     };
-    [[SSRequest request]GET:VideoDetail_NumberOfEpisodeUrl parameters:dic.mutableCopy success:^(SSRequest *request, id response) {
+    [[ABSRequest request]GET:VideoDetail_NumberOfEpisodeUrl parameters:dic.mutableCopy success:^(ABSRequest *request, id response) {
         self.modelCommon.episodeDataArray = [MediaTipResultModel mj_objectArrayWithKeyValuesArray:response[@"data"]];
         dispatch_group_leave(_group);
         
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
         SSMBToast(errorMsg, MainWindow);
         dispatch_group_leave(_group);
     }];
@@ -187,7 +187,7 @@ LCActionSheetDelegate>
 
 #pragma mark - 跳webView
 - (void)goWebViewWithBannerUrl:(NSString *)bannerUrl {
-    KSBaseWebViewController *webVC = [[KSBaseWebViewController alloc]init];
+    OOSBaseWebViewController *webVC = [[OOSBaseWebViewController alloc]init];
     webVC.bannerUrl = bannerUrl;
     [self.navigationController pushViewController:webVC animated:YES];
 }
@@ -389,7 +389,7 @@ LCActionSheetDelegate>
 }
 
 - (void)showMoreShareViewWithModel:(ProgramResultListModel *)model {
-    //    __block KSBaseViewController *vc = (KSBaseViewController *)SelectVC.childViewControllers.lastObject;
+    //    __block OOSBaseViewController *vc = (OOSBaseViewController *)SelectVC.childViewControllers.lastObject;
     //    vc.zh_popupController = [zhPopupController new];
     //    vc.zh_popupController.layoutType = zhPopupLayoutTypeBottom;
     //    vc.zh_popupController.dismissOnMaskTouched = YES;

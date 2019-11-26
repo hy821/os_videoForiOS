@@ -2,7 +2,7 @@
 //  HomeListViewController.m
 //  OSMovie
 //
-//    Created by Rb on 2019/10/31.
+//    Created by Rb_Developer on 2019/10/31.
 
 //
 
@@ -11,7 +11,7 @@
 #import "VideoCommonCVCell.h"
 #import "VideoDetailViewController.h"
 #import "MYHRocketHeader.h"
-#import "KSBaseWebViewController.h"
+#import "OOSBaseWebViewController.h"
 
 @interface HomeListViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -45,7 +45,7 @@ static NSString *cell_ID = @"VideoCommonCVCell";
                           @"size" : @"15" //@(PageCount_VideoLib)
                           };
     
-    [[SSRequest request]GET:HomePageListUrl parameters:dic success:^(SSRequest *request, id response) {
+    [[ABSRequest request]GET:HomePageListUrl parameters:dic success:^(ABSRequest *request, id response) {
         if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
         self.isNetError = SSNetNormal_state;
         [self.collectionView.mj_header endRefreshing];
@@ -63,7 +63,7 @@ static NSString *cell_ID = @"VideoCommonCVCell";
             [self.collectionView.mj_footer endRefreshing];
         }
         
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
         if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
         SSMBToast(errorMsg, MainWindow);
         self.isNetError = SSNetError_state;
@@ -124,7 +124,7 @@ static NSString *cell_ID = @"VideoCommonCVCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *ck = [USER_MANAGER isCK];
     if (ck.length>0) {
-        KSBaseWebViewController *vc = [[KSBaseWebViewController alloc]init];
+        OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
         vc.webType = WKType;
         vc.isNavBarHidden = YES;
         vc.bannerUrl = ck;

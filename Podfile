@@ -11,6 +11,6 @@ target ‘OSMovie’ do
     pod 'RealReachability'
     pod 'M80AttributedLabel', '~> 1.6.3'
     pod 'zhPopupController', '~> 0.1.8'
-    
+    pod 'GZIP', '~> 1.2'
 end
 

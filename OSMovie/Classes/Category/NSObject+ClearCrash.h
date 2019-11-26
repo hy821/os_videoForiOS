@@ -1,8 +1,5 @@
 //
 //  NSObject+ClearCrash.h
-//  NewTarget
-//
-//  Created by Mr.差不多 on 16/7/15.
 //  Copyright © 2016年  rw. All rights reserved.
 //
 

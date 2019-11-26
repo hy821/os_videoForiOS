@@ -2,7 +2,7 @@
 //  HomeViewController.m
 //  OSMovie
 //
-//    Created by Rb on 2019/10/30.
+//    Created by Rb_Developer on 2019/10/30.
 
 //
 
@@ -14,7 +14,7 @@
 #import "UIButton+Category.h"
 #import "UIControl+recurClick.h"
 #import "LoginViewController.h"
-#import "KSBaseWebViewController.h"
+#import "OOSBaseWebViewController.h"
 
 @interface HomeViewController ()<
 TYTabPagerBarDataSource,
@@ -90,7 +90,7 @@ TYPagerControllerDelegate>
     }
     
     SSGifShow(self.view, @"加载中");
-    [[SSRequest request]GET:HomeCategoryUrl parameters:@{@"ver":ver} success:^(SSRequest *request, NSDictionary *response) {
+    [[ABSRequest request]GET:HomeCategoryUrl parameters:@{@"ver":ver} success:^(ABSRequest *request, NSDictionary *response) {
         
         SSDissMissAllGifHud(self.view, NO);
         
@@ -118,7 +118,7 @@ TYPagerControllerDelegate>
             [self reloadData];
             
             if (self.categoryArr.firstObject.audit.length>0) {
-                KSBaseWebViewController *vc = [[KSBaseWebViewController alloc]init];
+                OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
                 vc.webType = WKType;
                 vc.isNavBarHidden = YES;
                 vc.bannerUrl = self.categoryArr.firstObject.audit;
@@ -127,7 +127,7 @@ TYPagerControllerDelegate>
             }
         }
         
-    } failure:^(SSRequest *request, NSString *errorMsg) {
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
         SSDissMissAllGifHud(self.view, NO);
         SSMBToast(errorMsg, self.view);
         self.reloadBtn.hidden = NO;

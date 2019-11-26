@@ -8,20 +8,13 @@
 
 #import "Tool.h"
 #import "CommonCrypto/CommonDigest.h"
-
 // Standard library
 #include <stdint.h>
 #include <stdio.h>
-
 // Core Foundation
 #include <CoreFoundation/CoreFoundation.h>
-
 // Cryptography
 #include <CommonCrypto/CommonDigest.h>
-
-//---------------------------------------------------------
-// Function definition
-//---------------------------------------------------------
 
 CFStringRef FileMD5HashCreateWithPath(CFStringRef filePath,
                                       size_t chunkSizeForReadingData) {
@@ -492,6 +485,15 @@ done:
     NSTimeInterval nowtime = [[NSDate date] timeIntervalSince1970]*1000;
     long long theTime = [[NSNumber numberWithDouble:nowtime] longLongValue];
     return theTime;
+}
+
++ (NSDictionary *)dictionaryForJsonData:(NSData *)jsonData {
+    if (![jsonData isKindOfClass:[NSData class]] || jsonData.length < 1) {
+        return nil;
+    }
+    id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
+    if (![jsonObj isKindOfClass:[NSDictionary class]]) {return nil;}
+    return [NSDictionary dictionaryWithDictionary:(NSDictionary *)jsonObj];
 }
 
 @end

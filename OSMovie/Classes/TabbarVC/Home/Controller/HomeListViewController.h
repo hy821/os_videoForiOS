@@ -2,15 +2,15 @@
 //  HomeListViewController.h
 //  OSMovie
 //
-//    Created by Rb on 2019/10/31.
+//    Created by Rb_Developer on 2019/10/31.
 
 //
 
-#import "KSBaseViewController.h"
+#import "OOSBaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HomeListViewController : KSBaseViewController
+@interface HomeListViewController : OOSBaseViewController
 
 @property (nonatomic,strong) HomeCategoryModel *model;
 

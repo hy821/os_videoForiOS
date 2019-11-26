@@ -2,7 +2,7 @@
 //  CommonModel.m
 //  OSMovie
 //
-//    Created by Rb on 2019/10/30.
+//    Created by Rb_Developer on 2019/10/30.
 
 //
 
@@ -430,4 +430,9 @@
     CGFloat titleHeightSub = [Helper heightOfString:_summary font:Font_Size(12) width:(ScreenWidth-self.sizeW(24))];
     _cellHeight = titleHeightName + self.sizeH(20) + titleHeightSub;
 }
+@end
+
+
+@implementation AdmetaModel : NSObject
+
 @end
