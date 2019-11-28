@@ -1,5 +1,5 @@
 //
-//  KSLayerAnimation.h
+//  OSLayerAnimation.h
 //
 
 #import <Foundation/Foundation.h>
@@ -10,7 +10,7 @@ typedef NS_ENUM(NSUInteger, TabbarAnimationType) {
     RotationAnimationLeftRight = 2,//左右翻转
 };
 
-@interface KSLayerAnimation : NSObject
+@interface OSLayerAnimation : NSObject
 +(void)animationWithTabbarIndex:(NSInteger)index type:(TabbarAnimationType)type;
 +(void)aniamtionWithTarBarView:(UIView*)view type:(TabbarAnimationType)type;
 +(void)animationWithView:(UIView *)view type:(TabbarAnimationType)type repeatCount:(NSInteger)count duration:(NSInteger)dur;

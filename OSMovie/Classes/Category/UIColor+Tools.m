@@ -3,7 +3,7 @@
 //  Osss
 //
 //  Created by Lff_OsDeveloper on 2017/3/29.
-//  Copyright © 2019年    asdfghjkl. All rights reserved.
+//  Copyright © 2017年    asdfghjkl. All rights reserved.
 //
 
 #import "UIColor+Tools.h"

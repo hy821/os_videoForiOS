@@ -6,6 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "STDPingServices.h"
 
 @interface UserManager : NSObject
 
@@ -19,7 +20,6 @@
 -(NSString *)getUserToken;
 - (void)removeUserAllData;
 -(BOOL)isLogin;
--(id)dataStrForKey:(NSString*)key;
 - (void)gotoLogin;
 -(BOOL)isDevStatus;
 -(NSString*)serverAddress;
@@ -44,6 +44,20 @@
 // (单位毫秒)  当前时间 + (上次请求开始请求时的时间 - 上次请求成功时的时间)
 - (NSString *)getTimeForToken;
 
+typedef NS_ENUM(NSUInteger, DomainType) {
+    DomainType_Cl = 0,
+    DomainType_Api,
+    DomainType_Ad,
+    DomainType_Cdn,
+};
+
+
+typedef void(^getValidDomainBlock)(NSString *);
+
+-(void)checkValidDomainWithType:(DomainType)type completeBlock:(getValidDomainBlock)block;
+
 - (void)callBackAdvWithUrls:(NSArray*)urls;
+
+- (void)pingWithUrl:(NSString*)checkUrl;
 
 @end

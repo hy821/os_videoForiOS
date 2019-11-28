@@ -2,7 +2,7 @@
 //  HudCenter.h
 //
 //  Created by Lff_OsDeveloper on 2017/3/29.
-//  Copyright © 2019年    asdfghjkl. All rights reserved.
+//  Copyright © 2017年    asdfghjkl. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,7 +16,6 @@ extern void ShowMaskStatus(NSString *statues);
 extern void ShowMessage(NSString *statues);
 extern void ShowProgress(CGFloat progress);
 extern void DismissHud(void);
-// MBP
 /**
  * 纯文本
  **/

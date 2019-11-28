@@ -3,7 +3,7 @@
 //  Osss
 //
 //  Created by Lff_OsDeveloper on 2017/3/29.
-//  Copyright © 2019年    asdfghjkl. All rights reserved.
+//  Copyright © 2017年    asdfghjkl. All rights reserved.
 //
 
 #import "ABSRequest.h"
@@ -14,8 +14,6 @@
 #import "NSData+GZIP.h"
 #import "GTMBase64.h"
 #import "NSData+KKAES.h"
-
-#import "RealReachability.h"
 
 @interface ABSRequest ()
 @end
@@ -248,7 +246,7 @@ static ABSRequest *absRequest = nil;
 //    NSString *ver = [infoDic objectForKey:@"CFBundleShortVersionString"];
 //    //正确的: osTypeId:01
 //    //改成osTypeId:02试试
-//    NSString *ua = [NSString stringWithFormat:@"%@ ks2/%@ (agent:s;channel:%@;credential:%@;deviceId:%@;osTypeId:01;detailInfo:iOS;simTypeId:%@;netTypeId:%@;deviceTypeId:02;osVersion:%@;token:%@)",[USER_MANAGER getUserAgent],[USER_MANAGER getVersionStr],[USER_MANAGER getAppPubChannel],[USER_MANAGER getCredential],[USER_MANAGER getUUID],[USER_MANAGER getSimType],[USER_MANAGER getNetWorkType],ver,[self getTokenWithUrlStr:urlStr IsLogin:isLogin]];
+//    NSString *ua = [NSString stringWithFormat:@"%@ ss2/%@ (agent:s;channel:%@;credential:%@;deviceId:%@;osTypeId:01;detailInfo:iOS;simTypeId:%@;netTypeId:%@;deviceTypeId:02;osVersion:%@;token:%@)",[USER_MANAGER getUserAgent],[USER_MANAGER getVersionStr],[USER_MANAGER getAppPubChannel],[USER_MANAGER getCredential],[USER_MANAGER getUUID],[USER_MANAGER getSimType],[USER_MANAGER getNetWorkType],ver,[self getTokenWithUrlStr:urlStr IsLogin:isLogin]];
     
     //Temp
     NSString *userID = [USER_MANAGER getUserID];
@@ -270,15 +268,16 @@ static ABSRequest *absRequest = nil;
 }
 
 //NetWorkA
-- (void)getNetWorkAddWithSuccess:(void (^)(ABSRequest *request, id response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
+- (void)getNetWorkAddWithUrl:(NSString*)requestUrl success:(void (^)(ABSRequest *request, id response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
     
-    NSString *requestUrl = @"http://120.77.243.186/cc/fst?t=gp";
-
+    if (![requestUrl containsString:@"http"]) {
+        requestUrl = [NSString stringWithFormat:@"http://%@/cc/fst?t=gp",requestUrl];
+    }
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestUrl]];
     [request setHTTPMethod:@"POST"];
     request.timeoutInterval= 10.f;
     [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-        
+    
     NSDictionary *parameters = @{
         @"userId" : [USER_MANAGER getUserID],
         @"did" : [USER_MANAGER getIDFA],
@@ -286,7 +285,7 @@ static ABSRequest *absRequest = nil;
     };
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
-
+    
     NSString *aesKey = @"2f69bfe8265f8faf1d29c721fa2c1ba6";
     NSString *aesIV = @"dDUcnZ9ZlS0rwF3R";
     NSData*aesKeyData = [aesKey dataUsingEncoding:NSUTF8StringEncoding];
@@ -294,7 +293,7 @@ static ABSRequest *absRequest = nil;
     
     NSData* aesData = [jsonData AES_CBC_EncryptWith:aesKeyData iv:aesIVData];
     aesData = [GTMBase64 encodeData:aesData];
-
+    
     [request setHTTPBody:aesData];
     
     AFHTTPSessionManager *requestManager = [AFHTTPSessionManager manager];
@@ -324,7 +323,7 @@ static ABSRequest *absRequest = nil;
                 SSLog(@"\n\ndealAndSaveDic--->\n%@",newDic);
             }
             [USERDEFAULTS setObject:dic forKey:NetWorkAddress];
-            
+            [USERDEFAULTS synchronize];
             success(self,response);
             /*
              {
@@ -355,91 +354,9 @@ static ABSRequest *absRequest = nil;
     
 }
 
--(void)checkValidDomain:(NSString*)mainDomain andSpareDomain:(NSString*)backupDomain CompleteBlock:(getValidDomainBlock)block {
-   if (![self checkNetWorkState]) {
-       SSLog(@"网络异常,请检查您的网络设置!");
-       return;
-   }
-
-   if (![mainDomain containsString:@"http"]) {
-       mainDomain =[NSString stringWithFormat:@"https://%@",mainDomain];
-   }
-
-   if (![backupDomain containsString:@"http"]) {
-       backupDomain =[NSString stringWithFormat:@"https://%@",backupDomain];
-
-   }
-
-   if (mainDomain.length && backupDomain.length) {
-
-       dispatch_async(dispatch_get_global_queue(0,0), ^{
-          if([self checkDomainIsValid:mainDomain]){
-             //主域名可用
-             if (block) {
-                 block(mainDomain);
-             }
-          }else {
-             //主域名不可用检测从域名
-             if ([self checkDomainIsValid:backupDomain]) {
-                 //从域名可用
-                 if (block) {
-                    block(backupDomain);
-                 }
-             }else {
-                 //从域名不可用结果为空
-                 if (block) {
-                    block(@"");
-                 }
-             }
-          }
-       });
-   }else {
-       //param invalid
-       SSLog(@"paraminvalid");
-   }
-}
-
--(BOOL)checkDomainIsValid:(NSString*)domainStr {
-   NSURL *url =[NSURL URLWithString:domainStr];
-    NSURLRequest *request =[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
-    NSHTTPURLResponse *response = nil;
-    NSError *error =nil;
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-   if (response.statusCode== 200) {
-       return YES;
-   }else {
-       return NO;
-   }
-}
-
-#pragma mark-监听网络回调
-//检测当前网络是否可用
--(BOOL)checkNetWorkState {
-    ReachabilityStatus status = [RealReachability sharedInstance].currentReachabilityStatus;
-    WWANAccessType type = [RealReachability sharedInstance].currentWWANtype;
-    if (status==RealStatusViaWiFi) {
-        return YES;
-    }else if (status==RealStatusUnknown || status==RealStatusNotReachable) {
-        return NO;
-    }else if (status==RealStatusViaWWAN) {
-        switch (type) {
-            case WWANTypeUnknown:
-                return NO;
-                break;
-            case WWANType2G:
-            case WWANType3G:
-            case WWANType4G:
-                return YES;
-                break;
-            default:
-                break;
-        }
-    }
-    return YES;
-}
-
-- (void)getAdvDataWithPositionID:(NSString*)positionID success:(void (^)(ABSRequest *request, id response))success
-                         failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
+- (void)getAdvDataWithUrl:(NSString*)requestUrlString positionID:(NSString*)positionID
+                  success:(void (^)(ABSRequest *request, id response))success
+                  failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
     NSDictionary *par = @{
         @"slot_id": positionID,
         @"slot_w": @(ScreenWidth),
@@ -466,8 +383,11 @@ static ABSRequest *absRequest = nil;
         @"client_type": @(4),
         @"client_version": @"1.1.0"
     };
-    
-    NSString *requestUrlString = @"http://dev.sspapi.51tv.com/api/req";
+
+    if (![requestUrlString containsString:@"http"]) {
+        requestUrlString = [NSString stringWithFormat:@"http://%@/api/req",requestUrlString];
+    }
+//    requestUrlString = @"http://dev.sspapi.51tv.com/api/req";
     
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];

@@ -1,11 +1,11 @@
 //
-//  KSScrollView.m
+//  ABOScrollView.m
 //
 
 
-#import "KSScrollView.h"
+#import "ABOScrollView.h"
 
-@implementation KSScrollView
+@implementation ABOScrollView
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {

@@ -31,12 +31,12 @@
     {
         self.uxy_ignoreEvent = YES;
         
-        [self performSelector:@selector(ksksk) withObject:@(NO) afterDelay:self.uxy_acceptEventInterval];
+        [self performSelector:@selector(abc) withObject:@(NO) afterDelay:self.uxy_acceptEventInterval];
     }
     [self __uxy_sendAction:action to:target forEvent:event];
 }
 
-- (void)ksksk
+- (void)abc
 {
     self.uxy_ignoreEvent = NO;
 }

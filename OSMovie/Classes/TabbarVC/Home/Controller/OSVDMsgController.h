@@ -1,9 +1,9 @@
 //
-//  VideoDetailMsgController.h
+//  OSVDMsgController.h
 //
 
 #import "OOSBaseViewController.h"
-@interface VideoDetailMsgController : UITableViewController
+@interface OSVDMsgController : UITableViewController
 - (void)loadDataWithCommonModel:(VDCommonModel*)model isOff:(BOOL)isOff;
 @property (nonatomic,copy) void(^loadDataBlock)(void);
 @property (nonatomic,copy) void(^updateDataWhenChangeSourceBlock)(VDCommonModel *model);

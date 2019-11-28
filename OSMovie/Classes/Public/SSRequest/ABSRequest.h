@@ -3,7 +3,7 @@
 //  Osss
 //
 //  Created by Lff_OsDeveloper on 2017/3/29.
-//  Copyright © 2019年    asdfghjkl. All rights reserved.
+//  Copyright © 2017年    asdfghjkl. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -49,8 +49,6 @@ typedef NS_ENUM(NSUInteger, SSRefreshType) {
  */
 + (instancetype)request;
 
-typedef void(^getValidDomainBlock)(NSString *);
-
 - (void)GET:(NSString *)URLString
  parameters:(id)parameters
     success:(void (^)(ABSRequest *request, NSDictionary *response))success
@@ -75,9 +73,9 @@ typedef void(^getValidDomainBlock)(NSString *);
 
 -(NSDictionary * )getPublicDic:(NSDictionary*)apiDic;
 
--(void)getNetWorkAddWithSuccess:(void (^)(ABSRequest *request, id response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
+- (void)getNetWorkAddWithUrl:(NSString*)requestUrl success:(void (^)(ABSRequest *request, id response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
 
-- (void)getAdvDataWithPositionID:(NSString*)positionID success:(void (^)(ABSRequest *request, id response))success
+- (void)getAdvDataWithUrl:(NSString*)requestUrl positionID:(NSString*)positionID success:(void (^)(ABSRequest *request, id response))success
 failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
 
 //广告反馈用的GET请求

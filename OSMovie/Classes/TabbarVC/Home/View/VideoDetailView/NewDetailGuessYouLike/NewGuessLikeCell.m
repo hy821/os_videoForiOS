@@ -5,7 +5,7 @@
 
 #import "NewGuessLikeCell.h"
 #import "UILabel+Category.h"
-#import "VideoDetailViewController.h"
+#import "OSVDController.h"
 #import "NewGuessLikeCVCell.h"
 #import "HorizenButton.h"
 #import "UIButton+Category.h"

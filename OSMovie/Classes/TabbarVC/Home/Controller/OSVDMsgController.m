@@ -1,9 +1,9 @@
 //
-//  VideoDetailMsgController.m
+//  OSVDMsgController.m
 //
 
 
-#import "VideoDetailMsgController.h"
+#import "OSVDMsgController.h"
 #import "VideoMsgCell.h"
 #import "SynopsisCell.h"
 #import "SelectEpisodeCell.h"
@@ -15,7 +15,7 @@
 #import "AllEpisodeView.h"
 #import "GuessLikeActionSheetView.h"
 
-@interface VideoDetailMsgController ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
+@interface OSVDMsgController ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 @property (nonatomic,assign) SSNetState isNetError;
 //Common数据源
 @property (nonatomic,strong) VDCommonModel *modelCommon;
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation VideoDetailMsgController
+@implementation OSVDMsgController
 
 - (NSMutableArray<EpisodeIntroModel *> *)allIntroDataArray {
     if (!_allIntroDataArray) {

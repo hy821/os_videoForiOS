@@ -1,9 +1,5 @@
 //
 //  UIFont+Extension.m
-//  BXInsurenceBroker
-//
-//  Created by JYJ on 16/2/23.
-//  Copyright © 2016年 baobeikeji. All rights reserved.
 //
 
 #import "UIFont+Extension.h"

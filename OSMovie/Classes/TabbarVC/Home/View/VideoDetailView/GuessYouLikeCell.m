@@ -6,7 +6,7 @@
 #import "GuessYouLikeCell.h"
 #import "UILabel+Category.h"
 #import "VideoCommonCVCell.h"
-#import "VideoDetailViewController.h"
+#import "OSVDController.h"
 #import "GuessYouLikeShortVideoCell.h"
 
 @interface GuessYouLikeCell()<UICollectionViewDelegate,UICollectionViewDataSource>

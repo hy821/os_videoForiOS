@@ -2,8 +2,8 @@
 //  UIImage+ZipSizeAndLength.h
 //  CatEntertainment
 //
-//  Created by     on 2018/5/22.
-//  Copyright © 2018年    . All rights reserved.
+//  Created by     on 2016/5/22.
+//  Copyright © 2016年    . All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

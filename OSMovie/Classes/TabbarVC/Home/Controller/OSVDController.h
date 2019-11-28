@@ -1,8 +1,8 @@
 //
-//  VideoDetailViewController.h
-//  OSMovie
+//  OSVDController.h
+//  ABOSMovie
 //
-//    Created by Rb_Developer on 2019/10/31.
+//    Created by Rb_Developer on 2017/10/31.
 
 //
 
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VideoDetailViewController : HJTabViewController
+@interface OSVDController : HJTabViewController
 
 @property (nonatomic,strong) ProgramResultListModel *model;
 

@@ -1,11 +1,11 @@
 //
-//  GoWebCountDownView.h
+//  GoWebAlertView.h
 //
 
 
 #import <UIKit/UIKit.h>
 
-@interface GoWebCountDownView : UIView
+@interface GoWebAlertView : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame TitleName:(NSString*)title AndCount:(NSInteger)count;
 

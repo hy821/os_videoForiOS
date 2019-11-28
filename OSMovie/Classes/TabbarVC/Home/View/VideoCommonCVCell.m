@@ -2,7 +2,6 @@
 //  VideoCommonCVCell.m
 //
 
-
 #import "VideoCommonCVCell.h"
 #import "UILabel+Category.h"
 

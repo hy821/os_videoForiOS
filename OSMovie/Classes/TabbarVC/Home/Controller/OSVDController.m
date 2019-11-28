@@ -1,9 +1,9 @@
 //
-//  VideoDetailViewController.m
-//  OSMovie
+//  OSVDController.m
+//  ABOSMovie
 //
 
-#import "VideoDetailViewController.h"
+#import "OSVDController.h"
 #import "UIButton+Category.h"
 #import "HorizenButton.h"
 #import "HJTabViewControllerPlugin_TabViewBar.h"
@@ -14,16 +14,16 @@
 #import "LEEAlert.h"
 #import "UIControl+recurClick.h"
 
-#import "VideoDetailMsgController.h"
+#import "OSVDMsgController.h"
 #import "ReportViewController.h"
 #import "ErrorReportViewController.h"
 #import "UILabel+Category.h"
-#import "GoWebCountDownView.h"
+#import "GoWebAlertView.h"
 
 //#import "VideoPlayViewController.h"
 //#import "ReportViewController.h"
 
-@interface VideoDetailViewController ()<
+@interface OSVDController ()<
 HJTabViewControllerDataSource,
 HJTabViewControllerDelagate,
 HJDefaultTabViewBarDelegate,
@@ -54,7 +54,7 @@ LCActionSheetDelegate>
 @property (nonatomic,strong) HJTabViewControllerPlugin_TabViewBar *tabViewBarPlugin;
 @end
 
-@implementation VideoDetailViewController
+@implementation OSVDController
 
 - (void)setModel:(ProgramResultListModel *)model {
     _model = model;
@@ -95,7 +95,7 @@ LCActionSheetDelegate>
         
         //给MsgVC赋值 刷新UI
         if (self.vcArr.firstObject) {
-            VideoDetailMsgController *vc = self.vcArr.firstObject;
+            OSVDMsgController *vc = self.vcArr.firstObject;
             self.modelCommon.likeDataArray = [self.likeDataArray copy];
             [vc loadDataWithCommonModel:self.modelCommon isOff:self.isOff];
         }
@@ -283,7 +283,7 @@ LCActionSheetDelegate>
         tip = [NSString stringWithFormat:@"秒后跳转到%@为您播放",self.modelCommon.mediaSourceArr[self.modelCommon.indexSelectForSource]];
     }
     
-    GoWebCountDownView * tool = [[GoWebCountDownView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth/1.5, ScreenWidth/3.5) TitleName:tip AndCount:3];
+    GoWebAlertView * tool = [[GoWebAlertView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth/1.5, ScreenWidth/3.5) TitleName:tip AndCount:3];
     tool.layer.cornerRadius = self.sizeH(8);
     tool.layer.masksToBounds = YES;
     WS()
@@ -306,7 +306,7 @@ LCActionSheetDelegate>
 -(NSMutableArray  *)vcArr {
     if(_vcArr == nil) {
         _vcArr = @[].mutableCopy;
-        VideoDetailMsgController * other = [[VideoDetailMsgController alloc]initWithStyle:UITableViewStyleGrouped];
+        OSVDMsgController * other = [[OSVDMsgController alloc]initWithStyle:UITableViewStyleGrouped];
         WS()
         other.loadDataBlock = ^{
             [weakSelf firstLoadWithHud:YES];
@@ -362,7 +362,7 @@ LCActionSheetDelegate>
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    SSLog(@"  VideoDetailViewController  视频详情页Dealloc, timer销毁, 关闭数据库");
+    SSLog(@"  OSVDController  视频详情页Dealloc, timer销毁, 关闭数据库");
 }
 
 - (void)upBackAndMoreBtnUI {

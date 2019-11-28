@@ -1,19 +1,19 @@
 //
-//  GoWebCountDownView.m
+//  GoWebAlertView.m
 //
 
 
-#import "GoWebCountDownView.h"
+#import "GoWebAlertView.h"
 #import "UIButton+Category.h"
 #import "UILabel+Category.h"
 
-@interface GoWebCountDownView ()
+@interface GoWebAlertView ()
 @property (nonatomic,assign) NSInteger timeInterval;
 @property (nonatomic,weak) UILabel *lab;
 @property (nonatomic,weak) NSTimer *timer;
 @end
 
-@implementation GoWebCountDownView
+@implementation GoWebAlertView
 
 - (instancetype)initWithFrame:(CGRect)frame TitleName:(NSString*)title AndCount:(NSInteger)count {
     if (self = [super initWithFrame:frame]) {

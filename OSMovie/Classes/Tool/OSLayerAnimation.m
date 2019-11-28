@@ -1,12 +1,12 @@
 //
-//  KSLayerAnimation.m
+//  OSLayerAnimation.m
 //
 
 
-#import "KSLayerAnimation.h"
+#import "OSLayerAnimation.h"
 #import "AppDelegate.h"
 static CGFloat duration = 0.4f;
-@implementation KSLayerAnimation
+@implementation OSLayerAnimation
 +(void)animationWithTabbarIndex:(NSInteger)index type:(TabbarAnimationType)type
 {
     NSMutableArray * tabbarbuttonArray = [NSMutableArray array];
@@ -17,7 +17,7 @@ static CGFloat duration = 0.4f;
         }
     }
     UIView * tabbarBtn = tabbarbuttonArray[index];
-    [KSLayerAnimation aniamtionWithTarBarView:tabbarBtn type:type];
+    [OSLayerAnimation aniamtionWithTarBarView:tabbarBtn type:type];
     
 }
 +(void)aniamtionWithTarBarView:(UIView *)view type:(TabbarAnimationType)type

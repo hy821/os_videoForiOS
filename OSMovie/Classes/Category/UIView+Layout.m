@@ -1,9 +1,6 @@
 //
 //  UIView+Layout.m
 //
-//  Created by Lff on 15/2/24.
-//  Copyright © 2015年 谭真. All rights reserved.
-//
 
 #import "UIView+Layout.h"
 

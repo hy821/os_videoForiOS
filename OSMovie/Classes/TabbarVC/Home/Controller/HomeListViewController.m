@@ -1,16 +1,16 @@
 //
 //  HomeListViewController.m
-//  OSMovie
+//  ABOSMovie
 //
-//    Created by Rb_Developer on 2019/10/31.
+//    Created by Rb_Developer on 2017/10/31.
 
 //
 
 #import "HomeListViewController.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 #import "VideoCommonCVCell.h"
-#import "VideoDetailViewController.h"
-#import "MYHRocketHeader.h"
+#import "OSVDController.h"
+#import "RefreshGifHeader.h"
 #import "OOSBaseWebViewController.h"
 
 @interface HomeListViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
@@ -91,7 +91,7 @@ static NSString *cell_ID = @"VideoCommonCVCell";
         _collectionView.showsVerticalScrollIndicator = NO;
         [_collectionView registerClass:[VideoCommonCVCell class] forCellWithReuseIdentifier:cell_ID];
         WS()
-        _collectionView.mj_header = [MYHRocketHeader headerWithRefreshingBlock:^{
+        _collectionView.mj_header = [RefreshGifHeader headerWithRefreshingBlock:^{
             weakSelf.cursor = @"0";
             [weakSelf loadDataWithAnimation:NO];
         }];
@@ -132,7 +132,7 @@ static NSString *cell_ID = @"VideoCommonCVCell";
         [self.navigationController pushViewController:vc animated:YES];
     }else {
         ProgramResultListModel *m = self.listArr[indexPath.item];
-        VideoDetailViewController *vc = [[VideoDetailViewController alloc]init];
+        OSVDController *vc = [[OSVDController alloc]init];
         vc.model = m;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];

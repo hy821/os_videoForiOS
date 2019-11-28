@@ -3,7 +3,7 @@
 //  CodeDemo
 //
 //  Created by wangrui on 2017/10/22.
-//  Copyright © 2019年 wangrui. All rights reserved.
+//  Copyright © 2017年 wangrui. All rights reserved.
 //
 //  Github地址：https://github.com/wangrui460/WRNavigationBar
 

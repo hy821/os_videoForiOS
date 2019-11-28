@@ -3,9 +3,9 @@
 //  MJRefreshExample
 //
 
-#import "MYHRocketHeader.h"
+#import "RefreshGifHeader.h"
 
-@implementation MYHRocketHeader
+@implementation RefreshGifHeader
 #pragma mark - 重写方法
 #pragma mark 基本设置
 - (void)prepare

@@ -8,7 +8,7 @@
 #import "UILabel+Category.h"
 #import "VerticalButton.h"
 #import "UIControl+recurClick.h"
-#import "KSLayerAnimation.h"
+#import "OSLayerAnimation.h"
 
 @interface ShortVideoMsgCell ()
 
@@ -119,14 +119,14 @@
 - (void)collectAction:(VerticalButton *)sender {
 
     sender.selected = !sender.selected;
-    [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
+    [OSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
     
 //    NSDictionary *dic = @{@"assetType" : self.model.type,
 //                          @"programId" : self.model.idForModel
 //                          };
 //    [USER_MANAGER videoCollectionWithPar:dic andIsCollection:!sender.isSelected success:^(id response) {
 //        sender.selected = !sender.selected;
-//        [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
+//        [OSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
 //    } failure:^(NSString *errMsg) {
 //        SSMBToast(errMsg, MainWindow);
 //    }];

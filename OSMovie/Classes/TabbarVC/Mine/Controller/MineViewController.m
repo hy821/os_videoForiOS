@@ -1,8 +1,8 @@
 //
 //  MineViewController.m
-//  OSMovie
+//  ABOSMovie
 //
-//    Created by Rb_Developer on 2019/10/30.
+//    Created by Rb_Developer on 2017/10/30.
 
 //
 

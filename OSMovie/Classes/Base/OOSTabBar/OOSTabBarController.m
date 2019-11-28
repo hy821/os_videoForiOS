@@ -7,7 +7,7 @@
 #import "OOSBaseViewController.h"
 #import "OOSBaseNavViewController.h"
 #import "OOSTabBar.h"
-#import "KSLayerAnimation.h"
+#import "OSLayerAnimation.h"
 #import "HomeViewController.h"
 #import "MineViewController.h"
 #import "LoginViewController.h"
@@ -98,12 +98,8 @@
 }
 
 - (void)animationWithIndex:(NSInteger) index {
-    [KSLayerAnimation animationWithTabbarIndex:index type:BounceAnimation];
+    [OSLayerAnimation animationWithTabbarIndex:index type:BounceAnimation];
     self.indexFlag = index;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 @end

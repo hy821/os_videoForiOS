@@ -3,14 +3,14 @@
 //  HJTabViewControllerDemo
 //
 //  Created by haijiao on 2017/1/6.
-//  Copyright © 2019年 olinone. All rights reserved.
+//  Copyright © 2017年 olinone. All rights reserved.
 //
 
 #import "HJTabViewController.h"
 #import "HJTabViewController+ViewController.h"
 #import "HJTabViewControllerPlugin_Base.h"
 #import <objc/runtime.h>
-#import "KSScrollView.h"
+#import "ABOScrollView.h"
 
 @interface HJTabViewController () <UIScrollViewDelegate> {
     struct {
@@ -30,7 +30,7 @@
 }
 
 @property (nonatomic, strong) UIView           *containerView;
-@property (nonatomic, strong) KSScrollView     *scrollView;
+@property (nonatomic, strong) ABOScrollView     *scrollView;
 @property (nonatomic, strong) NSArray          *viewControllers;
 @property (nonatomic, strong) UIView           *tabHeaderView;
 @property (nonatomic, assign) NSInteger        curIndex;
@@ -489,7 +489,7 @@
     self.containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.containerView];
     
-    self.scrollView = [[KSScrollView alloc] initWithFrame:self.containerView.bounds];
+    self.scrollView = [[ABOScrollView alloc] initWithFrame:self.containerView.bounds];
     self.scrollView.showsVerticalScrollIndicator = NO;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.scrollView.directionalLockEnabled = YES;

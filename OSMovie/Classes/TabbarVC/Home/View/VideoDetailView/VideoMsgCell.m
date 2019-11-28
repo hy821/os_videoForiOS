@@ -10,7 +10,7 @@
 #import "HJRatingView.h"
 #import "LCActionSheet.h"
 #import "UIControl+recurClick.h"
-#import "KSLayerAnimation.h"
+#import "OSLayerAnimation.h"
 
 @interface VideoMsgCell()<LCActionSheetDelegate>
 
@@ -280,7 +280,7 @@
 - (void)collectAction:(HorizenButton *)sender {
     
     sender.selected = !sender.selected;
-    [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
+    [OSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
 
 //    NSString *sourceID = @"";
 //    if (self.model.indexSelectForSource) {
@@ -291,7 +291,7 @@
 //                          };
 //    [USER_MANAGER videoCollectionWithPar:dic andIsCollection:!sender.isSelected success:^(id response) {
 //        sender.selected = !sender.selected;
-//        [KSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
+//        [OSLayerAnimation animationWithView:sender.imageView type:RotationAnimationLeftRight repeatCount:0 duration:0];
 //    } failure:^(NSString *errMsg) {
 //        SSMBToast(errMsg, MainWindow);
 //    }];

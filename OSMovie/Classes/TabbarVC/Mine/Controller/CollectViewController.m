@@ -7,8 +7,8 @@
 #import "CollectViewController.h"
 #import "UIButton+Category.h"
 #import "CollectAndHistoryCell.h"
-#import "VideoDetailViewController.h"
-#import "MYHRocketHeader.h"
+#import "OSVDController.h"
+#import "RefreshGifHeader.h"
 #import <DZNEmptyDataSet/UIScrollView+EmptyDataSet.h>
 
 @interface CollectViewController ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
@@ -300,7 +300,7 @@ static NSString * const cellID = @"CollectAndHistoryCell";
         ProgramResultListModel *m = self.dataArr[indexPath.item];
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        VideoDetailViewController *vc = [[VideoDetailViewController alloc]init];
+        OSVDController *vc = [[OSVDController alloc]init];
         vc.model = m;
         [self.navigationController pushViewController:vc animated:YES];
     }
@@ -328,7 +328,7 @@ static NSString * const cellID = @"CollectAndHistoryCell";
         _mainTableView.rowHeight = self.sizeH(100);
         _mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         WS()
-        _mainTableView.mj_header = [MYHRocketHeader headerWithRefreshingBlock:^{
+        _mainTableView.mj_header = [RefreshGifHeader headerWithRefreshingBlock:^{
             if (self.mainTableView.isEditing) {
                 [self.mainTableView.mj_header endRefreshing];
                 return;

@@ -1,7 +1,7 @@
 //
-//  OSMoviePrefixHeader.pch
+//  ABOSMoviePrefixHeader.pch
 //
-//    Created by Rb_Developer on 2019/9/17.
+//    Created by Rb_Developer on 2017/9/17.
 //
 
 #ifndef OSMoviePrefixHeader_pch
@@ -33,7 +33,6 @@
 #import "HudCenter.h"
 #import "ABSRequest.h"
 #import "UserManager.h"
-#import "Helper.h"
 #import "WRNavigationBar.h"
 #import <UIImageView+WebCache.h>
 #import "CommonModel.h"

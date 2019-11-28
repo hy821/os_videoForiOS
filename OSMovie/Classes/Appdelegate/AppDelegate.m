@@ -1,8 +1,8 @@
 //
 //  AppDelegate.m
-//  OSMovie
+//  ABOSMovie
 //
-//    Created by Rb_Developer on 2019/10/28.
+//    Created by Rb_Developer on 2017/10/28.
 
 //
 
@@ -96,9 +96,18 @@
 }
 
 - (void)getHosts {
-    [[ABSRequest request] getNetWorkAddWithSuccess:^(ABSRequest *request, id response) {
+    WS()
+    [USER_MANAGER checkValidDomainWithType:DomainType_Cl completeBlock:^(NSString *validUrl) {
+        SSLog(@"------------>回调了%@",validUrl);
+        [weakSelf getHostsWithURL:validUrl];
+    }];
+}
+
+- (void)getHostsWithURL:(NSString*)validUrl {
+    WS()
+    [[ABSRequest request] getNetWorkAddWithUrl:validUrl success:^(ABSRequest *request, id response) {
         SSLog(@"--->Host:%@",response);
-        [self getSplashAdvMsg];
+        [weakSelf getSplashAdvMsg];
     } failure:^(ABSRequest *request, NSString *errorMsg) {
         SSLog(@"--->HostError:%@",errorMsg);
     }];
@@ -138,16 +147,19 @@
 }
 
 - (void)getSplashAdvMsg {
-       
-    [[ABSRequest request]getAdvDataWithPositionID:@"225946" success:^(ABSRequest *request, id response) {
-        SSLog(@"advData--->%@",response);
-        if(response) {
-            AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];
-            self.advModel = m;
-            [self showApiSplashAdv];
-        }
-    } failure:^(ABSRequest *request, NSString *errorMsg) {
-        SSLog(@"advError--->%@",errorMsg);
+    WS()
+    [USER_MANAGER checkValidDomainWithType:DomainType_Ad completeBlock:^(NSString *validUrl) {
+        SSLog(@"------------>广告CheckDomain回调了%@",validUrl);
+        [[ABSRequest request]getAdvDataWithUrl:validUrl positionID:@"225946" success:^(ABSRequest *request, id response) {
+             SSLog(@"advData--->%@",response);
+             if(response) {
+                 AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];
+                 weakSelf.advModel = m;
+                 [weakSelf showApiSplashAdv];
+             }
+         } failure:^(ABSRequest *request, NSString *errorMsg) {
+             SSLog(@"advError--->%@",errorMsg);
+         }];
     }];
 }
 

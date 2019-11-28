@@ -1,8 +1,8 @@
 //
 //  CommonModel.m
-//  OSMovie
+//  ABOSMovie
 //
-//    Created by Rb_Developer on 2019/10/30.
+//    Created by Rb_Developer on 2017/10/30.
 
 //
 
@@ -113,7 +113,7 @@
     
     CGFloat videoHeight = ScreenWidth*13/24;
     
-    CGFloat titleHeight = [Helper heightOfString:_name font:Font_Size(14) width:(ScreenWidth-self.sizeW(90))];
+    CGFloat titleHeight = [Tool heightOfString:_name font:Font_Size(14) width:(ScreenWidth-self.sizeW(90))];
     if(titleHeight>self.sizeH(20)) {  //2行
 //        if (titleHeight>self.sizeH(34)) { //大于2行的, 控制在2行内
 //            titleHeight = self.sizeH(34);
@@ -152,7 +152,7 @@
     CGFloat topIconHeight = self.sizeH(38+10+10);
     CGFloat bottomToolHeight = self.sizeH(30+15+15);
     
-    CGFloat titleHeight = [Helper heightOfString:self.name font:Font_Size(17) width:(ScreenWidth-self.sizeW(20))];
+    CGFloat titleHeight = [Tool heightOfString:self.name font:Font_Size(17) width:(ScreenWidth-self.sizeW(20))];
     titleHeight = titleHeight + self.sizeH(20);
     
     if (self.height>0 && self.width>0) {
@@ -252,7 +252,7 @@
 - (void)setType:(NSString *)type {
     _type = type;
     NSString *des = [NSString stringWithFormat:@"简介:%@",_descriptionForModel];
-    CGFloat hForIntro = [Helper heightOfString:des font:Font_Size(13) width:ScreenWidth-self.sizeW(24)];
+    CGFloat hForIntro = [Tool heightOfString:des font:Font_Size(13) width:ScreenWidth-self.sizeW(24)];
     _isShowFoldBtn = hForIntro > self.sizeH(35);
     _isOpen = NO;
     _videoType = VideoType_UnKnow;
@@ -300,7 +300,7 @@
         case 5:
         {
             self.videoType = VideoType_Short;
-            CGFloat hForTitle = [Helper heightOfString:_name font:Font_Size(20) width:ScreenWidth-self.sizeW(24)];
+            CGFloat hForTitle = [Tool heightOfString:_name font:Font_Size(20) width:ScreenWidth-self.sizeW(24)];
             self.cellHeight_Msg = self.sizeH(88)+hForTitle;
             self.cellHeight_Intro = 0;
             self.cellHeight_Episode = 0;
@@ -426,8 +426,8 @@
 
 @implementation EpisodeIntroModel : NSObject
 - (void)refreshData {
-    CGFloat titleHeightName = [Helper heightOfString:_title font:Font_Size(12) width:(ScreenWidth-self.sizeW(24))];
-    CGFloat titleHeightSub = [Helper heightOfString:_summary font:Font_Size(12) width:(ScreenWidth-self.sizeW(24))];
+    CGFloat titleHeightName = [Tool heightOfString:_title font:Font_Size(12) width:(ScreenWidth-self.sizeW(24))];
+    CGFloat titleHeightSub = [Tool heightOfString:_summary font:Font_Size(12) width:(ScreenWidth-self.sizeW(24))];
     _cellHeight = titleHeightName + self.sizeH(20) + titleHeightSub;
 }
 @end

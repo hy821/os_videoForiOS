@@ -5,6 +5,6 @@
 
 #import "MJRefreshGifHeader.h"
 
-@interface MYHRocketHeader : MJRefreshGifHeader
+@interface RefreshGifHeader : MJRefreshGifHeader
 
 @end
