@@ -80,7 +80,7 @@ static ABSRequest *absRequest = nil;
 - (void)GET:(NSString *)URLString parameters:(id)parameters success:(void (^)(ABSRequest *request, NSDictionary *response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
     self.operationQueue = self.sessionManager.operationQueue;
     
-    NSString *requestUrlString = SSStr([USER_MANAGER serverAddress], URLString);
+    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
     
     [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:NO] forHTTPHeaderField:@"UserAgent"];
     
@@ -105,41 +105,6 @@ static ABSRequest *absRequest = nil;
     }];
 }
 
-- (void)GETAboutLogin:(NSString *)URLString
-           parameters:(NSDictionary *)parameters
-              success:(void (^)(ABSRequest *request, NSDictionary *response))success
-              failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
-    
-    self.operationQueue = self.sessionManager.operationQueue;
-    
-    NSString *requestUrlString = SSStr([USER_MANAGER serverAddressWithLogin], URLString);
-
-    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:YES] forHTTPHeaderField:@"UserAgent"];
-    
-    [self.sessionManager GET:requestUrlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        long long endTime = [Tool getCurrentTimeMillsNum];
-        long long startTime = [responseObject[@"requestStartTime"] longLongValue];
-        long long durationTime = startTime - endTime;
-
-        [USERDEFAULTS setObject:[NSNumber numberWithLong:durationTime] forKey:LastRequestDurTime];
-        [USERDEFAULTS synchronize];
-        
-        if([responseObject[@"code"] integerValue] == 10000) {
-            success(self,responseObject);
-        }else {
-            failure(self,responseObject[@"message"]);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if(error.code == -1009) {
-            failure(self,@"网络连接中断,请检查网络");
-        }else {
-            failure(self,error.localizedDescription);
-        }
-    }];
-}
-
 - (void)POST:(NSString *)URLString
   parameters:(id)parameters
      success:(void (^)(ABSRequest *request, id response))success
@@ -147,7 +112,7 @@ static ABSRequest *absRequest = nil;
     
     self.operationQueue = self.sessionManager.operationQueue;
    
-    NSString *requestUrlString = SSStr([USER_MANAGER serverAddress], URLString);
+    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
 
     self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.requestSerializer.timeoutInterval = 10.f;
@@ -175,41 +140,6 @@ static ABSRequest *absRequest = nil;
         }else {
             failure(self,error.localizedDescription);
         }
-    }];
-}
-
-- (void)POSTAboutLogin:(NSString *)URLString
-  parameters:(NSMutableDictionary*)parameters
-     success:(void (^)(ABSRequest *request, id response))success
-     failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure{
-    
-    self.operationQueue = self.sessionManager.operationQueue;
-    
-    NSString *requestUrlString = SSStr([USER_MANAGER serverAddressWithLogin], URLString);
-
-    [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:YES] forHTTPHeaderField:@"UserAgent"];
-    
-    [self.sessionManager POST:requestUrlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        long long endTime = [Tool getCurrentTimeMillsNum];
-        long long startTime = [responseObject[@"requestStartTime"] longLongValue];
-        long long durationTime = startTime - endTime;
-        [USERDEFAULTS setObject:[NSNumber numberWithLong:durationTime] forKey:LastRequestDurTime];
-        [USERDEFAULTS synchronize];
-
-        if([responseObject[@"code"] integerValue] == 10000) {
-            success(self,responseObject);
-        }else {
-            failure(self,responseObject[@"message"]);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if(error.code == -1009) {
-            failure(self,@"网络连接中断,请检查网络");
-        }else {
-            failure(self,error.localizedDescription);
-        }
-        
     }];
 }
 
@@ -263,7 +193,7 @@ static ABSRequest *absRequest = nil;
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *token = [NSString stringWithFormat:@"/%@-%@-%@-",urlStr,[USER_MANAGER getTimeForToken],app_Version];
     NSString * md5Str = [Tool md5:SSStr(token, userID)];
-    NSString *rsaStr = [RSAUtil encryptString:SSStr(token, md5Str) publicKey: isLogin ? [USER_MANAGER publicKeyWithLogin] : [USER_MANAGER publicKey]];
+    NSString *rsaStr = [RSAUtil encryptString:SSStr(token, md5Str) publicKey:PUBLIC_KEY_Normal];
     return rsaStr;
 }
 
@@ -324,7 +254,7 @@ static ABSRequest *absRequest = nil;
             }
             [USERDEFAULTS setObject:dic forKey:NetWorkAddress];
             [USERDEFAULTS synchronize];
-            success(self,response);
+            success(self,dic);
             /*
              {
                  apis =     (

@@ -50,4 +50,8 @@ NSString *const FIRSTRegisterFailNoti = @"FIRSTRegisterFailNoti";
 
 NSString *const NetWorkAddress = @"NetWorkAddress";
 
+NSString *const HOST_cl = @"HOST_cl";
+NSString *const HOST_ad = @"HOST_ad";
+NSString *const HOST_api = @"HOST_api";
+
 @end

@@ -194,7 +194,7 @@
     pingItem.ICMPSequence = _sequenceNumber;
     pingItem.originalAddress = self.address;
     pingItem.status = STDPingStatusDidReceiveUnexpectedPacket;
-//    [self _handlePingItem:pingItem];
+    [self _handlePingItem:pingItem];
 }
 
 - (void)st_simplePing:(STSimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet timeToLive:(NSInteger)timeToLive sequenceNumber:(uint16_t)sequenceNumber timeElapsed:(NSTimeInterval)timeElapsed {

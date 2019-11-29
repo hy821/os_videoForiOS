@@ -29,8 +29,8 @@
     self.tabBarVC = tabBar;
     
     [GLobalRealReachability startNotifier];
-
-    [self getHosts];
+    [self configAndUpdateHosts];
+    [self getSplashAdvMsg];
     [self configNavBar];
     [self updateUserAgent];
     [self.window makeKeyAndVisible];
@@ -95,24 +95,6 @@
     }];
 }
 
-- (void)getHosts {
-    WS()
-    [USER_MANAGER checkValidDomainWithType:DomainType_Cl completeBlock:^(NSString *validUrl) {
-        SSLog(@"------------>回调了%@",validUrl);
-        [weakSelf getHostsWithURL:validUrl];
-    }];
-}
-
-- (void)getHostsWithURL:(NSString*)validUrl {
-    WS()
-    [[ABSRequest request] getNetWorkAddWithUrl:validUrl success:^(ABSRequest *request, id response) {
-        SSLog(@"--->Host:%@",response);
-        [weakSelf getSplashAdvMsg];
-    } failure:^(ABSRequest *request, NSString *errorMsg) {
-        SSLog(@"--->HostError:%@",errorMsg);
-    }];
-}
-
 - (void)updateUserAgent {
     UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectZero];
     NSString *userAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
@@ -148,18 +130,15 @@
 
 - (void)getSplashAdvMsg {
     WS()
-    [USER_MANAGER checkValidDomainWithType:DomainType_Ad completeBlock:^(NSString *validUrl) {
-        SSLog(@"------------>广告CheckDomain回调了%@",validUrl);
-        [[ABSRequest request]getAdvDataWithUrl:validUrl positionID:@"225946" success:^(ABSRequest *request, id response) {
-             SSLog(@"advData--->%@",response);
-             if(response) {
-                 AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];
-                 weakSelf.advModel = m;
-                 [weakSelf showApiSplashAdv];
-             }
-         } failure:^(ABSRequest *request, NSString *errorMsg) {
-             SSLog(@"advError--->%@",errorMsg);
-         }];
+    [[ABSRequest request]getAdvDataWithUrl:[USERDEFAULTS objectForKey:HOST_ad] positionID:@"225946" success:^(ABSRequest *request, id response) {
+        SSLog(@"advData--->%@",response);
+        if(response) {
+            AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];
+            weakSelf.advModel = m;
+            [weakSelf showApiSplashAdv];
+        }
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
+        SSLog(@"advError--->%@",errorMsg);
     }];
 }
 
@@ -170,5 +149,47 @@
     [advertiseView showSplashScreenWithTime:3 andImgUrl:self.advModel.image_urls.firstObject];
 }
 
+- (void)configAndUpdateHosts {
+    NSString *cl = [USERDEFAULTS objectForKey:HOST_cl];
+    NSString *ad = [USERDEFAULTS objectForKey:HOST_ad];
+    NSString *api = [USERDEFAULTS objectForKey:HOST_api];
+    if (!cl) {[USERDEFAULTS setObject:DefaultHost_cl forKey:HOST_cl];}
+    if (!ad) {[USERDEFAULTS setObject:DefaultHost_ad forKey:HOST_ad];}
+    if (!api) {[USERDEFAULTS setObject:DefaultHost_api forKey:HOST_api];}
+    [USERDEFAULTS synchronize];
+    
+    WS()
+     [[ABSRequest request] getNetWorkAddWithUrl:[USERDEFAULTS objectForKey:HOST_cl] success:^(ABSRequest *request, id response) {
+         SSLog(@"--->Host:%@",response);
+         /*
+          {
+              apis =     (
+                          {
+                      adApiUrl = "dev.sspapi.51tv.com";
+                      apiUrl = "dev.api.vrg.51tv.com";
+                      cdnApiUrl = "";
+                  },
+                          {
+                      adApiUrl = "dev.sspapi.51tv.com";
+                      apiUrl = "dev.api.vrg.51tv.com";
+                      cdnApiUrl = "";
+                  }
+              );
+              clapi =     (
+                  "120.77.243.186",
+                  "120.77.243.186"
+              );
+              code = 0;
+          }
+          */
+         [weakSelf checkAndUpdateHostsWithData:response];
+     } failure:^(ABSRequest *request, NSString *errorMsg) {
+         SSLog(@"--->HostError:%@",errorMsg);
+     }];
+}
+
+- (void)checkAndUpdateHostsWithData:(NSDictionary*)dic {
+    
+}
 
 @end

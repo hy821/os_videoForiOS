@@ -64,4 +64,8 @@ extern NSString *const TabBarRefresh;
 
 extern NSString *const NetWorkAddress;
 
+extern NSString *const HOST_cl;
+extern NSString *const HOST_ad;
+extern NSString *const HOST_api;
+
 @end

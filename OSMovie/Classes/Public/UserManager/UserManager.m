@@ -40,7 +40,7 @@
     [USERDEFAULTS setObject:@"999" forKey:@"isLogin"];
     [USERDEFAULTS synchronize];
     [NOTIFICATION postNotificationName:RefreshUserMsgNoti object:nil];
-
+    
 }
 
 - (void)removeUserAllData {
@@ -55,7 +55,7 @@
 }
 
 -(NSString *)getUserIcon {
-  return [self isLogin] ? @"user_icon" : @"";
+    return [self isLogin] ? @"user_icon" : @"";
 }
 
 -(NSString *)getUserNickName {
@@ -68,10 +68,6 @@
     [SelectVC pushViewController:login animated:YES];
 }
 
--(BOOL)isDevStatus {
-    return YES;
-}
-
 -(NSString*)isCK {
     NSString *isIR = [USERDEFAULTS objectForKey:isCK];
     if (isIR && isIR.length>0) {
@@ -79,14 +75,6 @@
     }else {
         return @"";
     }
-}
-
--(NSString*)serverAddress {
-    return [self isDevStatus] ? DevServerURL_Normal : ServerURL_Normal;
-}
-
--(NSString*)serverAddressWithLogin {
-    return [self isDevStatus] ? DevServerURL_Login : ServerURL_Login;
 }
 
 -(NSString*)getUserAgent {
@@ -147,14 +135,6 @@
     return timeStr;
 }
 
--(NSString*)publicKey {
-    return [self isDevStatus] ? DevPUBLIC_KEY_Normal: PUBLIC_KEY_Normal;
-}
-
--(NSString*)publicKeyWithLogin {
-    return [self isDevStatus] ? DevPUBLIC_KEY_Login : PUBLIC_KEY_Login;
-}
-
 - (NSString *)getIDFA {
     NSString *idfaSave =[USERDEFAULTS objectForKey:@"IDFA_Creat"];
     if(idfaSave && idfaSave.length>0) {
@@ -181,29 +161,23 @@
 }
 
 - (void)pingWithUrl:(NSString*)checkUrl completeBlock:(void(^)(BOOL isValid))completeBlock {
-    __block NSInteger numYes = 0;
-    __block NSInteger numNo = 0;
     __block STDPingServices *service = [STDPingServices startPingAddress:checkUrl callbackHandler:^(STDPingItem *pingItem, NSArray *pingItems) {
         
-        if (pingItem.status != STDPingStatusFinished) {
-            numYes +=1;
-            if (numYes==3) {
-                completeBlock(YES);
-            }else if (numYes>3) {
-                service = nil;
-            }
-            
-        } else {
-            numNo +=1;
-            if (numNo==3) {
+        SSLog(@"Ping结果:%@",pingItem);
+        if (pingItem.status == STDPingStatusDidTimeout) {
+            if (pingItem.ICMPSequence == 2) {
                 completeBlock(NO);
-            }else if (numNo>3) {
                 service = nil;
             }
-            
+        }else if (pingItem.status == STDPingStatusDidReceivePacket) {
+            //            numYes +=1;
+            //            if (numYes==3) {
+            //                completeBlock(YES);
+            //            }else if (numYes>3) {
+            //                service = nil;
+            //            }
         }
     }];
-    
 }
 
 -(void)checkValidDomainWithType:(DomainType)type completeBlock:(getValidDomainBlock)block {
@@ -219,7 +193,9 @@
     
     WS()
     if (type==DomainType_Cl) {
-        NSString *mainDomain = @"120.77.243.186";
+        //        NSString *mainDomain = @"120.77.243.186";
+        NSString *mainDomain = @"123.23.234.186";
+        
         [weakSelf pingWithUrl:mainDomain completeBlock:^(BOOL isValid) {
             if (isValid) {
                 if (block) {block(mainDomain);}
@@ -233,12 +209,12 @@
                             [weakSelf pingWithUrl:obj completeBlock:^(BOOL isValid) {
                                 if (isValid) {
                                     validDomain = obj;
+                                    if (block) {block(validDomain);}
                                     *stop = YES;
                                     return;
                                 }
                             }];
                         }];
-                        if (block) {block(validDomain);}
                     }else{
                         if (block) {block(@"");}
                     }

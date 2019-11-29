@@ -54,18 +54,8 @@ typedef NS_ENUM(NSUInteger, SSRefreshType) {
     success:(void (^)(ABSRequest *request, NSDictionary *response))success
     failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
 
-- (void)GETAboutLogin:(NSString *)URLString
- parameters:(NSDictionary *)parameters
-    success:(void (^)(ABSRequest *request, NSDictionary *response))success
-    failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
-
 - (void)POST:(NSString *)URLString
   parameters:(id)parameters
-     success:(void (^)(ABSRequest *request, id response))success
-     failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
-
-- (void)POSTAboutLogin:(NSString *)URLString
-  parameters:(NSMutableDictionary *)parameters
      success:(void (^)(ABSRequest *request, id response))success
      failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
 
