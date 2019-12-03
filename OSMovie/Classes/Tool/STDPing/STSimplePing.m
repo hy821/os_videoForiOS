@@ -362,7 +362,7 @@ static uint16_t st_in_cksum(const void *buffer, size_t bufferLen) {
 - (BOOL)validateSequenceNumber:(uint16_t)sequenceNumber {
     if (self.nextSequenceNumberHasWrapped) {
         // If the sequence numbers have wrapped that we can't reliably check 
-        // whether this is a sequence number we sent.  Rather, we check to see 
+        // whether this is a sequence number we sent.  Rather, we check to see
         // whether the sequence number is within the last 120 sequence numbers 
         // we sent.  Note that the uint16_t subtraction here does the right 
         // thing regardless of the wrapping.
@@ -753,7 +753,7 @@ static void STHostResolveCallback(CFHostRef theHost, CFHostInfoType typeInfo, co
     
     assert(self.host == NULL);
     assert(self.hostAddress == nil);
-    
+
     self.host = (CFHostRef) CFAutorelease( CFHostCreateWithName(NULL, (__bridge CFStringRef) self.hostName) );
     assert(self.host != NULL);
     

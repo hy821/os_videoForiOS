@@ -23,8 +23,6 @@
 		607B06F92388466800E1AFF3 /* NSData+KKSignVerify.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B06F02388466800E1AFF3 /* NSData+KKSignVerify.m */; };
 		607B06FA2388466800E1AFF3 /* NSData+KKHASH.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B06F42388466800E1AFF3 /* NSData+KKHASH.m */; };
 		607B06FE238D1C8700E1AFF3 /* SplashScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B06FC238D1C8700E1AFF3 /* SplashScreenView.m */; };
-		607B0704238E7F3100E1AFF3 /* STSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B0700238E7F3100E1AFF3 /* STSimplePing.m */; };
-		607B0705238E7F3100E1AFF3 /* STDPingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 607B0702238E7F3100E1AFF3 /* STDPingServices.m */; };
 		60AE116223696EBF00DD2743 /* NSMutableArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0F7A23696EBF00DD2743 /* NSMutableArray+Safe.m */; };
 		60AE116323696EBF00DD2743 /* NSMutableDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0F7D23696EBF00DD2743 /* NSMutableDictionary+Safe.m */; };
 		60AE116423696EBF00DD2743 /* NSMutableString+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE0F8223696EBF00DD2743 /* NSMutableString+Safe.m */; };
@@ -123,6 +121,9 @@
 		60AE12602369A15200DD2743 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE12582369A15200DD2743 /* LoginViewController.m */; };
 		60AE12612369A15200DD2743 /* LoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE125C2369A15200DD2743 /* LoginTextField.m */; };
 		60AE12622369A15200DD2743 /* LoginAlphaBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE125D2369A15200DD2743 /* LoginAlphaBtn.m */; };
+		60B166EC2396444A00ABE718 /* STSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E62396444A00ABE718 /* STSimplePing.m */; };
+		60B166ED2396444A00ABE718 /* STDPingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E82396444A00ABE718 /* STDPingManager.m */; };
+		60B166EE2396444A00ABE718 /* STDPingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E92396444A00ABE718 /* STDPingServices.m */; };
 		60DC95992386751A00106BFF /* SimulateIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 60DC95982386751A00106BFF /* SimulateIDFA.m */; };
 		60FB6EDF2372B65F00796A32 /* OSVDMsgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FB6EDD2372B65F00796A32 /* OSVDMsgController.m */; };
 		60FB6EE22372CC6500796A32 /* GoWebAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FB6EE12372CC6500796A32 /* GoWebAlertView.m */; };
@@ -210,10 +211,6 @@
 		607B06F52388466800E1AFF3 /* NSData+KKSignVerify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+KKSignVerify.h"; sourceTree = "<group>"; };
 		607B06FC238D1C8700E1AFF3 /* SplashScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenView.m; sourceTree = "<group>"; };
 		607B06FD238D1C8700E1AFF3 /* SplashScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenView.h; sourceTree = "<group>"; };
-		607B0700238E7F3100E1AFF3 /* STSimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSimplePing.m; sourceTree = "<group>"; };
-		607B0701238E7F3100E1AFF3 /* STDPingServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STDPingServices.h; sourceTree = "<group>"; };
-		607B0702238E7F3100E1AFF3 /* STDPingServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STDPingServices.m; sourceTree = "<group>"; };
-		607B0703238E7F3100E1AFF3 /* STSimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSimplePing.h; sourceTree = "<group>"; };
 		60AE0F7423696EBF00DD2743 /* UIControl+recurClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIControl+recurClick.h"; sourceTree = "<group>"; };
 		60AE0F7523696EBF00DD2743 /* NSObject+ClearCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ClearCrash.h"; sourceTree = "<group>"; };
 		60AE0F7623696EBF00DD2743 /* UIFont+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Extension.h"; sourceTree = "<group>"; };
@@ -416,6 +413,12 @@
 		60AE125D2369A15200DD2743 /* LoginAlphaBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginAlphaBtn.m; sourceTree = "<group>"; };
 		60AE125E2369A15200DD2743 /* LoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTextField.h; sourceTree = "<group>"; };
 		60AE125F2369A15200DD2743 /* LoginAlphaBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginAlphaBtn.h; sourceTree = "<group>"; };
+		60B166E62396444A00ABE718 /* STSimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSimplePing.m; sourceTree = "<group>"; };
+		60B166E72396444A00ABE718 /* STDPingServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STDPingServices.h; sourceTree = "<group>"; };
+		60B166E82396444A00ABE718 /* STDPingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STDPingManager.m; sourceTree = "<group>"; };
+		60B166E92396444A00ABE718 /* STDPingServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STDPingServices.m; sourceTree = "<group>"; };
+		60B166EA2396444A00ABE718 /* STSimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSimplePing.h; sourceTree = "<group>"; };
+		60B166EB2396444A00ABE718 /* STDPingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STDPingManager.h; sourceTree = "<group>"; };
 		60DC95972386751A00106BFF /* SimulateIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulateIDFA.h; sourceTree = "<group>"; };
 		60DC95982386751A00106BFF /* SimulateIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulateIDFA.m; sourceTree = "<group>"; };
 		60FB6EDD2372B65F00796A32 /* OSVDMsgController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSVDMsgController.m; sourceTree = "<group>"; };
@@ -606,17 +609,6 @@
 				607B06FC238D1C8700E1AFF3 /* SplashScreenView.m */,
 			);
 			path = SplashAdvView;
-			sourceTree = "<group>";
-		};
-		607B06FF238E7F3100E1AFF3 /* pingTool */ = {
-			isa = PBXGroup;
-			children = (
-				607B0703238E7F3100E1AFF3 /* STSimplePing.h */,
-				607B0700238E7F3100E1AFF3 /* STSimplePing.m */,
-				607B0701238E7F3100E1AFF3 /* STDPingServices.h */,
-				607B0702238E7F3100E1AFF3 /* STDPingServices.m */,
-			);
-			path = pingTool;
 			sourceTree = "<group>";
 		};
 		60AE0F6E23696EBF00DD2743 /* Classes */ = {
@@ -1026,7 +1018,7 @@
 		60AE114823696EBF00DD2743 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
-				607B06FF238E7F3100E1AFF3 /* pingTool */,
+				60B166E52396444A00ABE718 /* STDPing */,
 				607B06EB2388466800E1AFF3 /* SecurityTool */,
 				607B06DC2387EA4100E1AFF3 /* AES */,
 				60DC95972386751A00106BFF /* SimulateIDFA.h */,
@@ -1204,6 +1196,19 @@
 				60AE125D2369A15200DD2743 /* LoginAlphaBtn.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		60B166E52396444A00ABE718 /* STDPing */ = {
+			isa = PBXGroup;
+			children = (
+				60B166EA2396444A00ABE718 /* STSimplePing.h */,
+				60B166E62396444A00ABE718 /* STSimplePing.m */,
+				60B166E72396444A00ABE718 /* STDPingServices.h */,
+				60B166E92396444A00ABE718 /* STDPingServices.m */,
+				60B166EB2396444A00ABE718 /* STDPingManager.h */,
+				60B166E82396444A00ABE718 /* STDPingManager.m */,
+			);
+			path = STDPing;
 			sourceTree = "<group>";
 		};
 		60FB6EE32372CD3900796A32 /* VideoDetailView */ = {
@@ -1474,7 +1479,6 @@
 				60FB6F032372CD3900796A32 /* AllEpisodeRectCell.m in Sources */,
 				60AE118C23696EBF00DD2743 /* UIScrollView+MJExtension.m in Sources */,
 				607B06F72388466800E1AFF3 /* SecKeyTools.m in Sources */,
-				607B0705238E7F3100E1AFF3 /* STDPingServices.m in Sources */,
 				60AE11DB23696EBF00DD2743 /* YHWebViewProgressView.m in Sources */,
 				60FB6EDF2372B65F00796A32 /* OSVDMsgController.m in Sources */,
 				60AE122B23696EC000DD2743 /* OOSBaseNavViewController.m in Sources */,
@@ -1491,6 +1495,7 @@
 				60AE119423696EBF00DD2743 /* MJRefreshAutoNormalFooter.m in Sources */,
 				60AE117A23696EBF00DD2743 /* ABFunSConst.m in Sources */,
 				60AE119723696EBF00DD2743 /* MJRefreshGifHeader.m in Sources */,
+				60B166ED2396444A00ABE718 /* STDPingManager.m in Sources */,
 				60FB6F0E2372CD3900796A32 /* GuessYouLikeShortVideoCell.m in Sources */,
 				60AE11F823696EC000DD2743 /* UIImage+LCActionSheet.m in Sources */,
 				60AE116923696EBF00DD2743 /* UIImage+Extension.m in Sources */,
@@ -1511,9 +1516,10 @@
 				60AE11D823696EBF00DD2743 /* HJTabViewBar.m in Sources */,
 				60AE116E23696EBF00DD2743 /* NSObject+ClearCrash.m in Sources */,
 				60AE123723696EC000DD2743 /* PubTextView.m in Sources */,
+				60B166EE2396444A00ABE718 /* STDPingServices.m in Sources */,
 				60AE117923696EBF00DD2743 /* UINavigationBar+Awesome.m in Sources */,
 				607B06FA2388466800E1AFF3 /* NSData+KKHASH.m in Sources */,
-				607B0704238E7F3100E1AFF3 /* STSimplePing.m in Sources */,
+				60B166EC2396444A00ABE718 /* STSimplePing.m in Sources */,
 				60AE122923696EC000DD2743 /* OOSBaseViewController.m in Sources */,
 				60AE11D123696EBF00DD2743 /* HJDefaultTabViewBar.m in Sources */,
 				607B06EA2388284500E1AFF3 /* NSString+AES.m in Sources */,

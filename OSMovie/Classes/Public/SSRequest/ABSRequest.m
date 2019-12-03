@@ -80,7 +80,12 @@ static ABSRequest *absRequest = nil;
 - (void)GET:(NSString *)URLString parameters:(id)parameters success:(void (^)(ABSRequest *request, NSDictionary *response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
     self.operationQueue = self.sessionManager.operationQueue;
     
-    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
+    NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
+    if (![ServerURL containsString:@"http"]) {
+        ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
+    }
+//    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
+    NSString *requestUrlString = SSStr(ServerURL, URLString);
     
     [self.sessionManager.requestSerializer setValue:[self getUserAgentStrWithUrlStr:URLString IsLogin:NO] forHTTPHeaderField:@"UserAgent"];
     
@@ -112,7 +117,12 @@ static ABSRequest *absRequest = nil;
     
     self.operationQueue = self.sessionManager.operationQueue;
    
-    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
+      NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
+        if (![ServerURL containsString:@"http"]) {
+            ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
+        }
+    //    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
+        NSString *requestUrlString = SSStr(ServerURL, URLString);
 
     self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.requestSerializer.timeoutInterval = 10.f;
@@ -197,10 +207,10 @@ static ABSRequest *absRequest = nil;
     return rsaStr;
 }
 
-//NetWorkA
+//NetWorkAddress
 - (void)getNetWorkAddWithUrl:(NSString*)requestUrl success:(void (^)(ABSRequest *request, id response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure {
     
-    if (![requestUrl containsString:@"http"]) {
+    if (![requestUrl containsString:@"http"] || ![requestUrl containsString:@"cc/fst?t=gp"]) {
         requestUrl = [NSString stringWithFormat:@"http://%@/cc/fst?t=gp",requestUrl];
     }
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestUrl]];
@@ -238,23 +248,25 @@ static ABSRequest *absRequest = nil;
             NSData *d = [GTMBase64 decodeString:base64DecodeStr];
             NSData *decryptData = [d AES_CBC_DecryptWith:aesKeyData iv:aesIVData];
             NSDictionary *dic =[NSJSONSerialization JSONObjectWithData:decryptData options:NSJSONReadingMutableLeaves error:nil];
-            NSMutableDictionary *newDic = [NSMutableDictionary dictionaryWithDictionary:dic];
-            SSLog(@"\n\nresponseDic--->\n%@",dic);
-            if (dic[@"clapi"]) {
-                NSArray *clArr = dic[@"clapi"];
-                NSMutableArray *newArr = [NSMutableArray array];
-                if(clArr.count>0) {
-                    [clArr enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        NSString *newStr = [NSString stringWithFormat:@"http://%@/cc/fst?t=gp",obj];
-                        [newArr addObject:newStr];
-                    }];
-                }
-                [newDic setObject:[newArr copy] forKey:@"clapi"];
-                SSLog(@"\n\ndealAndSaveDic--->\n%@",newDic);
-            }
             [USERDEFAULTS setObject:dic forKey:NetWorkAddress];
             [USERDEFAULTS synchronize];
             success(self,dic);
+            
+//            NSMutableDictionary *newDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+//            SSLog(@"\n\nresponseDic--->\n%@",dic);
+//            if (dic[@"clapi"]) {
+//                NSArray *clArr = dic[@"clapi"];
+//                NSMutableArray *newArr = [NSMutableArray array];
+//                if(clArr.count>0) {
+//                    [clArr enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                        NSString *newStr = [NSString stringWithFormat:@"http://%@/cc/fst?t=gp",obj];
+//                        [newArr addObject:newStr];
+//                    }];
+//                }
+//                [newDic setObject:[newArr copy] forKey:@"clapi"];
+//                SSLog(@"\n\ndealAndSaveDic--->\n%@",newDic);
+//            }
+           
             /*
              {
                  apis =     (

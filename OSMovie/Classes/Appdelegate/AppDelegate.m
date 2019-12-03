@@ -29,7 +29,7 @@
     self.tabBarVC = tabBar;
     
     [GLobalRealReachability startNotifier];
-    [self configAndUpdateHosts];
+    [USER_MANAGER configAndUpdateHosts];
     [self getSplashAdvMsg];
     [self configNavBar];
     [self updateUserAgent];
@@ -131,7 +131,7 @@
 - (void)getSplashAdvMsg {
     WS()
     [[ABSRequest request]getAdvDataWithUrl:[USERDEFAULTS objectForKey:HOST_ad] positionID:@"225946" success:^(ABSRequest *request, id response) {
-        SSLog(@"advData--->%@",response);
+//        SSLog(@"advData--->%@",response);
         if(response) {
             AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];
             weakSelf.advModel = m;
@@ -147,49 +147,6 @@
     SplashScreenView *advertiseView = [[SplashScreenView alloc] initWithFrame:self.window.bounds];
     advertiseView.advModel = self.advModel;
     [advertiseView showSplashScreenWithTime:3 andImgUrl:self.advModel.image_urls.firstObject];
-}
-
-- (void)configAndUpdateHosts {
-    NSString *cl = [USERDEFAULTS objectForKey:HOST_cl];
-    NSString *ad = [USERDEFAULTS objectForKey:HOST_ad];
-    NSString *api = [USERDEFAULTS objectForKey:HOST_api];
-    if (!cl) {[USERDEFAULTS setObject:DefaultHost_cl forKey:HOST_cl];}
-    if (!ad) {[USERDEFAULTS setObject:DefaultHost_ad forKey:HOST_ad];}
-    if (!api) {[USERDEFAULTS setObject:DefaultHost_api forKey:HOST_api];}
-    [USERDEFAULTS synchronize];
-    
-    WS()
-     [[ABSRequest request] getNetWorkAddWithUrl:[USERDEFAULTS objectForKey:HOST_cl] success:^(ABSRequest *request, id response) {
-         SSLog(@"--->Host:%@",response);
-         /*
-          {
-              apis =     (
-                          {
-                      adApiUrl = "dev.sspapi.51tv.com";
-                      apiUrl = "dev.api.vrg.51tv.com";
-                      cdnApiUrl = "";
-                  },
-                          {
-                      adApiUrl = "dev.sspapi.51tv.com";
-                      apiUrl = "dev.api.vrg.51tv.com";
-                      cdnApiUrl = "";
-                  }
-              );
-              clapi =     (
-                  "120.77.243.186",
-                  "120.77.243.186"
-              );
-              code = 0;
-          }
-          */
-         [weakSelf checkAndUpdateHostsWithData:response];
-     } failure:^(ABSRequest *request, NSString *errorMsg) {
-         SSLog(@"--->HostError:%@",errorMsg);
-     }];
-}
-
-- (void)checkAndUpdateHostsWithData:(NSDictionary*)dic {
-    
 }
 
 @end

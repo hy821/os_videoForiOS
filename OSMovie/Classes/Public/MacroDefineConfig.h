@@ -146,7 +146,7 @@
 #define PageCount_VideoLib 15
 
 #define DefaultHost_cl @"120.77.243.186"
-#define DefaultHost_ad @"dev.sspapi.51tv.com"
-#define DefaultHost_api @"dev.api.vrg.51tv.com"
+#define DefaultHost_ad @"dev.sspapi.51tv.comm"
+#define DefaultHost_api @"dev.api.vrg.51tv.comm"
 
 #endif /* MacroDefineConfig_h */

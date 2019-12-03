@@ -11,6 +11,7 @@
 #import "MineViewController.h"
 #import "SimulateIDFA.h"
 #import "RealReachability.h"
+#import "STDPingManager.h"
 
 @implementation UserManager
 
@@ -160,190 +161,102 @@
     }
 }
 
-- (void)pingWithUrl:(NSString*)checkUrl completeBlock:(void(^)(BOOL isValid))completeBlock {
-    __block STDPingServices *service = [STDPingServices startPingAddress:checkUrl callbackHandler:^(STDPingItem *pingItem, NSArray *pingItems) {
-        
-        SSLog(@"Ping结果:%@",pingItem);
-        if (pingItem.status == STDPingStatusDidTimeout) {
-            if (pingItem.ICMPSequence == 2) {
-                completeBlock(NO);
-                service = nil;
-            }
-        }else if (pingItem.status == STDPingStatusDidReceivePacket) {
-            //            numYes +=1;
-            //            if (numYes==3) {
-            //                completeBlock(YES);
-            //            }else if (numYes>3) {
-            //                service = nil;
-            //            }
-        }
-    }];
-}
-
--(void)checkValidDomainWithType:(DomainType)type completeBlock:(getValidDomainBlock)block {
+-(void)checkValidDomainWithType:(DomainType)type {
     
     if (![self checkNetWorkState]) {
-        SSLog(@"网络异常");
-        if (block) {block(@"");}
+        SSLog(@"网络异常,pingCheck失败");
         return;
     }
     
-    NSDictionary *dicCache = [USERDEFAULTS objectForKey:NetWorkAddress];
-    BOOL haveCache = dicCache;
+    //Tmp
+    NSDictionary *dicc = @{
+        @"apis":@[
+                @{
+                    @"adApiUrl":@"dev.sspapi.51tv.com",
+                    @"apiUrl":@"dev.api.vrg.51tv.com"
+                },
+                @{
+                    @"adApiUrl":@"dev.sspapi.51tv1.com",
+                    @"apiUrl":@"dev.api.vrg.51tv1.com"
+                },
+                @{
+                    @"adApiUrl":@"dev.sspapi.51tv2.com",
+                    @"apiUrl":@"dev.api.vrg.51tv2.com"
+                },
+                @{
+                    @"adApiUrl":@"dev.sspapi.51tv3.com",
+                    @"apiUrl":@"dev.api.vrg.51tv3.com"
+                },
+                @{
+                    @"adApiUrl":@"dev.sspapi.51tv4.com",
+                    @"apiUrl":@"dev.api.vrg.51tv4.com"
+                }],
+        @"clapi":@[
+                @"120.77.243.186",
+                @"120.77.243.187",
+                @"120.77.243.188",
+                @"120.77.243.189",
+                @"120.77.243.190"
+        ]
+    };
+
+    [USERDEFAULTS setObject:dicc forKey:NetWorkAddress];
+    [USERDEFAULTS synchronize];
     
-    WS()
+    NSDictionary *dicCache = [USERDEFAULTS objectForKey:NetWorkAddress];
+    NSArray *arrApis = (NSArray*)dicCache[@"apis"];
+    __block NSMutableArray *arrCache = [NSMutableArray array];
+
+//    WS()
     if (type==DomainType_Cl) {
-        //        NSString *mainDomain = @"120.77.243.186";
-        NSString *mainDomain = @"123.23.234.186";
+        NSArray *arrCl = (NSArray*)dicCache[@"clapi"];
+        if (arrCl.count>0) {
+            
+            [STDPingManager getFastIPwith:arrCl andWithCount:10 withFastIP:^(NSString *ipAddress) {
+                SSLog(@"--->CheckBackCL:%@",ipAddress);
+                if (ipAddress.length>0) {
+                    [USERDEFAULTS setObject:ipAddress forKey:HOST_cl];
+                }
+            }];
+        }
         
-        [weakSelf pingWithUrl:mainDomain completeBlock:^(BOOL isValid) {
-            if (isValid) {
-                if (block) {block(mainDomain);}
-            }else {
-                NSArray *arrCache = [NSArray array];
-                if (haveCache) {
-                    arrCache = (NSArray*)dicCache[@"clapi"];
-                    if (arrCache.count>0) {
-                        __block NSString *validDomain = @"";
-                        [arrCache enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                            [weakSelf pingWithUrl:obj completeBlock:^(BOOL isValid) {
-                                if (isValid) {
-                                    validDomain = obj;
-                                    if (block) {block(validDomain);}
-                                    *stop = YES;
-                                    return;
-                                }
-                            }];
-                        }];
-                    }else{
-                        if (block) {block(@"");}
-                    }
-                }else {
-                    if (block) {block(@"");}
-                }
-            }
-        }];
     }else if (type==DomainType_Api) {
-        NSString *apiMainDomain = @"120.77.243.186";
-        [weakSelf pingWithUrl:apiMainDomain completeBlock:^(BOOL isValid) {
-            if (isValid) {
-                if (block) {block(apiMainDomain);}
-            }else {
-                NSArray *arrCache = [NSArray array];
-                if (haveCache) {
-                    arrCache = (NSArray*)dicCache[@"apis"];
-                    if (arrCache.count>0) {
-                        __block NSString *validDomain = @"";
-                        [arrCache enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                            if (obj && obj[@"apiUrl"]) {
-                                NSString*checkUrl = obj[@"apiUrl"];
-                                [weakSelf pingWithUrl:checkUrl completeBlock:^(BOOL isValid) {
-                                    if (isValid) {
-                                        validDomain = checkUrl;
-                                        *stop = YES;
-                                        return;
-                                    }
-                                }];
-                            }
-                        }];
-                        if (block) {block(validDomain);}
-                    }else{
-                        if (block) {block(@"");}
-                    }
-                }else {
-                    if (block) {block(@"");}
+        if (arrApis.count>0) {
+            [arrApis enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (obj[@"apiUrl"]) {
+                    NSString *urlCheck = obj[@"apiUrl"];
+                    [arrCache addObject:urlCheck];
                 }
+            }];
+            if (arrCache.count>0) {
+                [STDPingManager getFastIPwith:arrCache andWithCount:10 withFastIP:^(NSString *ipAddress) {
+                    SSLog(@"--->CheckBackApi:%@",ipAddress);
+                    [USERDEFAULTS setObject:ipAddress forKey:HOST_api];
+                }];
             }
-        }];
+        }
         
     }else if (type==DomainType_Ad) {
-        NSString *apiMainDomain = @"dev.sspapi.51tv.com";
-        [weakSelf pingWithUrl:apiMainDomain completeBlock:^(BOOL isValid) {
-            if (isValid) {
-                if (block) {block(apiMainDomain);}
-            }else {
-                NSArray *arrCache = [NSArray array];
-                if (haveCache) {
-                    arrCache = (NSArray*)dicCache[@"apis"];
-                    if (arrCache.count>0) {
-                        __block NSString *validDomain = @"";
-                        [arrCache enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                            if (obj && obj[@"adApiUrl"]) {
-                                NSString*checkUrl = obj[@"adApiUrl"];
-                                [weakSelf pingWithUrl:checkUrl completeBlock:^(BOOL isValid) {
-                                    if (isValid) {
-                                        validDomain = checkUrl;
-                                        *stop = YES;
-                                        return;
-                                    }
-                                }];
-                            }
-                        }];
-                        if (block) {block(validDomain);}
-                    }else{
-                        if (block) {block(@"");}
-                    }
-                }else {
-                    if (block) {block(@"");}
+        if (arrApis.count>0) {
+            [arrApis enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if (obj[@"adApiUrl"]) {
+                    NSString *urlCheck = obj[@"adApiUrl"];
+                    [arrCache addObject:urlCheck];
                 }
+            }];
+            if (arrCache.count>0) {
+                [STDPingManager getFastIPwith:arrCache andWithCount:10 withFastIP:^(NSString *ipAddress) {
+                    SSLog(@"--->CheckBackAd:%@",ipAddress);
+                    [USERDEFAULTS setObject:ipAddress forKey:HOST_ad];
+                }];
             }
-        }];
+        }
         
     }else if (type==DomainType_Cdn) {
-        NSString *apiMainDomain = @"120.77.243.186";
-        [weakSelf pingWithUrl:apiMainDomain completeBlock:^(BOOL isValid) {
-            if (isValid) {
-                if (block) {block(apiMainDomain);}
-            }else {
-                NSArray *arrCache = [NSArray array];
-                if (haveCache) {
-                    arrCache = (NSArray*)dicCache[@"apis"];
-                    if (arrCache.count>0) {
-                        __block NSString *validDomain = @"";
-                        [arrCache enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                            if (obj && obj[@"cdnApiUrl"]) {
-                                NSString*checkUrl = obj[@"cdnApiUrl"];
-                                [weakSelf pingWithUrl:checkUrl completeBlock:^(BOOL isValid) {
-                                    if (isValid) {
-                                        validDomain = checkUrl;
-                                        *stop = YES;
-                                        return;
-                                    }
-                                }];
-                            }
-                        }];
-                        if (block) {block(validDomain);}
-                    }else{
-                        if (block) {block(@"");}
-                    }
-                }else {
-                    if (block) {block(@"");}
-                }
-            }
-        }];
+
     }
     
-    /*
-     {
-     apis =     (
-     {
-     adApiUrl = "39.105.88.24";
-     apiUrl = "39.105.88.24";
-     cdnApiUrl = "";
-     },
-     {
-     adApiUrl = "39.105.88.24";
-     apiUrl = "39.105.88.24";
-     cdnApiUrl = "";
-     }
-     );
-     clapi =     (
-     "120.77.243.186",
-     "120.77.243.186"
-     );
-     code = 0;
-     }
-     */
+    [USERDEFAULTS synchronize];
 }
 
 #pragma mark-监听网络回调
@@ -370,6 +283,30 @@
         }
     }
     return YES;
+}
+
+- (void)configAndUpdateHosts {
+    NSString *cl = [USERDEFAULTS objectForKey:HOST_cl];
+    NSString *ad = [USERDEFAULTS objectForKey:HOST_ad];
+    NSString *api = [USERDEFAULTS objectForKey:HOST_api];
+    if (!cl) {[USERDEFAULTS setObject:DefaultHost_cl forKey:HOST_cl];}
+    if (!ad) {[USERDEFAULTS setObject:DefaultHost_ad forKey:HOST_ad];}
+    if (!api) {[USERDEFAULTS setObject:DefaultHost_api forKey:HOST_api];}
+    [USERDEFAULTS synchronize];
+    
+    WS()
+     [[ABSRequest request] getNetWorkAddWithUrl:[USERDEFAULTS objectForKey:HOST_cl] success:^(ABSRequest *request, id response) {
+         SSLog(@"--->Host:%@",response);
+       
+         if (response) {
+             [weakSelf checkValidDomainWithType:DomainType_Cl];
+             [weakSelf checkValidDomainWithType:DomainType_Api];
+             [weakSelf checkValidDomainWithType:DomainType_Ad];
+         }
+         
+     } failure:^(ABSRequest *request, NSString *errorMsg) {
+         SSLog(@"--->HostError:%@",errorMsg);
+     }];
 }
 
 @end
