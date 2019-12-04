@@ -1,9 +1,5 @@
 //
 //  STDPingManager.m
-//  Lock
-//
-//  Created by Jerry on 2019/1/7.
-//  Copyright © 2019 周玉举. All rights reserved.
 //
 
 #import "STDPingManager.h"

@@ -168,40 +168,40 @@
         return;
     }
     
-    //Tmp
-    NSDictionary *dicc = @{
-        @"apis":@[
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv.com",
-                    @"apiUrl":@"dev.api.vrg.51tv.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv1.com",
-                    @"apiUrl":@"dev.api.vrg.51tv1.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv2.com",
-                    @"apiUrl":@"dev.api.vrg.51tv2.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv3.com",
-                    @"apiUrl":@"dev.api.vrg.51tv3.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv4.com",
-                    @"apiUrl":@"dev.api.vrg.51tv4.com"
-                }],
-        @"clapi":@[
-                @"120.77.243.186",
-                @"120.77.243.187",
-                @"120.77.243.188",
-                @"120.77.243.189",
-                @"120.77.243.190"
-        ]
-    };
-
-    [USERDEFAULTS setObject:dicc forKey:NetWorkAddress];
-    [USERDEFAULTS synchronize];
+//    //Tmp
+//    NSDictionary *dicc = @{
+//        @"apis":@[
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv1.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv1.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv2.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv2.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv3.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv3.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv4.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv4.com"
+//                }],
+//        @"clapi":@[
+//                @"120.77.243.186",
+//                @"120.77.243.187",
+//                @"120.77.243.188",
+//                @"120.77.243.189",
+//                @"120.77.243.190"
+//        ]
+//    };
+//
+//    [USERDEFAULTS setObject:dicc forKey:NetWorkAddress];
+//    [USERDEFAULTS synchronize];
     
     NSDictionary *dicCache = [USERDEFAULTS objectForKey:NetWorkAddress];
     NSArray *arrApis = (NSArray*)dicCache[@"apis"];
