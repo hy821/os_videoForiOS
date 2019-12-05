@@ -144,7 +144,7 @@ static NSString * const cellID = @"CollectAndHistoryCell";
     }];
     
     //    删除
-    UIButton *deleteBtn = [UIButton buttonWithTitle:@"删除" titleColor:KCOLOR(@"#FF5C3E") bgColor:White_Color highlightedColor:KCOLOR(@"#FF5C3E")];
+    UIButton *deleteBtn = [UIButton buttonWithTitle:@"删除" titleColor:ThemeColor bgColor:White_Color highlightedColor:ThemeColor];
     [self.bottomView addSubview:deleteBtn];
     self.deleteBtn = deleteBtn;
     [deleteBtn addTarget:self action:@selector(deleteBtnAction) forControlEvents:UIControlEventTouchUpInside];

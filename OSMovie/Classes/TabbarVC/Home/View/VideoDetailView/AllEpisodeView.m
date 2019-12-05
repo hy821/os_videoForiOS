@@ -198,7 +198,7 @@ static NSString * const cellID_Intro = @"AllEpisodeIntroCell";
     UIButton *episodeBtn = [UIButton buttonWithTitle:@"选择剧集" titleColor:Black_Color bgColor:White_Color highlightedColor:nil];
     episodeBtn.selected = YES;
     [episodeBtn.titleLabel setFont:Font_Size(15)];
-    [episodeBtn setTitleColor:KCOLOR(@"#FF5C3E") forState:(UIControlStateSelected)];
+    [episodeBtn setTitleColor:ThemeColor forState:(UIControlStateSelected)];
     [episodeBtn addTarget:self action:@selector(selectAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:episodeBtn];
     self.episodeBtn = episodeBtn;
@@ -209,7 +209,7 @@ static NSString * const cellID_Intro = @"AllEpisodeIntroCell";
     
     UIButton *introBtn = [UIButton buttonWithTitle:@"剧集简介" titleColor:Black_Color bgColor:White_Color highlightedColor:nil];
     [introBtn.titleLabel setFont:Font_Size(15)];
-    [introBtn setTitleColor:KCOLOR(@"#FF5C3E") forState:(UIControlStateSelected)];
+    [introBtn setTitleColor:ThemeColor forState:(UIControlStateSelected)];
     [introBtn addTarget:self action:@selector(introAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:introBtn];
     self.introBtn = introBtn;

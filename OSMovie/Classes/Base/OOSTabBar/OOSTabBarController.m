@@ -43,8 +43,8 @@
     childController.tabBarItem.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     childController.tabBarItem.selectedImage = [[UIImage imageNamed:selectedImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     // 设置一下选中tabbar文字颜色
-    [childController.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : KCOLOR(@"#D96139") }forState:UIControlStateSelected];
-    [childController.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : KCOLOR(@"#403632") }forState:UIControlStateNormal];
+    [childController.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : ThemeColor }forState:UIControlStateSelected];
+    [childController.tabBarItem setTitleTextAttributes:@{ NSForegroundColorAttributeName : KCOLOR(@"#403633") }forState:UIControlStateNormal];
     UINavigationController * nav = [[navVc alloc] initWithRootViewController:childController];
     [self addChildViewController:nav];
 }

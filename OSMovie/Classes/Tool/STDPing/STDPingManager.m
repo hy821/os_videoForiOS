@@ -29,7 +29,7 @@
     NSMutableDictionary * avgPing = [NSMutableDictionary new];
     NSMutableArray * failArray = [NSMutableArray new];
     NSMutableArray * unexpectedArray = [NSMutableArray new];
-    NSMutableArray * timeoutArray = [NSMutableArray new];
+//    NSMutableArray * timeoutArray = [NSMutableArray new];
     NSMutableArray * errorArray = [NSMutableArray new];
     for (NSString * address in self.IPList) {
         dispatch_group_enter(group);

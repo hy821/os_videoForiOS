@@ -128,7 +128,7 @@ static NSString *cellID_rect = @"SelectEpisodeRectCell";
         make.height.equalTo(self.sizeH(25));
     }];
     
-    UIButton *allBtn = [UIButton buttonWithTitle:@"全部剧集" titleColor:KCOLOR(@"#FF5C3E") bgColor:White_Color highlightedColor:KCOLOR(@"#FF5C3E")];
+    UIButton *allBtn = [UIButton buttonWithTitle:@"全部剧集" titleColor:ThemeColor bgColor:White_Color highlightedColor:ThemeColor];
     [allBtn.titleLabel setFont:Font_Size(11)];
     [allBtn addTarget:self action:@selector(allAction) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:allBtn];

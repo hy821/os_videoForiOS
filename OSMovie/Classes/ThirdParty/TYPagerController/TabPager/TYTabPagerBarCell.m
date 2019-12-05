@@ -34,7 +34,7 @@
 {
     UILabel *titleLabel = [[UILabel alloc]init];
     titleLabel.font = [UIFont systemFontOfSize:15];
-    titleLabel.textColor = KCOLOR(@"#341818");
+    titleLabel.textColor = ThemeColor;
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:titleLabel];
     _titleLabel = titleLabel;

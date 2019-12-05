@@ -28,7 +28,7 @@
         self.widths = [NSMutableDictionary dictionary];
         
         self.normalColor = White_Color; //KCOLOR(@"#4A4A4A");
-        self.highlightedColor = White_Color; //KCOLOR(@"#FF5C3E");
+        self.highlightedColor = White_Color; //ThemeColor;
         
         _indicatorView = [[UIView alloc] initWithFrame:CGRectZero];
         _indicatorView.backgroundColor = self.highlightedColor;

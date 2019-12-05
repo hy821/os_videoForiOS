@@ -181,30 +181,9 @@ static ABSRequest *absRequest = nil;
 }
 
 - (NSString *)getUserAgentStrWithUrlStr:(NSString *)urlStr IsLogin:(BOOL)isLogin {
-//Old
-//    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-//    NSString *ver = [infoDic objectForKey:@"CFBundleShortVersionString"];
-//    //正确的: osTypeId:01
-//    //改成osTypeId:02试试
-//    NSString *ua = [NSString stringWithFormat:@"%@ ss2/%@ (agent:s;channel:%@;credential:%@;deviceId:%@;osTypeId:01;detailInfo:iOS;simTypeId:%@;netTypeId:%@;deviceTypeId:02;osVersion:%@;token:%@)",[USER_MANAGER getUserAgent],[USER_MANAGER getVersionStr],[USER_MANAGER getAppPubChannel],[USER_MANAGER getCredential],[USER_MANAGER getUUID],[USER_MANAGER getSimType],[USER_MANAGER getNetWorkType],ver,[self getTokenWithUrlStr:urlStr IsLogin:isLogin]];
-    
-    //Temp
     NSString *userID = [USER_MANAGER getUserID];
     NSString *ua = [NSString stringWithFormat:@"%@@1.0.0@02@official",userID];
     return ua;
-}
-
-- (NSString *)getTokenWithUrlStr:(NSString *)urlStr IsLogin:(BOOL)isLogin {
-    NSString *userID = [USER_MANAGER getUserID];
-    if (userID && userID.length>8) {
-        userID = [NSString stringWithFormat:@"%@*%@#%@!%@$%@",[userID substringWithRange:NSMakeRange(0, 1)],[userID substringWithRange:NSMakeRange(1, 1)],[userID substringWithRange:NSMakeRange(2, 1)],[userID substringWithRange:NSMakeRange(4, 1)],[userID substringWithRange:NSMakeRange(7, 1)]];
-    }
-    
-    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    NSString *token = [NSString stringWithFormat:@"/%@-%@-%@-",urlStr,[USER_MANAGER getTimeForToken],app_Version];
-    NSString * md5Str = [Tool md5:SSStr(token, userID)];
-    NSString *rsaStr = [RSAUtil encryptString:SSStr(token, md5Str) publicKey:PUBLIC_KEY_Normal];
-    return rsaStr;
 }
 
 //NetWorkAddress

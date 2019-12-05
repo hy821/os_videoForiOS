@@ -41,7 +41,7 @@
     _normalTextFont = [UIFont systemFontOfSize:16];
     _selectedTextFont = [UIFont systemFontOfSize:16];
     _normalTextColor = KCOLOR(@"#A99898");
-    _selectedTextColor = KCOLOR(@"#341818");
+    _selectedTextColor = ThemeColor;
     _textColorProgressEnable = YES;
     //_adjustContentCellsCenter = YES;
 }

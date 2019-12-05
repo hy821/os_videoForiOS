@@ -100,7 +100,7 @@ static NSString * const cellID = @"SettingCell";
             .LeeAddAction(^(LEEAction *action) {
                 action.type = LEEActionTypeDefault;
                 action.title = @"确定";
-                action.titleColor = Orange_ThemeColor;
+                action.titleColor = ThemeColor;
                 action.font = Font_Size(16);
                 action.height = 40.0f;
                 action.clickBlock = ^{
@@ -190,7 +190,7 @@ static NSString * const cellID = @"SettingCell";
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        UILabel *loginLab = [UILabel labelWithTitle:IS_LOGIN ? @"退出登录" : @"登录" font:15 textColor:KCOLOR(@"#D96139") textAlignment:1];
+        UILabel *loginLab = [UILabel labelWithTitle:IS_LOGIN ? @"退出登录" : @"登录" font:15 textColor:ThemeColor textAlignment:1];
         [loginLab setFont:Font_Bold(15)];
         [self addSubview:loginLab];
         self.loginLab = loginLab;

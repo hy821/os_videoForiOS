@@ -23,7 +23,7 @@
     if (model.isCacheView) {
         if (model.isCache) {
             self.cacheIV.hidden = NO;
-            self.backgroundColor = KCOLOR(@"#FF5C3E");
+            self.backgroundColor = ThemeColor;
             self.numLab.textColor = White_Color;
         }else {
             self.backgroundColor = KCOLOR(@"#F7F7F7");
@@ -31,7 +31,7 @@
         }
     }else {
         if (model.isSelect) {
-            self.backgroundColor = KCOLOR(@"#FF5C3E");
+            self.backgroundColor = ThemeColor;
             self.numLab.textColor = White_Color;
         }else {
             self.backgroundColor = KCOLOR(@"#F7F7F7");

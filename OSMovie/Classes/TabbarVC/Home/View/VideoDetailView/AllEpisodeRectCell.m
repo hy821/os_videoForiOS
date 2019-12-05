@@ -23,8 +23,8 @@
     self.picLab.text = model.mediaIndex;
   
     if (model.isSelect) {
-        self.titleLab.textColor = KCOLOR(@"#FF5C3E");
-        self.videoIV.layer.borderColor = KCOLOR(@"#FF5C3E").CGColor;
+        self.titleLab.textColor = ThemeColor;
+        self.videoIV.layer.borderColor = ThemeColor.CGColor;
     }else {
         self.titleLab.textColor = KCOLOR(@"#4A4A4A");
         self.videoIV.layer.borderColor = White_Color.CGColor;

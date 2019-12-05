@@ -964,16 +964,16 @@
 		60AE10DA23696EBF00DD2743 /* TabPager */ = {
 			isa = PBXGroup;
 			children = (
-				60AE10DB23696EBF00DD2743 /* TYTabPagerBar.m */,
-				60AE10DC23696EBF00DD2743 /* TYTabPagerBarLayout.m */,
-				60AE10DD23696EBF00DD2743 /* TYTabPagerBarCell.h */,
-				60AE10DE23696EBF00DD2743 /* TYTabPagerController.h */,
-				60AE10DF23696EBF00DD2743 /* TYTabPagerView.m */,
 				60AE10E023696EBF00DD2743 /* TYTabPagerBar.h */,
-				60AE10E123696EBF00DD2743 /* TYTabPagerBarLayout.h */,
-				60AE10E223696EBF00DD2743 /* TYTabPagerController.m */,
+				60AE10DB23696EBF00DD2743 /* TYTabPagerBar.m */,
+				60AE10DD23696EBF00DD2743 /* TYTabPagerBarCell.h */,
 				60AE10E323696EBF00DD2743 /* TYTabPagerBarCell.m */,
+				60AE10DE23696EBF00DD2743 /* TYTabPagerController.h */,
+				60AE10E223696EBF00DD2743 /* TYTabPagerController.m */,
+				60AE10E123696EBF00DD2743 /* TYTabPagerBarLayout.h */,
+				60AE10DC23696EBF00DD2743 /* TYTabPagerBarLayout.m */,
 				60AE10E423696EBF00DD2743 /* TYTabPagerView.h */,
+				60AE10DF23696EBF00DD2743 /* TYTabPagerView.m */,
 			);
 			path = TabPager;
 			sourceTree = "<group>";
@@ -1239,12 +1239,12 @@
 		60FB6EEC2372CD3900796A32 /* SelectEpisodeCell */ = {
 			isa = PBXGroup;
 			children = (
+				60FB6EF02372CD3900796A32 /* SelectEpisodeRectCell.h */,
 				60FB6EED2372CD3900796A32 /* SelectEpisodeRectCell.m */,
 				60FB6EEE2372CD3900796A32 /* SelectEpisodeCircleCell.h */,
+				60FB6EF12372CD3900796A32 /* SelectEpisodeCircleCell.m */,
 				60FB6EF22372CD3900796A32 /* SelectEpisodeCell.h */,
 				60FB6EEF2372CD3900796A32 /* SelectEpisodeCell.m */,
-				60FB6EF02372CD3900796A32 /* SelectEpisodeRectCell.h */,
-				60FB6EF12372CD3900796A32 /* SelectEpisodeCircleCell.m */,
 			);
 			path = SelectEpisodeCell;
 			sourceTree = "<group>";
@@ -1265,8 +1265,8 @@
 		60FB6F102372D31F00796A32 /* RatingView */ = {
 			isa = PBXGroup;
 			children = (
-				60FB6F112372D31F00796A32 /* HJRatingView.m */,
 				60FB6F122372D31F00796A32 /* HJRatingView.h */,
+				60FB6F112372D31F00796A32 /* HJRatingView.m */,
 			);
 			path = RatingView;
 			sourceTree = "<group>";

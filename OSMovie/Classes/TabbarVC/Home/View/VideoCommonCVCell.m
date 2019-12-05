@@ -124,7 +124,7 @@
         make.centerY.equalTo(self.sortIV).offset(2);
     }];
     
-    UILabel *scoreLab = [UILabel labelWithTitle:@"" font:11 textColor:Orange_ThemeColor textAlignment:0];
+    UILabel *scoreLab = [UILabel labelWithTitle:@"" font:11 textColor:ThemeColor textAlignment:0];
     [self.videoIV addSubview:scoreLab];
     self.scoreLab = scoreLab;
     [self.scoreLab mas_makeConstraints:^(MASConstraintMaker *make) {

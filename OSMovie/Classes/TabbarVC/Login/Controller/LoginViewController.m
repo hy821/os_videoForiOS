@@ -27,9 +27,9 @@
 }
 
 - (void)initUI {
-    self.view.backgroundColor = ThemeColor;
+    self.view.backgroundColor = White_Color;
     
-    UILabel *titleLab = [UILabel labelWithTitle:@"邮箱登录" font:15 textColor:KCOLOR(@"#DC4E0F") textAlignment:1];
+    UILabel *titleLab = [UILabel labelWithTitle:@"邮箱登录" font:15 textColor:ThemeColor textAlignment:1];
     [self.view addSubview:titleLab];
     [titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
@@ -87,8 +87,8 @@
     loginBtn.titleLabel.font = Font_Size(16);
     [loginBtn setTitleColor:White_Color forState:UIControlStateNormal];
     [loginBtn setTitleColor:White_Color forState:UIControlStateSelected];
-    [loginBtn setBackgroundColor:Orange_ThemeColor forState:UIControlStateNormal];
-    [loginBtn setBackgroundColor:Orange_ThemeColor forState:UIControlStateHighlighted];
+    [loginBtn setBackgroundColor:ThemeColor forState:UIControlStateNormal];
+    [loginBtn setBackgroundColor:ThemeColor forState:UIControlStateHighlighted];
     loginBtn.layer.masksToBounds = YES;
     loginBtn.layer.cornerRadius = self.sizeH(23);
     [loginBtn addTarget:self action:@selector(loginBtnAction) forControlEvents:UIControlEventTouchUpInside];

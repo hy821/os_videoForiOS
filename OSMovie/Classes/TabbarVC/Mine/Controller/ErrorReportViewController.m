@@ -226,7 +226,7 @@ static NSString * const ErrorReportVideoFooter_ID = @"ErrorReportVideoFooter_ID"
         make.height.equalTo(self.sizeH(130));
     }];
     
-    UIButton *reportBtn = [UIButton buttonWithTitle:@"提交" titleColor:White_Color bgColor:KCOLOR(@"#FF5C3E") highlightedColor:White_Color];
+    UIButton *reportBtn = [UIButton buttonWithTitle:@"提交" titleColor:White_Color bgColor:ThemeColor highlightedColor:White_Color];
     [reportBtn.titleLabel setFont:Font_Size(16)];
     [reportBtn addTarget:self action:@selector(reportAction) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:reportBtn];
