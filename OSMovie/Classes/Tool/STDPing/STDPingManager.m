@@ -55,7 +55,7 @@
                         [unexpectedArray addObject:address];
                         break;
                     case STDPingStatusDidTimeout:
-                        //超时--->大哥,超时就不用移除了吧
+                        //超时---> 超时就不用移除了吧
 //                        [timeoutArray addObject:address];
                         break;
                     case STDPingStatusError:

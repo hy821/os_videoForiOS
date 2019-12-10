@@ -120,7 +120,6 @@
 		60AE12552369A0F200DD2743 /* CommonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE12542369A0F200DD2743 /* CommonModel.m */; };
 		60AE12602369A15200DD2743 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE12582369A15200DD2743 /* LoginViewController.m */; };
 		60AE12612369A15200DD2743 /* LoginTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE125C2369A15200DD2743 /* LoginTextField.m */; };
-		60AE12622369A15200DD2743 /* LoginAlphaBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 60AE125D2369A15200DD2743 /* LoginAlphaBtn.m */; };
 		60B166EC2396444A00ABE718 /* STSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E62396444A00ABE718 /* STSimplePing.m */; };
 		60B166ED2396444A00ABE718 /* STDPingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E82396444A00ABE718 /* STDPingManager.m */; };
 		60B166EE2396444A00ABE718 /* STDPingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E92396444A00ABE718 /* STDPingServices.m */; };
@@ -410,9 +409,7 @@
 		60AE12582369A15200DD2743 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		60AE12592369A15200DD2743 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		60AE125C2369A15200DD2743 /* LoginTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTextField.m; sourceTree = "<group>"; };
-		60AE125D2369A15200DD2743 /* LoginAlphaBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginAlphaBtn.m; sourceTree = "<group>"; };
 		60AE125E2369A15200DD2743 /* LoginTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTextField.h; sourceTree = "<group>"; };
-		60AE125F2369A15200DD2743 /* LoginAlphaBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginAlphaBtn.h; sourceTree = "<group>"; };
 		60B166E62396444A00ABE718 /* STSimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STSimplePing.m; sourceTree = "<group>"; };
 		60B166E72396444A00ABE718 /* STDPingServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STDPingServices.h; sourceTree = "<group>"; };
 		60B166E82396444A00ABE718 /* STDPingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STDPingManager.m; sourceTree = "<group>"; };
@@ -1192,8 +1189,6 @@
 			children = (
 				60AE125E2369A15200DD2743 /* LoginTextField.h */,
 				60AE125C2369A15200DD2743 /* LoginTextField.m */,
-				60AE125F2369A15200DD2743 /* LoginAlphaBtn.h */,
-				60AE125D2369A15200DD2743 /* LoginAlphaBtn.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1450,7 +1445,6 @@
 			files = (
 				60AE118F23696EBF00DD2743 /* MJRefreshBackGifFooter.m in Sources */,
 				60AE11FC23696EC000DD2743 /* TYPagerViewLayout.m in Sources */,
-				60AE12622369A15200DD2743 /* LoginAlphaBtn.m in Sources */,
 				60FE4FB5237146C500BE4C41 /* CollectViewController.m in Sources */,
 				60AE119623696EBF00DD2743 /* MJRefreshStateHeader.m in Sources */,
 				60AE11FB23696EC000DD2743 /* TYPagerController.m in Sources */,

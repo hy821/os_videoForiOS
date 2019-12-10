@@ -14,16 +14,16 @@ typedef NS_ENUM(NSUInteger, WebType) {
 @property (nonatomic,assign) WebType webType;
 @property (nonatomic, copy) NSString *titleStr;
 @property (nonatomic,assign) BOOL isNavBarHidden;
-@property (nonatomic,assign) BOOL isHaveInteration;
+@property (nonatomic,assign) BOOL isHaveInteration;//交互
 
 @property (nonatomic,assign) BOOL isShowBack;
 
 @end
 
-//@interface WeakScriptMessageDelegate : NSObject<WKScriptMessageHandler>
-//
-//@property (nonatomic, weak) id<WKScriptMessageHandler> scriptDelegate;
-//
-//- (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate;
-//
-//@end
+@interface WeakScriptMessageDelegate : NSObject<WKScriptMessageHandler>
+
+@property (nonatomic, weak) id<WKScriptMessageHandler> scriptDelegate;
+
+- (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate;
+
+@end

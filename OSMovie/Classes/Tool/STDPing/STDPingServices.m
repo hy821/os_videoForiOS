@@ -119,6 +119,7 @@
     if (pingItem.status == STDPingStatusDidReceivePacket || pingItem.status == STDPingStatusDidReceiveUnexpectedPacket) {
         [_pingItems addObject:pingItem];
     }
+//    SSLog(@"--->Handle _repingTimes=%d address:%@",_repingTimes,pingItem.originalAddress);
     if (_repingTimes < self.maximumPingTimes - 1) {
         if (self.callbackHandler) {
             self.callbackHandler(pingItem, [_pingItems copy]);
@@ -127,6 +128,7 @@
         NSTimer *timer = [NSTimer timerWithTimeInterval:0 target:self selector:@selector(reping) userInfo:nil repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     } else {
+        _repingTimes ++;
         if (self.callbackHandler) {
             self.callbackHandler(pingItem, [_pingItems copy]);
         }
@@ -137,8 +139,10 @@
 - (void)cancel {
     [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeoutActionFired) object:nil];
     [self.simplePing stop];
+    
     STDPingItem *pingItem = [[STDPingItem alloc] init];
     pingItem.status = STDPingStatusFinished;
+//    SSLog(@"--->Finished cancel_TimeOut,%@",self.address);
     [_pingItems addObject:pingItem];
     if (self.callbackHandler) {
         self.callbackHandler(pingItem, [_pingItems copy]);
@@ -221,6 +225,7 @@
     pingItem.IPAddress = pinger.IPAddress ?: pinger.hostName;
     [_pingItems addObject:pingItem];
     pingItem.status = STDPingStatusFinished;
+//    SSLog(@"--->Finished didFailWithError,%@",self.address);
     if (self.callbackHandler) {
         self.callbackHandler(pingItem, [_pingItems copy]);
     }

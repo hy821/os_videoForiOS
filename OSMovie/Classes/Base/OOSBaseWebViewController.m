@@ -30,6 +30,9 @@ WKScriptMessageHandler>
 
 @implementation OOSBaseWebViewController
 
+static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
+ 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.webType = WKType;
@@ -349,7 +352,7 @@ WKScriptMessageHandler>
     [_wkWeb removeObserver:self forKeyPath:@"estimatedProgress" context:nil];
  
     if(self.isHaveInteration) {
-        
+        [self.wkConfig.userContentController removeScriptMessageHandlerForName:AdvActionOpenApp];
     }
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     
@@ -393,7 +396,34 @@ WKScriptMessageHandler>
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    if ([message.name isEqualToString:AdvActionOpenApp])
+    {
+        //尝试调起三方App
+        NSDictionary *dic = (NSDictionary *)message.body;
+        NSString *scheme = dic[@"scheme"];
+        NSString *appstoreID = dic[@"appstoreID"];
+        appstoreID = @"1071755393";
+        
+        NSString *htmlJumpString = dic[@"webUrl"];
+        
+        if(scheme.length) {
+            [[UIApplication sharedApplication] openURL:URL(scheme)  options:@{} completionHandler:^(BOOL success) {
+                
+                if (!success) {  //调起失败,跳AppStore
+                    if(appstoreID.length) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id%@?mt=8",appstoreID]] options:@{} completionHandler:^(BOOL success) {
+                            
+                        }];
+                    }
+                }
+                
+            }];
+        }else if(htmlJumpString.length) {
+            // 跳转网页
+            
+        }
 
+    }
 }
 
 - (void)closeSelf {
@@ -423,22 +453,24 @@ WKScriptMessageHandler>
         [_wkWeb.scrollView setAlwaysBounceVertical:YES];
         [_wkWeb setAllowsBackForwardNavigationGestures:true];
         _wkWeb.backgroundColor = [UIColor whiteColor];
+        
+        if(self.isHaveInteration){  //交互
+            [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:AdvActionOpenApp];
+        }
     }return _wkWeb;
 }
 @end
 
 
+@implementation WeakScriptMessageDelegate
 
-//
-//@implementation WeakScriptMessageDelegate
-//
-//- (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate {
-//    self = [super init];
-//    if (self) {_scriptDelegate = scriptDelegate;}
-//    return self;
-//}
-//
-//- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-//    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];
-//}
-//@end
+- (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate {
+    self = [super init];
+    if (self) {_scriptDelegate = scriptDelegate;}
+    return self;
+}
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];
+}
+@end

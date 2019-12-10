@@ -175,28 +175,25 @@
                     @"adApiUrl":@"dev.sspapi.51tv.com",
                     @"apiUrl":@"dev.api.vrg.51tv.com"
                 },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv1.com",
-                    @"apiUrl":@"dev.api.vrg.51tv1.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv2.com",
-                    @"apiUrl":@"dev.api.vrg.51tv2.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv3.com",
-                    @"apiUrl":@"dev.api.vrg.51tv3.com"
-                },
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv4.com",
-                    @"apiUrl":@"dev.api.vrg.51tv4.com"
-                }],
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv1.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv1.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv2.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv2.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv3.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv3.com"
+//                },
+//                @{
+//                    @"adApiUrl":@"dev.sspapi.51tv4.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv4.com"
+//                }
+        ],
         @"clapi":@[
-                @"120.77.243.186",
-                @"120.77.243.187",
-                @"120.77.243.188",
-                @"120.77.243.189",
-                @"120.77.243.190"
+                @"120.77.243.186"
         ]
     };
 
@@ -300,8 +297,12 @@
        
          if (response) {
              [weakSelf checkValidDomainWithType:DomainType_Cl];
-             [weakSelf checkValidDomainWithType:DomainType_Api];
-             [weakSelf checkValidDomainWithType:DomainType_Ad];
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf checkValidDomainWithType:DomainType_Api];
+             });
+             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf checkValidDomainWithType:DomainType_Ad];
+             });
          }
          
      } failure:^(ABSRequest *request, NSString *errorMsg) {

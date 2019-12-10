@@ -6,7 +6,6 @@
 #import "UIImage+Extension.h"
 #import "ABSRequest.h"
 #import "UILabel+Category.h"
-#import "LoginAlphaBtn.h"
 
 @interface LoginTextField()<UITextFieldDelegate>
 @property (nonatomic,assign) TextFieldType type;
@@ -32,8 +31,8 @@
 -(void)createUI {
     self.layer.cornerRadius = self.sizeH(8);
     self.clipsToBounds = YES;
-    self.layer.borderColor = KCOLOR(@"#ffffff").CGColor;
-    self.layer.borderWidth = 1.5f;
+    self.layer.borderColor = LightGray_Color.CGColor; //KCOLOR(@"#2F4F4F").CGColor;
+    self.layer.borderWidth = 0.7f;
     
     UIView *loginAlphaView = [[UIView alloc]init];
     loginAlphaView.backgroundColor = KCOLOR(@"#ffffff");
@@ -202,13 +201,13 @@
         _textField = [[UITextField alloc]init];
         _textField.textAlignment = NSTextAlignmentLeft;
         _textField.delegate = self;
-        _textField.textColor = White_Color;
+        _textField.textColor = KCOLOR(@"#2F4F4F");
         _textField.font = Font_Size(17);
 
         NSString*holderText = self.placeholder;
         NSMutableAttributedString*placeholder = [[NSMutableAttributedString alloc]initWithString:holderText];
         [placeholder addAttribute:NSForegroundColorAttributeName
-                           value:White_Color
+                           value:LightGray_Color
                            range:NSMakeRange(0,holderText.length)];
         _textField.attributedPlaceholder = placeholder;
         
@@ -290,14 +289,14 @@
         _timeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_timeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_timeBtn setTitle:@"获取验证码" forState:UIControlStateSelected];
-        [_timeBtn setTitleColor:KCOLOR(@"#ffffff") forState:UIControlStateNormal];
-        [_timeBtn setTitleColor:KCOLOR(@"#ffffff") forState:UIControlStateSelected];
+        [_timeBtn setTitleColor:KCOLOR(@"#2F4F4F") forState:UIControlStateNormal];
+        [_timeBtn setTitleColor:KCOLOR(@"#2F4F4F") forState:UIControlStateSelected];
         _timeBtn.backgroundColor = Clear_Color;
-        _timeBtn.titleLabel.font = Font_Size(12);
+        _timeBtn.titleLabel.font = Font_Slim(12);
         _timeBtn.layer.cornerRadius = self.sizeH(12.f);
         _timeBtn.clipsToBounds = YES;
-        _timeBtn.layer.borderColor = KCOLOR(@"#ffffff").CGColor;
-        _timeBtn.layer.borderWidth = 1;
+        _timeBtn.layer.borderColor = LightGray_Color.CGColor;
+        _timeBtn.layer.borderWidth = 0.7f;
         [_timeBtn addTarget:self action:@selector(startAnimation:) forControlEvents:UIControlEventTouchUpInside];
     }return _timeBtn;
 }
