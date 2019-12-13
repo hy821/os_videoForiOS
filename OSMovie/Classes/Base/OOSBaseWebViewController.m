@@ -399,30 +399,53 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
     if ([message.name isEqualToString:AdvActionOpenApp])
     {
         //尝试调起三方App
-        NSDictionary *dic = (NSDictionary *)message.body;
-        NSString *scheme = dic[@"scheme"];
-        NSString *appstoreID = dic[@"appstoreID"];
-        appstoreID = @"1071755393";
+        NSDictionary *dic = (NSDictionary*)message.body;
+        NSString *action_type = dic[@"action_type"];
+        NSString *action_url = dic[@"action_url"];
+        NSString *deeplink_url = dic[@"deeplink_url"];
+        NSArray *click_murls = dic[@"click_murls"];
+        NSArray *deeplink_murl = dic[@"deeplink_murl"];
         
-        NSString *htmlJumpString = dic[@"webUrl"];
-        
-        if(scheme.length) {
-            [[UIApplication sharedApplication] openURL:URL(scheme)  options:@{} completionHandler:^(BOOL success) {
-                
-                if (!success) {  //调起失败,跳AppStore
-                    if(appstoreID.length) {
-                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id%@?mt=8",appstoreID]] options:@{} completionHandler:^(BOOL success) {
-                            
-                        }];
+        NSInteger type = [action_type integerValue];
+        if (type==3)
+        { //下载,调整AppStore
+            if(action_url.length) {
+                [[UIApplication sharedApplication] openURL:URL(action_url) options:@{} completionHandler:^(BOOL success) {
+                    if (success) {
+                        if (click_murls && click_murls.count>0) {
+                            [USER_MANAGER callBackAdvWithUrls:click_murls];
+                        }
                     }
-                }
-                
-            }];
-        }else if(htmlJumpString.length) {
-            // 跳转网页
+                }];
+            }
             
         }
-
+        else if (type==5)
+        { //deepLink 唤起App Or 跳落地页
+            if(deeplink_url.length) {
+                [[UIApplication sharedApplication] openURL:URL(deeplink_url)  options:@{} completionHandler:^(BOOL success) {
+                    if (success) {
+                        if (click_murls && click_murls.count>0) {
+                            [USER_MANAGER callBackAdvWithUrls:click_murls];
+                        }
+                        if (deeplink_murl && deeplink_murl.count>0) {
+                            [USER_MANAGER callBackAdvWithUrls:deeplink_murl];
+                        }
+                        
+                    }else {  //调起失败,跳落地页
+                        if(action_url.length) {
+                            [[UIApplication sharedApplication] openURL:URL(action_url) options:@{} completionHandler:^(BOOL success) {
+                                if (success) {
+                                    if (click_murls && click_murls.count>0) {
+                                        [USER_MANAGER callBackAdvWithUrls:click_murls];
+                                    }
+                                }
+                            }];
+                        }
+                    }
+                }];
+            }
+    }
     }
 }
 
