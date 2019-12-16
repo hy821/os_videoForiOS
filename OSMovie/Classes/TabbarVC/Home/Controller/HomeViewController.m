@@ -119,7 +119,6 @@ TYPagerControllerDelegate>
             
             if (self.categoryArr.firstObject.audit.length>0) {
                 OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
-                vc.webType = WKType;
                 vc.isHaveInteration = YES;
                 vc.isNavBarHidden = YES;
                 vc.bannerUrl = self.categoryArr.firstObject.audit;

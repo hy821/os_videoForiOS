@@ -7,14 +7,12 @@
 #import "YHWebViewProgressView.h"
 
 @interface OOSBaseWebViewController ()
-<UIWebViewDelegate,
-WKNavigationDelegate,
+<WKNavigationDelegate,
 WKUIDelegate,
 UIGestureRecognizerDelegate,
 WKScriptMessageHandler>
 @property (nonatomic,weak) YHWebViewProgressView * progressView;
 @property (strong, nonatomic) YHWebViewProgress *progressProxy;
-@property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) UIBarButtonItem *backItem;
 @property (nonatomic, strong) UIBarButtonItem *closeItem;
 @property (nonatomic,strong) WKWebView * wkWeb;
@@ -24,7 +22,6 @@ WKScriptMessageHandler>
 @property (nonatomic,strong) UIView * showErrorView;
 @property (nonatomic,strong) UIImageView * errorIV;
 @property (nonatomic,strong) UILabel * errorLab;
-@property (nonatomic,assign) BOOL isFirstAppear;
 
 @end
 
@@ -35,37 +32,28 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.webType = WKType;
     if (@available(iOS 11.0, *)) {
         UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    if(self.bannerUrl == nil) {
-        self.bannerUrl = @"";
-    }
+    self.title = self.titleStr ? self.titleStr : @"";
+    self.bannerUrl = self.bannerUrl ? self.bannerUrl : @"";
+    
     if(self.isNavBarHidden) {
         self.closeBtn.hidden = YES;
         [self.view bringSubviewToFront:self.closeBtn];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willChangeStatusBarFrame:)
                                                      name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
     }
+    
+    self.fd_prefersNavigationBarHidden = self.isNavBarHidden;
+    self.fd_interactivePopDisabled = YES;
+    
     [self createUI];
     [self resolveURL];
-    if (self.titleStr) {
-        self.title = _titleStr;
-    }
-    self.navigationItem.leftBarButtonItem = self.backItem;
-
-    if (self.isShowBack) {
-        self.closeBtn.hidden = NO;
-        [self.view bringSubviewToFront:self.closeBtn];
-        
-    }else{
-        self.fd_prefersNavigationBarHidden = self.isNavBarHidden;
-        self.fd_interactivePopDisabled = YES;
-    }
+    
 }
 
 - (void)willChangeStatusBarFrame:(NSNotification*)notification {
@@ -84,38 +72,33 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
 }
 
 - (void)createUI {
-    if(self.webType == NormalType) {
-        [self.view addSubview:self.webView];
-        [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.top.bottom.equalTo(self.view);
-        }];
-    }else {
-        [self.view addSubview:self.wkWeb];
-        [self.wkWeb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-            make.top.equalTo(self.view).offset(self.isNavBarHidden?[UIApplication sharedApplication].statusBarFrame.size.height :[self contentOffset]);
-        }];
-    }
-
+    CGFloat statusBarH = [UIApplication sharedApplication].statusBarFrame.size.height;
+    [self.view addSubview:self.wkWeb];
+    [self.wkWeb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.bottom.equalTo(self.view);
+        make.top.equalTo(self.view).offset(self.isNavBarHidden ? statusBarH : [self contentOffset]);
+    }];
+    
     [self.view addSubview:self.showErrorView];
     self.showErrorView.hidden = YES;
     [self.showErrorView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.bottom.equalTo(self.view);
     }];
-    // 创建进度条代理，用于处理进度控制
+    // 进度条代理，用于处理进度控制
     _progressProxy = [[YHWebViewProgress alloc] init];
-    // 创建进度条
-    YHWebViewProgressView *progressView = [[YHWebViewProgressView alloc] initWithFrame:CGRectMake(0, self.isNavBarHidden?[UIApplication sharedApplication].statusBarFrame.size.height :[self contentOffset],ScreenWidth, 3.f)];
-    progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleBottomMargin;
-    // 添加到视图
+    // 进度条
+    YHWebViewProgressView *progressView = [[YHWebViewProgressView alloc] initWithFrame:CGRectMake(0, self.isNavBarHidden ? statusBarH : [self contentOffset],ScreenWidth, 3.f)];
+    progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self.view addSubview:progressView];
     self.progressView = progressView;
     [self.view bringSubviewToFront:_progressView];
-    if(self.isNavBarHidden)
-    {
+    
+    if(self.isNavBarHidden) {
         [self.view bringSubviewToFront:self.closeBtn];
         [self.view bringSubviewToFront:self.backBtn];
     }
+
+    self.navigationItem.leftBarButtonItem = self.backItem;
 }
 
 -(void)resolveURL
@@ -159,46 +142,13 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
     }
 }
 
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    //允许跳转
-    decisionHandler(WKNavigationActionPolicyAllow);
-}
-
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if(!self.isFirstAppear) {
-        return;
-    }
-    if([self.wkWeb canGoBack]&&self.isNavBarHidden&&(self.navigationController.isNavigationBarHidden)) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-    }
+    [self.navigationController setNavigationBarHidden:self.isNavBarHidden animated:YES];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if([self.wkWeb canGoBack]&&self.isNavBarHidden)
-    {
-        
-        self.wkWeb.mj_y = [self contentOffset];
-    }else
-    {
-        if(self.isNavBarHidden)
-        {
-            if(!self.isFirstAppear)
-            {
-                self.isFirstAppear = YES;
-                return;
-            }
-            self.wkWeb.mj_y = [UIApplication sharedApplication].statusBarFrame.size.height;
-            self.backBtn.mj_y = [UIApplication sharedApplication].statusBarFrame.size.height;
-        }
-    }
-}
 - (void)updateButtonItems
 {
-    
     if ([self.wkWeb canGoBack]&&self.navigationItem.leftBarButtonItems.count!=2) {
         self.navigationItem.leftBarButtonItems = @[self.backItem];
         //, self.closeItem
@@ -346,7 +296,7 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
 }
 
 -(void)dealloc {
-    SSLog(@"%s",__func__);
+    SSLog(@"OOSBaseWebViewController--Dealloc %s",__func__);
     [_wkWeb removeObserver:self forKeyPath:@"loading" context:nil];//移除kvo
     [_wkWeb removeObserver:self forKeyPath:@"title" context:nil];
     [_wkWeb removeObserver:self forKeyPath:@"estimatedProgress" context:nil];
@@ -373,27 +323,6 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
     }
 }
 
-#pragma mark - UIWebViewDelegate
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    if(!self.showErrorView.isHidden) {
-        self.showErrorView.hidden = YES;
-    }
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if(!self.showErrorView.isHidden) {
-        self.showErrorView.hidden = YES;
-    }
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    if(self.showErrorView.isHidden) {
-        self.showErrorView.hidden = NO;
-        [self.view bringSubviewToFront:self.showErrorView];
-        [self.view bringSubviewToFront:self.progressView];
-    }
-}
-
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     if ([message.name isEqualToString:AdvActionOpenApp])
@@ -407,7 +336,14 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
         NSArray *deeplink_murl = dic[@"deeplink_murl"];
         
         NSInteger type = [action_type integerValue];
-        if (type==3)
+        if (type==1 || type==2) {
+            if (action_url) {
+                OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
+                vc.bannerUrl = action_url;
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        else if (type==3)
         { //下载,调整AppStore
             if(action_url.length) {
                 [[UIApplication sharedApplication] openURL:URL(action_url) options:@{} completionHandler:^(BOOL success) {
@@ -417,8 +353,7 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
                         }
                     }
                 }];
-            }
-            
+            }            
         }
         else if (type==5)
         { //deepLink 唤起App Or 跳落地页
@@ -445,23 +380,12 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
                     }
                 }];
             }
-    }
+        }
     }
 }
 
 - (void)closeSelf {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (UIWebView *)webView {
-    if (!_webView) {
-        _webView = [[UIWebView alloc] init];
-        _webView.delegate = self;
-        _webView.opaque = NO;
-        _webView.scalesPageToFit = YES;
-        _webView.autoresizesSubviews = NO;
-        _webView.backgroundColor = White_Color;
-    }return _webView;
 }
 
 -(WKWebView *)wkWeb {

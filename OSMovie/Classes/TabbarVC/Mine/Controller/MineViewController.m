@@ -103,14 +103,9 @@ static NSString * const cellHeader_ID = @"cellHeader_ID";
                 break;
             case 2: //QQ粉丝群
             {
-                OOSBaseWebViewController *webView = [[OOSBaseWebViewController alloc]init];
-                webView.webType = WKType;
-                webView.isHaveInteration = YES;
-                webView.titleStr = @"影视部落交流群";
-                webView.bannerUrl = @"https://www.baidu.com";
-                //[USER_MANAGER isDevStatus] ? SSStr(DevServerURL_H5, QQFansH5_Url) : SSStr(ServerURL_H5, QQFansH5_Url);
-                webView.hidesBottomBarWhenPushed = YES;
-                [weakSelf.navigationController pushViewController:webView animated:YES];
+//                OOSBaseWebViewController *webView = [[OOSBaseWebViewController alloc]init];
+//                webView.hidesBottomBarWhenPushed = YES;
+//                [weakSelf.navigationController pushViewController:webView animated:YES];
             }
                 break;
             default:

@@ -65,43 +65,36 @@
 
     [USER_MANAGER callBackAdvWithUrls:self.advModel.click_murls];
 
-    //deepLink Test
-//    [[UIApplication sharedApplication] openURL:URL(@"taobao://s.taobao.com/?q=iphone") options:@{} completionHandler:nil];
-//    return;
-    
-//    //第三方下载地址 AppStore Test
-//    NSString * number = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id1071755393?mt=8"];
-//    [[UIApplication sharedApplication] openURL:URL(number) options:@{} completionHandler:nil];
-//    return;
-    
-    //deepLink jump OtherApp
-    if (self.advModel.deeplink_url && self.advModel.deeplink_url.length>0) {
-        [[UIApplication sharedApplication] openURL:URL(self.advModel.deeplink_url) options:@{} completionHandler:nil];
-        return;
-    }
-    
     switch (self.advModel.action_type) {
         case 1:
         case 2:
         {
-            _imgLinkUrl = self.advModel.action_url;
-            
             OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
-            vc.webType = WKType;
-            vc.isNavBarHidden = YES;
             vc.bannerUrl = self.advModel.action_url;
             vc.hidesBottomBarWhenPushed = YES;
-            vc.isShowBack = YES;
             [SelectVC pushViewController:vc animated:YES];
         }
             break;
         case 3:  //第三方下载地址 AppStore
         {
-            //            NSString * number = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/cn/app/id1071755393?mt=8"];
-            //            [[UIApplication sharedApplication] openURL:URL(number) options:@{} completionHandler:nil];
             [[UIApplication sharedApplication] openURL:URL(self.advModel.action_url) options:@{} completionHandler:nil];
         }
             break;
+        case 5:   //deepLink jump OtherApp
+        {
+            if (self.advModel.deeplink_url && self.advModel.deeplink_url.length>0) {
+                [[UIApplication sharedApplication] openURL:URL(self.advModel.deeplink_url) options:@{} completionHandler:^(BOOL success) {
+                    if(success) {
+                        [USER_MANAGER callBackAdvWithUrls:self.advModel.deeplink_murl];
+                    }else {
+                        OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
+                        vc.bannerUrl = self.advModel.action_url;
+                        vc.hidesBottomBarWhenPushed = YES;
+                        [SelectVC pushViewController:vc animated:YES];
+                    }
+                }];
+            }
+        }
         default:
             break;
     }

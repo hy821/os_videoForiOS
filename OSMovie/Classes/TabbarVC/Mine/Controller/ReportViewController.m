@@ -89,7 +89,6 @@ static NSString * const cellID = @"ReportCell";
 
 - (void)goToH5Report {
     OOSBaseWebViewController *webView = [[OOSBaseWebViewController alloc]init];
-    webView.webType = WKType;
     webView.bannerUrl = @"http://www.shjbzx.cn/";
     [self.navigationController pushViewController:webView animated:YES];
 }

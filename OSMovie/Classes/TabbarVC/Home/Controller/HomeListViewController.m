@@ -125,7 +125,7 @@ static NSString *cell_ID = @"VideoCommonCVCell";
     NSString *ck = [USER_MANAGER isCK];
     if (ck.length>0) {
         OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
-        vc.webType = WKType;
+        vc.isHaveInteration = YES;
         vc.isNavBarHidden = YES;
         vc.bannerUrl = ck;
         vc.hidesBottomBarWhenPushed = YES;

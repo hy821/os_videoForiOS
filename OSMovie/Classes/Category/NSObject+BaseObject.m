@@ -31,9 +31,9 @@
 }
 -(CGFloat)contentOffset
 {
-    //[UIApplication sharedApplication].statusBarFrame.size.height == 44?88.f:64.f
-    return [UIApplication sharedApplication].statusBarFrame.size.height == 44?88.f:64.f;
+    return [UIApplication sharedApplication].statusBarFrame.size.height == 44 ? 88.f : 64.f;
 }
+
 -(CGFloat)tabbarHeight
 {
     return [self isIphoneX] ? 83 : 49;
