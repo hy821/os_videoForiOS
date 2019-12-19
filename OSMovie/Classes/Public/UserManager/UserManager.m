@@ -172,7 +172,7 @@
     NSDictionary *dicc = @{
         @"apis":@[
                 @{
-                    @"adApiUrl":@"sspapi.51tv.com",
+                    @"adApiUrl":@"dev.sspapi.51tv.com",
                     @"apiUrl":@"dev.api.vrg.51tv.com"
                 },
 //                @{

@@ -130,7 +130,7 @@
 
 - (void)getSplashAdvMsg {
     WS()
-    [[ABSRequest request]getAdvDataWithUrl:[USERDEFAULTS objectForKey:HOST_ad] positionID:@"249839" success:^(ABSRequest *request, id response) {
+    [[ABSRequest request]getAdvDataWithUrl:[USERDEFAULTS objectForKey:HOST_ad] positionID:@"275488" success:^(ABSRequest *request, id response) {
 //        SSLog(@"advData--->%@",response);
         if(response) {
             AdmetaModel *m = [AdmetaModel mj_objectWithKeyValues:response];

@@ -335,6 +335,32 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
         NSArray *click_murls = dic[@"click_murls"];
         NSArray *deeplink_murl = dic[@"deeplink_murl"];
         
+        //先判断deepLink 唤起App Or 跳落地页
+        if(deeplink_url.length) {
+            [[UIApplication sharedApplication] openURL:URL(deeplink_url)  options:@{} completionHandler:^(BOOL success) {
+                if (success) {
+                    if (click_murls && click_murls.count>0) {
+                        [USER_MANAGER callBackAdvWithUrls:click_murls];
+                    }
+                    if (deeplink_murl && deeplink_murl.count>0) {
+                        [USER_MANAGER callBackAdvWithUrls:deeplink_murl];
+                    }
+                    
+                }else {  //调起失败,跳落地页
+                    if(action_url.length) {
+                        [[UIApplication sharedApplication] openURL:URL(action_url) options:@{} completionHandler:^(BOOL success) {
+                            if (success) {
+                                if (click_murls && click_murls.count>0) {
+                                    [USER_MANAGER callBackAdvWithUrls:click_murls];
+                                }
+                            }
+                        }];
+                    }
+                }
+            }];
+            return;
+        }
+        
         NSInteger type = [action_type integerValue];
         if (type==1 || type==2) {
             if (action_url) {
@@ -354,32 +380,6 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
                     }
                 }];
             }            
-        }
-        else if (type==5)
-        { //deepLink 唤起App Or 跳落地页
-            if(deeplink_url.length) {
-                [[UIApplication sharedApplication] openURL:URL(deeplink_url)  options:@{} completionHandler:^(BOOL success) {
-                    if (success) {
-                        if (click_murls && click_murls.count>0) {
-                            [USER_MANAGER callBackAdvWithUrls:click_murls];
-                        }
-                        if (deeplink_murl && deeplink_murl.count>0) {
-                            [USER_MANAGER callBackAdvWithUrls:deeplink_murl];
-                        }
-                        
-                    }else {  //调起失败,跳落地页
-                        if(action_url.length) {
-                            [[UIApplication sharedApplication] openURL:URL(action_url) options:@{} completionHandler:^(BOOL success) {
-                                if (success) {
-                                    if (click_murls && click_murls.count>0) {
-                                        [USER_MANAGER callBackAdvWithUrls:click_murls];
-                                    }
-                                }
-                            }];
-                        }
-                    }
-                }];
-            }
         }
     }
 }

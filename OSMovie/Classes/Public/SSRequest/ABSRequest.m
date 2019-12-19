@@ -306,9 +306,8 @@ static ABSRequest *absRequest = nil;
     };
 
     if (![requestUrlString containsString:@"http"]) {
-        requestUrlString = [NSString stringWithFormat:@"http://%@/api/req",requestUrlString];
+        requestUrlString = [NSString stringWithFormat:@"http://%@/osApi/reqAd",requestUrlString];
     }
-//    requestUrlString = @"http://dev.sspapi.51tv.com/api/req";
     
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
     sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
