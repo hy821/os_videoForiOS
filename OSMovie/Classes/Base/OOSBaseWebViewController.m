@@ -335,6 +335,9 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
         NSArray *click_murls = dic[@"click_murls"];
         NSArray *deeplink_murl = dic[@"deeplink_murl"];
         
+        NSDictionary *advData = dic[@"advData"];
+        SSLog(@"advData:%@",advData);
+        
         //先判断deepLink 唤起App Or 跳落地页
         if(deeplink_url.length) {
             [[UIApplication sharedApplication] openURL:URL(deeplink_url)  options:@{} completionHandler:^(BOOL success) {

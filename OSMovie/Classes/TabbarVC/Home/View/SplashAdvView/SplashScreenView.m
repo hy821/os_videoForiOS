@@ -65,6 +65,23 @@
 
     [USER_MANAGER callBackAdvWithUrls:self.advModel.click_murls];
 
+    //deepLink jump OtherApp
+    if (self.advModel.deeplink_url && self.advModel.deeplink_url.length>0) {
+        [[UIApplication sharedApplication] openURL:URL(self.advModel.deeplink_url) options:@{} completionHandler:^(BOOL success) {
+            if(success) {
+                [USER_MANAGER callBackAdvWithUrls:self.advModel.deeplink_murl];
+            }else {
+                if (self.advModel.action_url && self.advModel.action_url.length>0) {
+                    OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
+                    vc.bannerUrl = self.advModel.action_url;
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [SelectVC pushViewController:vc animated:YES];
+                }
+            }
+        }];
+        return;
+    }  
+    
     switch (self.advModel.action_type) {
         case 1:
         case 2:
@@ -80,24 +97,10 @@
             [[UIApplication sharedApplication] openURL:URL(self.advModel.action_url) options:@{} completionHandler:nil];
         }
             break;
-        case 5:   //deepLink jump OtherApp
-        {
-            if (self.advModel.deeplink_url && self.advModel.deeplink_url.length>0) {
-                [[UIApplication sharedApplication] openURL:URL(self.advModel.deeplink_url) options:@{} completionHandler:^(BOOL success) {
-                    if(success) {
-                        [USER_MANAGER callBackAdvWithUrls:self.advModel.deeplink_murl];
-                    }else {
-                        OOSBaseWebViewController *vc = [[OOSBaseWebViewController alloc]init];
-                        vc.bannerUrl = self.advModel.action_url;
-                        vc.hidesBottomBarWhenPushed = YES;
-                        [SelectVC pushViewController:vc animated:YES];
-                    }
-                }];
-            }
-        }
         default:
             break;
     }
+    
 }
 
 - (void)countDown {
