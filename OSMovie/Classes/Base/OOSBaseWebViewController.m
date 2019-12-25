@@ -391,7 +391,8 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
         SSLog(@"待解析URL:%@",urlStr);
         
         WS()
-        [USER_MANAGER parsedUrlForH5WithUrl:urlStr success:^(id response)
+        [USER_MANAGER parsedUrlForH5WithUrl:urlStr success:^(id response) {
+        
             NSDictionary *dic = @{@"resultCode":@"1",
                                   @"resultData": response
             };
@@ -406,7 +407,6 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
                 }];
             }
         } failure:nil];
-        
     }
 }
 

@@ -168,47 +168,33 @@
         return;
     }
     
-    //Tmp
-    NSDictionary *dicc = @{
-        @"apis":@[
-                @{
-                    @"adApiUrl":@"dev.sspapi.51tv.com",
-                    @"apiUrl":@"dev.api.vrg.51tv.com"
-                },
+//    //Tmp
+//    NSDictionary *dicc = @{
+//        @"apis":@[
 //                @{
-//                    @"adApiUrl":@"dev.sspapi.51tv1.com",
-//                    @"apiUrl":@"dev.api.vrg.51tv1.com"
+//                    @"adApiUrl":@"dev.sspapi.51tv.com",
+//                    @"apiUrl":@"dev.api.vrg.51tv.com"
 //                },
-//                @{
-//                    @"adApiUrl":@"dev.sspapi.51tv2.com",
-//                    @"apiUrl":@"dev.api.vrg.51tv2.com"
-//                },
-//                @{
-//                    @"adApiUrl":@"dev.sspapi.51tv3.com",
-//                    @"apiUrl":@"dev.api.vrg.51tv3.com"
-//                },
-//                @{
-//                    @"adApiUrl":@"dev.sspapi.51tv4.com",
-//                    @"apiUrl":@"dev.api.vrg.51tv4.com"
-//                }
-        ],
-        @"clapi":@[
-                @"120.77.243.186"
-        ]
-    };
-
-    [USERDEFAULTS setObject:dicc forKey:NetWorkAddress];
-    [USERDEFAULTS synchronize];
-    
+//        ],
+//        @"clapi":@[
+//                @"120.77.243.186"
+//        ]
+//    };
+//
+//    [USERDEFAULTS setObject:dicc forKey:NetWorkAddress];
+//    [USERDEFAULTS synchronize];
+//
     NSDictionary *dicCache = [USERDEFAULTS objectForKey:NetWorkAddress];
     NSArray *arrApis = (NSArray*)dicCache[@"apis"];
     __block NSMutableArray *arrCache = [NSMutableArray array];
-
+    
 //    WS()
     if (type==DomainType_Cl) {
         NSArray *arrCl = (NSArray*)dicCache[@"clapi"];
+        NSSet *set = [NSSet setWithArray:arrCl];
+        arrCl = [set allObjects];
+        SSLog(@"去重后arrCL:%@",arrCl);
         if (arrCl.count>0) {
-            
             [STDPingManager getFastIPwith:arrCl andWithCount:10 withFastIP:^(NSString *ipAddress) {
                 SSLog(@"--->CheckBackCL:%@",ipAddress);
                 if (ipAddress.length>0) {
@@ -222,10 +208,13 @@
             [arrApis enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if (obj[@"apiUrl"]) {
                     NSString *urlCheck = obj[@"apiUrl"];
-                    [arrCache addObject:urlCheck];
+                    if (![arrCache containsObject:urlCheck]) {
+                        [arrCache addObject:urlCheck];
+                    }
                 }
             }];
             if (arrCache.count>0) {
+                SSLog(@"去重后arrApi:%@",arrCache);
                 [STDPingManager getFastIPwith:arrCache andWithCount:10 withFastIP:^(NSString *ipAddress) {
                     SSLog(@"--->CheckBackApi:%@",ipAddress);
                     [USERDEFAULTS setObject:ipAddress forKey:HOST_api];
@@ -238,10 +227,13 @@
             [arrApis enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if (obj[@"adApiUrl"]) {
                     NSString *urlCheck = obj[@"adApiUrl"];
-                    [arrCache addObject:urlCheck];
+                    if (![arrCache containsObject:urlCheck]) {
+                        [arrCache addObject:urlCheck];
+                    }
                 }
             }];
             if (arrCache.count>0) {
+                SSLog(@"去重后arrAd:%@",arrCache);
                 [STDPingManager getFastIPwith:arrCache andWithCount:10 withFastIP:^(NSString *ipAddress) {
                     SSLog(@"--->CheckBackAd:%@",ipAddress);
                     [USERDEFAULTS setObject:ipAddress forKey:HOST_ad];
