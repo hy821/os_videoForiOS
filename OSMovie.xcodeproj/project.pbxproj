@@ -123,6 +123,7 @@
 		60B166EC2396444A00ABE718 /* STSimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E62396444A00ABE718 /* STSimplePing.m */; };
 		60B166ED2396444A00ABE718 /* STDPingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E82396444A00ABE718 /* STDPingManager.m */; };
 		60B166EE2396444A00ABE718 /* STDPingServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B166E92396444A00ABE718 /* STDPingServices.m */; };
+		60D9863E23B3638A0085B4F3 /* launchConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 60D9863D23B3638A0085B4F3 /* launchConfig.json */; };
 		60DC95992386751A00106BFF /* SimulateIDFA.m in Sources */ = {isa = PBXBuildFile; fileRef = 60DC95982386751A00106BFF /* SimulateIDFA.m */; };
 		60FB6EDF2372B65F00796A32 /* OSVDMsgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FB6EDD2372B65F00796A32 /* OSVDMsgController.m */; };
 		60FB6EE22372CC6500796A32 /* GoWebAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 60FB6EE12372CC6500796A32 /* GoWebAlertView.m */; };
@@ -416,6 +417,7 @@
 		60B166E92396444A00ABE718 /* STDPingServices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STDPingServices.m; sourceTree = "<group>"; };
 		60B166EA2396444A00ABE718 /* STSimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STSimplePing.h; sourceTree = "<group>"; };
 		60B166EB2396444A00ABE718 /* STDPingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STDPingManager.h; sourceTree = "<group>"; };
+		60D9863D23B3638A0085B4F3 /* launchConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = launchConfig.json; sourceTree = "<group>"; };
 		60DC95972386751A00106BFF /* SimulateIDFA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimulateIDFA.h; sourceTree = "<group>"; };
 		60DC95982386751A00106BFF /* SimulateIDFA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimulateIDFA.m; sourceTree = "<group>"; };
 		60FB6EDD2372B65F00796A32 /* OSVDMsgController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSVDMsgController.m; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				60AE0F7223696EBF00DD2743 /* Category */,
 				60AE0FC523696EBF00DD2743 /* ThirdParty */,
 				60AE114823696EBF00DD2743 /* Tool */,
+				60D9863B23B362600085B4F3 /* Other */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -636,6 +639,7 @@
 				60AE0F8A23696EBF00DD2743 /* UIImage+Extension.m */,
 				60AE0F8B23696EBF00DD2743 /* UIImage+ZipSizeAndLength.m */,
 				60AE0F8C23696EBF00DD2743 /* UINavigationBar+Awesome.h */,
+				60AE0FA523696EBF00DD2743 /* NSObject+BaseObject.h */,
 				60AE0F8D23696EBF00DD2743 /* NSObject+BaseObject.m */,
 				60AE0F8E23696EBF00DD2743 /* UILabel+Category.m */,
 				60AE0F8F23696EBF00DD2743 /* UIColor+Tools.h */,
@@ -650,7 +654,6 @@
 				60AE0F9823696EBF00DD2743 /* UIBarButtonItem+Extension.m */,
 				60AE0F9923696EBF00DD2743 /* ButtonCategory */,
 				60AE0FA423696EBF00DD2743 /* UIColor+Tools.m */,
-				60AE0FA523696EBF00DD2743 /* NSObject+BaseObject.h */,
 				60AE0FA623696EBF00DD2743 /* UILabel+Category.h */,
 				60AE0FA723696EBF00DD2743 /* UINavigationBar+Awesome.m */,
 			);
@@ -1015,6 +1018,7 @@
 		60AE114823696EBF00DD2743 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				60AE115C23696EBF00DD2743 /* Hud */,
 				60B166E52396444A00ABE718 /* STDPing */,
 				607B06EB2388466800E1AFF3 /* SecurityTool */,
 				607B06DC2387EA4100E1AFF3 /* AES */,
@@ -1030,7 +1034,6 @@
 				60AE115023696EBF00DD2743 /* OSLayerAnimation.m */,
 				60AE115223696EBF00DD2743 /* Tool.h */,
 				60AE114A23696EBF00DD2743 /* Tool.m */,
-				60AE115C23696EBF00DD2743 /* Hud */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -1204,6 +1207,14 @@
 				60B166E82396444A00ABE718 /* STDPingManager.m */,
 			);
 			path = STDPing;
+			sourceTree = "<group>";
+		};
+		60D9863B23B362600085B4F3 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				60D9863D23B3638A0085B4F3 /* launchConfig.json */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		60FB6EE32372CD3900796A32 /* VideoDetailView */ = {
@@ -1391,6 +1402,7 @@
 			files = (
 				605FC66C2366B56E0076F32A /* LaunchScreen.storyboard in Resources */,
 				60AE11DE23696EBF00DD2743 /* MBProgressHUD.bundle in Resources */,
+				60D9863E23B3638A0085B4F3 /* launchConfig.json in Resources */,
 				605FC6692366B56E0076F32A /* Assets.xcassets in Resources */,
 				605FC6672366B56C0076F32A /* Main.storyboard in Resources */,
 				60AE118B23696EBF00DD2743 /* MJRefresh.bundle in Resources */,

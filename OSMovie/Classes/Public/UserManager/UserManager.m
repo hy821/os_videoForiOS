@@ -278,9 +278,15 @@
     NSString *cl = [USERDEFAULTS objectForKey:HOST_cl];
     NSString *ad = [USERDEFAULTS objectForKey:HOST_ad];
     NSString *api = [USERDEFAULTS objectForKey:HOST_api];
-    if (!cl) {[USERDEFAULTS setObject:DefaultHost_cl forKey:HOST_cl];}
-    if (!ad) {[USERDEFAULTS setObject:DefaultHost_ad forKey:HOST_ad];}
-    if (!api) {[USERDEFAULTS setObject:DefaultHost_api forKey:HOST_api];}
+    
+    NSDictionary *apiDic = [self getLaunchDicWithKey:@"defaultHost"];
+    NSString *cl_def = apiDic[@"cl"];
+    NSString *ad_def = apiDic[@"ad"];
+    NSString *api_def = apiDic[@"api"];
+    
+    if (!cl) {[USERDEFAULTS setObject:cl_def forKey:HOST_cl];}
+    if (!ad) {[USERDEFAULTS setObject:ad_def forKey:HOST_ad];}
+    if (!api) {[USERDEFAULTS setObject:api_def forKey:HOST_api];}
     [USERDEFAULTS synchronize];
     
     WS()
@@ -304,10 +310,11 @@
 
 //H5解析播放地址
 - (void)parsedUrlForH5WithUrl:(NSString*)urlParsing success:(void (^)(id response))success failure:(void(^)(NSString* errMsg))failure {
-    
-    NSString *HOST = @"";  //例如: http://127.0.0.1/parse/?
-    NSString *APPID = @"";
-    NSString *APPKEY = @"";
+
+    NSDictionary *parseDic = [self getLaunchDicWithKey:@"parseUrlData"];
+    NSString *HOST = parseDic[@"HOST"];
+    NSString *APPID = parseDic[@"APPID"];
+    NSString *APPKEY = parseDic[@"APPKEY"];
     
     NSString *timeStr = [Tool getCurrentTimeSecsString];
     NSString *signStr = [Tool md5:[NSString stringWithFormat:@"%@%@%@%@",APPID,APPKEY,urlParsing,timeStr]];
@@ -320,4 +327,10 @@
     }];
 }
 
+- (NSDictionary*)getLaunchDicWithKey:(NSString*)key {
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"launchConfig" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSDictionary *launchDic = [NSJSONSerialization JSONObjectWithData:data                   options:NSJSONReadingMutableContainers error:nil];
+    return (NSDictionary*)launchDic[key];
+}
 @end

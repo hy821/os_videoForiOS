@@ -1,0 +1,12 @@
+{
+    "defaultHost":{
+        "cl":"120.77.243.186",
+        "ad":"dev.sspapi.51tv.com",
+        "api":"dev.api.vrg.51tv.com"
+    },
+    "parseUrlData":{
+        "HOST":"http://127.0.0.1/parse/?",
+        "APPID":"AppIddd",
+        "APPKEY":"AppKeyyy"
+    },
+}
