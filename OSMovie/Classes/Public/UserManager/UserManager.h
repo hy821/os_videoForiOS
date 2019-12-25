@@ -50,4 +50,7 @@ typedef NS_ENUM(NSUInteger, DomainType) {
 
 - (void)configAndUpdateHosts;
 
+//H5解析播放地址
+- (void)parsedUrlForH5WithUrl:(NSString*)urlParsing success:(void (^)(id response))success failure:(void(^)(NSString* errMsg))failure;
+
 @end

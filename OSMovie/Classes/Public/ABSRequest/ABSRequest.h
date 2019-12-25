@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, SSRefreshType) {
 - (void)getAdvDataWithUrl:(NSString*)requestUrl positionID:(NSString*)positionID success:(void (^)(ABSRequest *request, id response))success
 failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
 
-//广告反馈用的GET请求
+//广告反馈用的GET请求   &&  H5解析播放地址
 - (void)AdvReportGET:(NSString *)URLString success:(void (^)(ABSRequest *request, NSDictionary *response))success failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure;
 
 @end

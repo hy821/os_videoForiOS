@@ -159,13 +159,21 @@ static ABSRequest *absRequest = nil;
     self.operationQueue = self.sessionManager.operationQueue;
     [self.sessionManager GET:URLString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        if([responseObject[@"code"] integerValue] == 10000) {
-//            success(self,responseObject);
-//        }else {
-//            failure(self,responseObject[@"message"]);
-//        }
+        //H5解析地址时,需要返回Block
+        if([URLString containsString:@"type=vod"]) {
+            if([responseObject[@"code"] integerValue] == 0) {
+                success(self,responseObject[@"data"]);
+            }else {
+                failure(self,responseObject[@"message"]);
+            }
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        //H5解析地址时,需要返回Block
+        if([URLString containsString:@"type=vod"]) {
+            failure(self,error.localizedDescription);
+        }
         
 //        if(error.code == -1009) {
 //            failure(self,@"网络连接中断,请检查网络");

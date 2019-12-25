@@ -28,7 +28,7 @@ WKScriptMessageHandler>
 @implementation OOSBaseWebViewController
 
 static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
- 
+static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -97,7 +97,7 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
         [self.view bringSubviewToFront:self.closeBtn];
         [self.view bringSubviewToFront:self.backBtn];
     }
-
+    
     self.navigationItem.leftBarButtonItem = self.backItem;
 }
 
@@ -121,7 +121,7 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
     //Cookie
     NSURL *url = [NSURL URLWithString:_bannerUrl];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-     [self.wkWeb loadRequest:request];
+    [self.wkWeb loadRequest:request];
 }
 
 #pragma mark--KVO
@@ -300,9 +300,10 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
     [_wkWeb removeObserver:self forKeyPath:@"loading" context:nil];//移除kvo
     [_wkWeb removeObserver:self forKeyPath:@"title" context:nil];
     [_wkWeb removeObserver:self forKeyPath:@"estimatedProgress" context:nil];
- 
+    
     if(self.isHaveInteration) {
         [self.wkConfig.userContentController removeScriptMessageHandlerForName:AdvActionOpenApp];
+        [self.wkConfig.userContentController removeScriptMessageHandlerForName:ParseVideoUrlByApp];
     }
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     
@@ -325,8 +326,7 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    if ([message.name isEqualToString:AdvActionOpenApp])
-    {
+    if ([message.name isEqualToString:AdvActionOpenApp]) {
         //尝试调起三方App
         NSDictionary *dic = (NSDictionary*)message.body;
         NSString *action_type = dic[@"action_type"];
@@ -382,8 +382,31 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
                         }
                     }
                 }];
-            }            
+            }
         }
+    }
+    else if ([message.name isEqualToString:ParseVideoUrlByApp]) {
+        //解析播放地址
+        NSString *urlStr = (NSString*)message.body;
+        SSLog(@"待解析URL:%@",urlStr);
+        
+        WS()
+        [USER_MANAGER parsedUrlForH5WithUrl:urlStr success:^(id response)
+            NSDictionary *dic = @{@"resultCode":@"1",
+                                  @"resultData": response
+            };
+            NSString *callBackKey = @"parsedVideoUrl";
+            
+            if ([NSJSONSerialization isValidJSONObject:dic]) {
+                NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+                [weakSelf.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                    SSLog(@"%@ %@",response,error);
+                }];
+            }
+        } failure:nil];
+        
     }
 }
 
@@ -406,6 +429,7 @@ static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
         
         if(self.isHaveInteration){  //交互
             [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:AdvActionOpenApp];
+            [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:ParseVideoUrlByApp];
         }
     }return _wkWeb;
 }

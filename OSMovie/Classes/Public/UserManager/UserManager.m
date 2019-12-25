@@ -310,4 +310,22 @@
      }];
 }
 
+//H5解析播放地址
+- (void)parsedUrlForH5WithUrl:(NSString*)urlParsing success:(void (^)(id response))success failure:(void(^)(NSString* errMsg))failure {
+    
+    NSString *HOST = @"";  //例如: http://127.0.0.1/parse/?
+    NSString *APPID = @"";
+    NSString *APPKEY = @"";
+    
+    NSString *timeStr = [Tool getCurrentTimeSecsString];
+    NSString *signStr = [Tool md5:[NSString stringWithFormat:@"%@%@%@%@",APPID,APPKEY,urlParsing,timeStr]];
+    NSString *uurl = [NSString stringWithFormat:@"%@type=vod&url=%@&t=%@&appid=%@&sign=%@",HOST,urlParsing,timeStr,APPID,signStr];
+    
+    [[ABSRequest request]AdvReportGET:uurl success:^(ABSRequest *request, NSDictionary *response) {
+        success(response);
+    } failure:^(ABSRequest *request, NSString *errorMsg) {
+        success(@"");
+    }];
+}
+
 @end

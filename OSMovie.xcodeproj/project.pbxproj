@@ -704,19 +704,19 @@
 				60AE0FB923696EBF00DD2743 /* ABFunSConst.h */,
 				60AE0FAB23696EBF00DD2743 /* ABFunSConst.m */,
 				60AE0FBA23696EBF00DD2743 /* UserManager */,
-				60AE0FAC23696EBF00DD2743 /* SSRequest */,
+				60AE0FAC23696EBF00DD2743 /* ABSRequest */,
 				60AE0FAF23696EBF00DD2743 /* MacroDefineConfig.h */,
 			);
 			path = Public;
 			sourceTree = "<group>";
 		};
-		60AE0FAC23696EBF00DD2743 /* SSRequest */ = {
+		60AE0FAC23696EBF00DD2743 /* ABSRequest */ = {
 			isa = PBXGroup;
 			children = (
 				60AE0FAE23696EBF00DD2743 /* ABSRequest.h */,
 				60AE0FAD23696EBF00DD2743 /* ABSRequest.m */,
 			);
-			path = SSRequest;
+			path = ABSRequest;
 			sourceTree = "<group>";
 		};
 		60AE0FBA23696EBF00DD2743 /* UserManager */ = {
