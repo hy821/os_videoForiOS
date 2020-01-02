@@ -387,26 +387,46 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
     }
     else if ([message.name isEqualToString:ParseVideoUrlByApp]) {
         //解析播放地址
-        NSString *urlStr = (NSString*)message.body;
-        SSLog(@"待解析URL:%@",urlStr);
+        NSDictionary *dic = (NSDictionary *)message.body;
+        NSString *urlStr = dic[@"playUrl"];
+        NSString *type = dic[@"type"];
         
         WS()
-        [USER_MANAGER parsedUrlForH5WithUrl:urlStr success:^(id response) {
-        
-            NSDictionary *dic = @{@"resultCode":@"1",
-                                  @"resultData": response
-            };
-            NSString *callBackKey = @"parsedVideoUrl";
-            
-            if ([NSJSONSerialization isValidJSONObject:dic]) {
-                NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
-                NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
-                [weakSelf.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
-                    SSLog(@"%@ %@",response,error);
-                }];
-            }
-        } failure:nil];
+        if ([type intValue]==11) {  //自上传解密
+            [USER_MANAGER decodeH5VideoUrlWithUrl:urlStr success:^(NSString *decodeUrl) {
+                
+                NSDictionary *dic = @{@"resultCode":@"1",
+                                      @"resultData": decodeUrl
+                };
+                NSString *callBackKey = @"parsedVideoUrl";
+                
+                if ([NSJSONSerialization isValidJSONObject:dic]) {
+                    NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+                    NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                    NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+                    [weakSelf.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                        SSLog(@"%@ %@",response,error);
+                    }];
+                }
+            }];
+        }else {
+            [USER_MANAGER parsedUrlForH5WithUrl:urlStr success:^(id response) {
+                
+                NSDictionary *dic = @{@"resultCode":@"1",
+                                      @"resultData": response
+                };
+                NSString *callBackKey = @"parsedVideoUrl";
+                
+                if ([NSJSONSerialization isValidJSONObject:dic]) {
+                    NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+                    NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                    NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+                    [weakSelf.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                        SSLog(@"%@ %@",response,error);
+                    }];
+                }
+            } failure:nil];
+        }
     }
 }
 

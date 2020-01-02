@@ -34,6 +34,7 @@
     [self configNavBar];
     [self updateUserAgent];
     [self.window makeKeyAndVisible];
+
     return YES;
 }
 

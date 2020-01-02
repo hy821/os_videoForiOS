@@ -12,6 +12,8 @@
 #import "SimulateIDFA.h"
 #import "RealReachability.h"
 #import "STDPingManager.h"
+#import "NSData+KKAES.h"
+#import "GTMBase64.h"
 
 @implementation UserManager
 
@@ -333,4 +335,44 @@
     NSDictionary *launchDic = [NSJSONSerialization JSONObjectWithData:data                   options:NSJSONReadingMutableContainers error:nil];
     return (NSDictionary*)launchDic[key];
 }
+
+//H5解密自上传视频
+- (void)decodeH5VideoUrlWithUrl:(NSString*)urlParsing success:(void (^)(id response))success {
+    NSString *originUrl = urlParsing;
+    NSArray *arr = [urlParsing componentsSeparatedByString:@"/"];
+    if (arr.count>0) {
+        urlParsing = arr.lastObject;
+        NSData *urlData = [self safeUrlBase64Decode:urlParsing];
+        NSData *keyData = [@"aGVsbG8tdmlkZW8t" dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *dealData = [urlData AES_ECB_DecryptWith:keyData];
+        NSString *dealStr = [[NSString alloc] initWithData:dealData encoding:NSUTF8StringEncoding];
+        if ([dealStr componentsSeparatedByString:@"-"].count>0) {
+            dealStr = [dealStr componentsSeparatedByString:@"-"].firstObject;
+            originUrl = [originUrl stringByReplacingOccurrencesOfString:urlParsing withString:dealStr];
+            SSLog(@"解密:%@",originUrl);
+            success(originUrl);
+        }else {
+            success(@"");
+        }
+    }else {
+        success(@"");
+    }
+}
+
+//MARK: 将saveBase64编码中的"-"，"_"字符串转换成"+"，"/"，字符串长度余4倍的位补"="
+- (NSData*)safeUrlBase64Decode:(NSString*)safeUrlbase64Str
+{
+            // '-' -> '+'
+            // '_' -> '/'
+            // 不足4倍长度，补'='
+            NSMutableString * base64Str = [[NSMutableString alloc]initWithString:safeUrlbase64Str];
+            base64Str = (NSMutableString * )[base64Str stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
+            base64Str = (NSMutableString * )[base64Str stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
+            NSInteger mod4 = base64Str.length % 4;
+            if(mod4 > 0)
+                    [base64Str appendString:[@"====" substringToIndex:(4-mod4)]];
+            NSLog(@"Base64原文：%@", base64Str);
+            return [GTMBase64 decodeData:[base64Str dataUsingEncoding:NSUTF8StringEncoding]];
+}
+
 @end

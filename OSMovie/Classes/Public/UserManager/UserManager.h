@@ -53,4 +53,7 @@ typedef NS_ENUM(NSUInteger, DomainType) {
 //H5解析播放地址
 - (void)parsedUrlForH5WithUrl:(NSString*)urlParsing success:(void (^)(id response))success failure:(void(^)(NSString* errMsg))failure;
 
+//H5解密自上传视频
+- (void)decodeH5VideoUrlWithUrl:(NSString*)urlParsing success:(void (^)(id response))success;
+
 @end
