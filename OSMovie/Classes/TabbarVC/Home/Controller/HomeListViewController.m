@@ -39,14 +39,14 @@ static NSString *cell_ID = @"VideoCommonCVCell";
 }
 
 - (void)loadDataWithAnimation:(BOOL)isAnimation {
-    if (isAnimation) {SSGifShow(MainWindow, @"加载中");}
+    if (isAnimation) {SSGifShow(self.view, @"加载中");}
     NSDictionary *dic = @{@"si" : self.model.categoryID,
                           @"cursor" : self.cursor,
                           @"size" : @"15" //@(PageCount_VideoLib)
                           };
     
     [[ABSRequest request]GET:HomePageListUrl parameters:dic success:^(ABSRequest *request, id response) {
-        if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
+        if (isAnimation) {SSDissMissAllGifHud(self.view, YES);}
         self.isNetError = SSNetNormal_state;
         [self.collectionView.mj_header endRefreshing];
         
@@ -64,8 +64,8 @@ static NSString *cell_ID = @"VideoCommonCVCell";
         }
         
     } failure:^(ABSRequest *request, NSString *errorMsg) {
-        if (isAnimation) {SSDissMissAllGifHud(MainWindow, YES);}
-        SSMBToast(errorMsg, MainWindow);
+        if (isAnimation) {SSDissMissAllGifHud(self.view, YES);}
+        SSMBToast(errorMsg, self.view);
         self.isNetError = SSNetError_state;
         [self.collectionView reloadData];
         [self.collectionView.mj_header endRefreshing];

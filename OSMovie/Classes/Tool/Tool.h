@@ -107,4 +107,12 @@ typedef NS_ENUM(NSInteger, DirectionStyle){
 //字符串文字的label bounds
 +(CGRect)boundsOfString:(NSString *)string font:(UIFont *)font width:(CGFloat)width;
 
+
+
+//MARK: 将saveBase64编码中的"-"，"_"字符串转换成"+"，"/"，字符串长度余4倍的位补"="
++ (NSData*)safeUrlBase64Decode:(NSString*)safeUrlbase64Str;
+
+#pragma - 因为Base64编码中包含有+,/,=这些不安全的URL字符串,所以要进行换字符
++(NSString*)safeUrlBase64Encode:(NSData*)data;
+
 @end

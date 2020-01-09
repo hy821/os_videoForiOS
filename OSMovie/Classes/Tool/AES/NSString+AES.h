@@ -16,7 +16,4 @@
 /**< 解密方法 */
 - (NSString*)aci_decryptWithAES;
 
-
-- (NSData *)encrypt:(NSData *)plainText key:(NSString *)key  iv:(NSString *)iv;
-
 @end

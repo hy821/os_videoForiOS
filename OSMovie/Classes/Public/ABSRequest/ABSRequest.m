@@ -116,13 +116,12 @@ static ABSRequest *absRequest = nil;
      failure:(void (^)(ABSRequest *request, NSString *errorMsg))failure{
     
     self.operationQueue = self.sessionManager.operationQueue;
-   
-      NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
-        if (![ServerURL containsString:@"http"]) {
-            ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
-        }
-    //    NSString *requestUrlString = SSStr(ServerURL_Normal, URLString);
-        NSString *requestUrlString = SSStr(ServerURL, URLString);
+    
+    NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
+    if (![ServerURL containsString:@"http"]) {
+        ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
+    }
+    NSString *requestUrlString = SSStr(ServerURL, URLString);
 
     self.sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
     self.sessionManager.requestSerializer.timeoutInterval = 10.f;

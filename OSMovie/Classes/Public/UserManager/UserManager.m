@@ -5,6 +5,7 @@
 //
 
 #import "UserManager.h"
+#import <AdSupport/AdSupport.h>
 #import "AFNetworkReachabilityManager.h"
 #import "LoginViewController.h"
 #import "LEEAlert.h"
@@ -139,15 +140,17 @@
 }
 
 - (NSString *)getIDFA {
-    NSString *idfaSave =[USERDEFAULTS objectForKey:@"IDFA_Creat"];
-    if(idfaSave && idfaSave.length>0) {
-        return idfaSave;
+    NSString *idfa = @"";
+    if (iOS10Later) {
+        if([[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
+            idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        }else {
+            idfa = [SimulateIDFA createSimulateIDFA];
+        }
     }else {
-        NSString *idfa = [SimulateIDFA createSimulateIDFA];
-        [USERDEFAULTS setObject:idfa forKey:@"IDFA_Creat"];
-        [USERDEFAULTS synchronize];
-        return idfa;
+        idfa = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     }
+    return idfa;
 }
 
 - (void)callBackAdvWithUrls:(NSArray*)urls {
@@ -342,7 +345,7 @@
     NSArray *arr = [urlParsing componentsSeparatedByString:@"/"];
     if (arr.count>0) {
         urlParsing = arr.lastObject;
-        NSData *urlData = [self safeUrlBase64Decode:urlParsing];
+        NSData *urlData = [Tool safeUrlBase64Decode:urlParsing];
         NSData *keyData = [@"aGVsbG8tdmlkZW8t" dataUsingEncoding:NSUTF8StringEncoding];
         NSData *dealData = [urlData AES_ECB_DecryptWith:keyData];
         NSString *dealStr = [[NSString alloc] initWithData:dealData encoding:NSUTF8StringEncoding];
@@ -357,22 +360,6 @@
     }else {
         success(@"");
     }
-}
-
-//MARK: 将saveBase64编码中的"-"，"_"字符串转换成"+"，"/"，字符串长度余4倍的位补"="
-- (NSData*)safeUrlBase64Decode:(NSString*)safeUrlbase64Str
-{
-            // '-' -> '+'
-            // '_' -> '/'
-            // 不足4倍长度，补'='
-            NSMutableString * base64Str = [[NSMutableString alloc]initWithString:safeUrlbase64Str];
-            base64Str = (NSMutableString * )[base64Str stringByReplacingOccurrencesOfString:@"-" withString:@"+"];
-            base64Str = (NSMutableString * )[base64Str stringByReplacingOccurrencesOfString:@"_" withString:@"/"];
-            NSInteger mod4 = base64Str.length % 4;
-            if(mod4 > 0)
-                    [base64Str appendString:[@"====" substringToIndex:(4-mod4)]];
-            NSLog(@"Base64原文：%@", base64Str);
-            return [GTMBase64 decodeData:[base64Str dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 @end

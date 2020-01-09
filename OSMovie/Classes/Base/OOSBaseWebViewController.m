@@ -6,6 +6,12 @@
 #import "YHWebViewProgress.h"
 #import "YHWebViewProgressView.h"
 
+#import "NSData+KKAES.h"
+#import "GTMBase64.h"
+
+//临时
+#import <AFNetworking/AFNetworking.h>
+
 @interface OOSBaseWebViewController ()
 <WKNavigationDelegate,
 WKUIDelegate,
@@ -29,6 +35,7 @@ WKScriptMessageHandler>
 
 static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
 static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
+static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -304,6 +311,7 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
     if(self.isHaveInteration) {
         [self.wkConfig.userContentController removeScriptMessageHandlerForName:AdvActionOpenApp];
         [self.wkConfig.userContentController removeScriptMessageHandlerForName:ParseVideoUrlByApp];
+        [self.wkConfig.userContentController removeScriptMessageHandlerForName:DownloadAppForCoin];
     }
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     
@@ -337,7 +345,7 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
         
         NSDictionary *advData = dic[@"advData"];
         SSLog(@"advData:%@",advData);
-        
+
         //先判断deepLink 唤起App Or 跳落地页
         if(deeplink_url.length) {
             [[UIApplication sharedApplication] openURL:URL(deeplink_url)  options:@{} completionHandler:^(BOOL success) {
@@ -428,6 +436,94 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
             } failure:nil];
         }
     }
+    else if ([message.name isEqualToString:DownloadAppForCoin]) {
+        //下载App获取观影币
+        
+        /*
+         "data": {
+                "id": "7ea003d3974e4b66beed750b4e8cc2e2",
+                "appName": "淘宝",
+                "packName": "taobao.apk",
+                "downLink": "www.nidaye.com",
+                "device": "02", //iOS
+                "enableStatus": 0,
+                "deleteStatus": 0,
+                "modifyTime": 1577773929317,
+                "createTime": 1577773929317
+            },
+         */
+        NSDictionary *dic = (NSDictionary*)message.body;
+        NSString *downLink = dic[@"downLink"] ? dic[@"downLink"] : @"";
+        NSString *appId = dic[@"id"] ? dic[@"id"] : @"";
+        NSString *packName = dic[@"packName"] ? dic[@"packName"] : @"";
+        NSString *deviceId = [USER_MANAGER getIDFA];
+        
+        NSDictionary *advData = dic[@"advData"];
+        SSLog(@"advData:%@",advData);
+        
+        if(downLink.length) {
+            WS()
+            [[UIApplication sharedApplication] openURL:URL(downLink)  options:@{} completionHandler:^(BOOL success) {
+                if (success) {
+                    //上报
+                    NSDictionary *dic = @{
+                        @"appId" : appId,
+                        @"deviceId" : deviceId,
+                        @"packName" : packName
+                    };
+                    
+                    NSString *callBackKey = @"downLoadAppCallBack";
+                    
+                    if ([NSJSONSerialization isValidJSONObject:dic]) {
+                        NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+                        NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                        NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+                        [weakSelf.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                            SSLog(@"回调H5成功: %@ %@",response,error);
+                            
+
+//                            //-------模拟广告商 回调--------//
+//                            NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970]*1000)];
+//                            NSString *signStr = [NSString stringWithFormat:@"%@_%@_%@",deviceId,packName,timeSp];
+//
+//                            NSData *signData = [signStr dataUsingEncoding:NSUTF8StringEncoding];
+//                            NSData *keyData = [@"osMta12xg3e0mt5G" dataUsingEncoding:NSUTF8StringEncoding];
+//                            NSData *encodeData = [signData AES_ECB_EncryptWith:keyData];
+//
+//                            encodeData = [GTMBase64 encodeData:encodeData];
+//                            NSString *encodeStr = [[NSString alloc] initWithData:encodeData encoding:NSUTF8StringEncoding];
+//                            SSLog(@"----->encodeStr:%@",encodeStr);
+//                            NSDictionary *dic = @{@"sign":encodeStr};
+//
+//
+//                            NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
+//                            if (![ServerURL containsString:@"http"]) {
+//                                ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
+//                            }
+//                            NSString *requestUrlString = SSStr(ServerURL, @"test/api/callback/download/callback/v1");
+//
+//                            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//                            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
+//
+//                            [manager POST:requestUrlString parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+//                                [formData appendPartWithFormData:[encodeStr dataUsingEncoding:kCFStringEncodingUTF8]  name:@"sign"];
+//                            } progress:^(NSProgress * _Nonnull uploadProgress) {
+//
+//                            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//                                SSLog(@"成功---------->");
+//                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//                                SSLog(@"失败---------->");
+//                            }];
+                            
+                            
+                        }];
+                    }
+
+                }
+            }];
+            return;
+        }
+    }
 }
 
 - (void)closeSelf {
@@ -450,6 +546,7 @@ static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
         if(self.isHaveInteration){  //交互
             [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:AdvActionOpenApp];
             [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:ParseVideoUrlByApp];
+            [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:DownloadAppForCoin];
         }
     }return _wkWeb;
 }
