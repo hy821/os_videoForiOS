@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		423D54B16439BF02B6B59C02 /* libPods-OSMovie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4E29481A2C1E4CEFAE7E0DD /* libPods-OSMovie.a */; };
+		600C49EB240A493D00F13C05 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 600C49EA240A493D00F13C05 /* Security.framework */; };
+		600C49F1240A49D200F13C05 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 600C49ED240A49D200F13C05 /* SAMKeychainQuery.m */; };
+		600C49F2240A49D200F13C05 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 600C49F0240A49D200F13C05 /* SAMKeychain.m */; };
 		6010551C2373CA2800A015C2 /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6010551A2373CA2700A015C2 /* UIView+Layout.m */; };
 		605FC6672366B56C0076F32A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 605FC6652366B56C0076F32A /* Main.storyboard */; };
 		605FC6692366B56E0076F32A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 605FC6682366B56E0076F32A /* Assets.xcassets */; };
@@ -178,6 +181,12 @@
 /* Begin PBXFileReference section */
 		0EA390F32F3D79FFD1DC80F9 /* Pods-OSMovie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSMovie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OSMovie/Pods-OSMovie.debug.xcconfig"; sourceTree = "<group>"; };
 		47CB3FE118917DF8FCC455DC /* Pods-OSMovie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSMovie.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSMovie/Pods-OSMovie.release.xcconfig"; sourceTree = "<group>"; };
+		600C49EA240A493D00F13C05 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		600C49ED240A49D200F13C05 /* SAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainQuery.m; sourceTree = "<group>"; };
+		600C49EE240A49D200F13C05 /* SAMKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychain.h; sourceTree = "<group>"; };
+		600C49EF240A49D200F13C05 /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
+		600C49F0240A49D200F13C05 /* SAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychain.m; sourceTree = "<group>"; };
+		600C49F3240A63A600F13C05 /* 蜜桃.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "蜜桃.entitlements"; sourceTree = "<group>"; };
 		6010551A2373CA2700A015C2 /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
 		6010551B2373CA2700A015C2 /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
 		605FC6592366B56C0076F32A /* 蜜桃.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "蜜桃.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -490,6 +499,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				600C49EB240A493D00F13C05 /* Security.framework in Frameworks */,
 				423D54B16439BF02B6B59C02 /* libPods-OSMovie.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +521,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		600C49EC240A49D200F13C05 /* KeyChainTool */ = {
+			isa = PBXGroup;
+			children = (
+				600C49EE240A49D200F13C05 /* SAMKeychain.h */,
+				600C49F0240A49D200F13C05 /* SAMKeychain.m */,
+				600C49EF240A49D200F13C05 /* SAMKeychainQuery.h */,
+				600C49ED240A49D200F13C05 /* SAMKeychainQuery.m */,
+			);
+			path = KeyChainTool;
+			sourceTree = "<group>";
+		};
 		605FC6502366B56C0076F32A = {
 			isa = PBXGroup;
 			children = (
@@ -536,6 +557,7 @@
 		605FC65B2366B56C0076F32A /* OSMovie */ = {
 			isa = PBXGroup;
 			children = (
+				600C49F3240A63A600F13C05 /* 蜜桃.entitlements */,
 				60AE0F6E23696EBF00DD2743 /* Classes */,
 				605FC6652366B56C0076F32A /* Main.storyboard */,
 				605FC6682366B56E0076F32A /* Assets.xcassets */,
@@ -1018,6 +1040,7 @@
 		60AE114823696EBF00DD2743 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				600C49EC240A49D200F13C05 /* KeyChainTool */,
 				60AE115C23696EBF00DD2743 /* Hud */,
 				60B166E52396444A00ABE718 /* STDPing */,
 				607B06EB2388466800E1AFF3 /* SecurityTool */,
@@ -1280,6 +1303,7 @@
 		8D7C9A15C9077B16FCBCF33E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				600C49EA240A493D00F13C05 /* Security.framework */,
 				607B06CF2386C60500E1AFF3 /* libz.tbd */,
 				607B06C22386BDE200E1AFF3 /* libz.1.2.5.tbd */,
 				B4E29481A2C1E4CEFAE7E0DD /* libPods-OSMovie.a */,
@@ -1480,6 +1504,7 @@
 				60AE117B23696EBF00DD2743 /* ABSRequest.m in Sources */,
 				60AE124E2369A0B000DD2743 /* HomeViewController.m in Sources */,
 				60AE116423696EBF00DD2743 /* NSMutableString+Safe.m in Sources */,
+				600C49F2240A49D200F13C05 /* SAMKeychain.m in Sources */,
 				607B06F62388466800E1AFF3 /* NSData+KKRSA.m in Sources */,
 				60AE123223696EC000DD2743 /* OSLayerAnimation.m in Sources */,
 				60FB6F032372CD3900796A32 /* AllEpisodeRectCell.m in Sources */,
@@ -1535,6 +1560,7 @@
 				60AE119023696EBF00DD2743 /* MJRefreshBackStateFooter.m in Sources */,
 				60FE4FC82371475800BE4C41 /* SettingCell.m in Sources */,
 				60AE120023696EC000DD2743 /* TYTabPagerController.m in Sources */,
+				600C49F1240A49D200F13C05 /* SAMKeychainQuery.m in Sources */,
 				60AE12552369A0F200DD2743 /* CommonModel.m in Sources */,
 				60AE11F523696EC000DD2743 /* UIDevice+LCActionSheet.m in Sources */,
 				60FB6F052372CD3900796A32 /* AllEpisodeIntroCell.m in Sources */,
@@ -1764,6 +1790,7 @@
 			baseConfigurationReference = 0EA390F32F3D79FFD1DC80F9 /* Pods-OSMovie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "OSMovie/蜜桃.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5P9562ZCTP;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1793,6 +1820,7 @@
 			baseConfigurationReference = 47CB3FE118917DF8FCC455DC /* Pods-OSMovie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "OSMovie/蜜桃.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5P9562ZCTP;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -5,12 +5,9 @@
 #import "OOSBaseWebViewController.h"
 #import "YHWebViewProgress.h"
 #import "YHWebViewProgressView.h"
-
 #import "NSData+KKAES.h"
 #import "GTMBase64.h"
-
-//临时
-#import <AFNetworking/AFNetworking.h>
+#import <AdSupport/AdSupport.h>
 
 @interface OOSBaseWebViewController ()
 <WKNavigationDelegate,
@@ -36,14 +33,18 @@ WKScriptMessageHandler>
 static NSString *AdvActionOpenApp = @"advActionOpenAppByH5";
 static NSString *ParseVideoUrlByApp = @"parseVideoUrlByApp";
 static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
+static NSString *CheckIDFA  = @"idfaByH5";
+static NSString *GetIdfaForRegister  = @"getIdfaByH5"; //获取idfa 注册传参用, 新设备首次注册有金币奖励
+static NSString *ContactQQByH5 = @"contactQQByH5";
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (@available(iOS 11.0, *)) {
-        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }else{
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+//    if (@available(iOS 11.0, *)) {
+//        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//    }else{
+//        self.automaticallyAdjustsScrollViewInsets = NO;
+//    }
     
     self.title = self.titleStr ? self.titleStr : @"";
     self.bannerUrl = self.bannerUrl ? self.bannerUrl : @"";
@@ -61,6 +62,34 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
     [self createUI];
     [self resolveURL];
     
+    //跳AppStore回来时,发通知让WebView回调,刷新观影币任务状态
+    [NOTIFICATION addObserver:self selector:@selector(callBackToUpdateCoinTask) name:AppBecomeActiveNoti object:nil];
+    
+    //fix:WKWebView，隐藏导航栏，视频详情页 全屏播放 退出全屏后，顶部出现20px的空白
+    if (@available(iOS 11.0, *)) {
+        if(isFullScreenX) {
+            self.wkWeb.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
+        }else{
+            self.wkWeb.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+    }else{
+        // Fallback on earlier versions
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+}
+
+- (void)callBackToUpdateCoinTask {
+    NSString *callBackKey = @"isShowEntranceCallBack";
+    NSDictionary *dic = @{@"idfa": @"updateTask"};
+    
+    if ([NSJSONSerialization isValidJSONObject:dic]) {
+        NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+        [self.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+            SSLog(@"CheckIdfaStatus回调H5成功: %@ %@",response,error);
+        }];
+    }
 }
 
 - (void)willChangeStatusBarFrame:(NSNotification*)notification {
@@ -312,9 +341,11 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
         [self.wkConfig.userContentController removeScriptMessageHandlerForName:AdvActionOpenApp];
         [self.wkConfig.userContentController removeScriptMessageHandlerForName:ParseVideoUrlByApp];
         [self.wkConfig.userContentController removeScriptMessageHandlerForName:DownloadAppForCoin];
+        [self.wkConfig.userContentController removeScriptMessageHandlerForName:CheckIDFA];
+        [self.wkConfig.userContentController removeScriptMessageHandlerForName:GetIdfaForRegister];
+        [self.wkConfig.userContentController removeScriptMessageHandlerForName:ContactQQByH5];
     }
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    
 }
 
 #pragma mark-- wkWebViewDelegate
@@ -438,25 +469,12 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
     }
     else if ([message.name isEqualToString:DownloadAppForCoin]) {
         //下载App获取观影币
-        
-        /*
-         "data": {
-                "id": "7ea003d3974e4b66beed750b4e8cc2e2",
-                "appName": "淘宝",
-                "packName": "taobao.apk",
-                "downLink": "www.nidaye.com",
-                "device": "02", //iOS
-                "enableStatus": 0,
-                "deleteStatus": 0,
-                "modifyTime": 1577773929317,
-                "createTime": 1577773929317
-            },
-         */
+       
         NSDictionary *dic = (NSDictionary*)message.body;
         NSString *downLink = dic[@"downLink"] ? dic[@"downLink"] : @"";
         NSString *appId = dic[@"id"] ? dic[@"id"] : @"";
         NSString *packName = dic[@"packName"] ? dic[@"packName"] : @"";
-        NSString *deviceId = [USER_MANAGER getIDFA];
+        NSString *deviceId = [USER_MANAGER getUUID];
         
         NSDictionary *advData = dic[@"advData"];
         SSLog(@"advData:%@",advData);
@@ -471,59 +489,95 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
                         @"deviceId" : deviceId,
                         @"packName" : packName
                     };
-                    
                     NSString *callBackKey = @"downLoadAppCallBack";
-                    
                     if ([NSJSONSerialization isValidJSONObject:dic]) {
                         NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
                         NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                         NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
                         [weakSelf.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
                             SSLog(@"回调H5成功: %@ %@",response,error);
-                            
-
 //                            //-------模拟广告商 回调--------//
-//                            NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970]*1000)];
-//                            NSString *signStr = [NSString stringWithFormat:@"%@_%@_%@",deviceId,packName,timeSp];
-//
-//                            NSData *signData = [signStr dataUsingEncoding:NSUTF8StringEncoding];
-//                            NSData *keyData = [@"osMta12xg3e0mt5G" dataUsingEncoding:NSUTF8StringEncoding];
-//                            NSData *encodeData = [signData AES_ECB_EncryptWith:keyData];
-//
-//                            encodeData = [GTMBase64 encodeData:encodeData];
-//                            NSString *encodeStr = [[NSString alloc] initWithData:encodeData encoding:NSUTF8StringEncoding];
-//                            SSLog(@"----->encodeStr:%@",encodeStr);
-//                            NSDictionary *dic = @{@"sign":encodeStr};
-//
-//
-//                            NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
-//                            if (![ServerURL containsString:@"http"]) {
-//                                ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
-//                            }
-//                            NSString *requestUrlString = SSStr(ServerURL, @"test/api/callback/download/callback/v1");
-//
-//                            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//                            manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
-//
-//                            [manager POST:requestUrlString parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//                                [formData appendPartWithFormData:[encodeStr dataUsingEncoding:kCFStringEncodingUTF8]  name:@"sign"];
-//                            } progress:^(NSProgress * _Nonnull uploadProgress) {
-//
-//                            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//                                SSLog(@"成功---------->");
-//                            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//                                SSLog(@"失败---------->");
-//                            }];
-                            
-                            
+//                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                                NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)([[NSDate date] timeIntervalSince1970]*1000)];
+//                                NSString *signStr = [NSString stringWithFormat:@"%@_%@_%@",deviceId,packName,timeSp];
+//                                [weakSelf advReportWithStr:signStr];
+//                            });
                         }];
                     }
-
                 }
             }];
             return;
         }
+    }else if ([message.name isEqualToString:CheckIDFA]) {
+        NSString *callBackKey = @"isShowEntranceCallBack";
+        NSDictionary *dic = @{@"idfa": @"y"};
+        
+        if ([NSJSONSerialization isValidJSONObject:dic]) {
+            NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+            [self.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                SSLog(@"CheckIdfaStatus回调H5成功: %@ %@",response,error);
+            }];
+        }
+    }else if ([message.name isEqualToString:GetIdfaForRegister]) {
+        NSString *callBackKey = @"idfaForRegisterCallBack";
+        NSDictionary *dic = @{@"idfa": [USER_MANAGER getUUID]};
+        
+        if ([NSJSONSerialization isValidJSONObject:dic]) {
+            NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *paraStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            NSString *callBackStr = [NSString stringWithFormat:@"%@(%@)",callBackKey,paraStr];
+            [self.wkWeb evaluateJavaScript:callBackStr completionHandler:^(id _Nullable response, NSError * _Nullable error) {
+                SSLog(@"CheckIdfaStatus回调H5成功: %@ %@",response,error);
+            }];
+        }
+    }else if ([message.name isEqualToString:ContactQQByH5]) {
+        //联系QQ客服
+        NSString *qqAccount = message.body;
+        
+        NSString *urlStr = [NSString stringWithFormat:@"mqq://im/chat?chat_type=wpa&uin=%@&version=1&src_type=web",qqAccount];
+        NSURL *url = [NSURL URLWithString:urlStr];
+        if([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+                
+            }];
+        }else {
+            SSMBToast(@"您未安装手机QQ，请安装后重试。", MainWindow);
+        }
     }
+}
+
+//-------模拟广告商 回调--------//
+- (void)advReportWithStr:(NSString*)signStr {
+    NSData *signData = [signStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *keyData = [@"osMta12xg3e0mt5G" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *encodeData = [signData AES_ECB_EncryptWith:keyData];
+
+    encodeData = [GTMBase64 encodeData:encodeData];
+    NSString *encodeStr = [[NSString alloc] initWithData:encodeData encoding:NSUTF8StringEncoding];
+    SSLog(@"----->encodeStr:%@",encodeStr);
+    NSDictionary *dic = @{@"sign":encodeStr};
+
+
+    NSString *ServerURL = [USERDEFAULTS objectForKey:HOST_api];
+    if (![ServerURL containsString:@"http"]) {
+        ServerURL = [NSString stringWithFormat:@"http://%@/",ServerURL];
+    }
+    NSString *requestUrlString = SSStr(ServerURL, @"test/api/callback/download/callback/v1");
+
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
+
+    [manager POST:requestUrlString parameters:dic constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFormData:[encodeStr dataUsingEncoding:kCFStringEncodingUTF8]  name:@"sign"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        SSLog(@"成功---------->");
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        SSLog(@"失败---------->");
+    }];
 }
 
 - (void)closeSelf {
@@ -534,7 +588,7 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
     if(_wkWeb == nil) {
         WKWebViewConfiguration* webViewConfig = [[WKWebViewConfiguration alloc]init];
         webViewConfig.processPool = [[WKProcessPool alloc] init];
-        webViewConfig.allowsInlineMediaPlayback = YES;
+        webViewConfig.allowsInlineMediaPlayback = YES;  // 使用h5的视频播放器在线播放, 还是使用原生播放器全屏播放
         self.wkConfig = webViewConfig;
         _wkWeb = [[WKWebView alloc]initWithFrame:CGRectZero configuration:self.wkConfig];
         _wkWeb.UIDelegate = self;
@@ -547,6 +601,10 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
             [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:AdvActionOpenApp];
             [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:ParseVideoUrlByApp];
             [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:DownloadAppForCoin];
+            [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:CheckIDFA];
+            [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:GetIdfaForRegister];
+            [self.wkConfig.userContentController addScriptMessageHandler:[[WeakScriptMessageDelegate alloc] initWithDelegate:self] name:ContactQQByH5];
+            
         }
     }return _wkWeb;
 }
@@ -564,4 +622,5 @@ static NSString *DownloadAppForCoin = @"downLoadAppForCoinByH5";
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     [self.scriptDelegate userContentController:userContentController didReceiveScriptMessage:message];
 }
+
 @end

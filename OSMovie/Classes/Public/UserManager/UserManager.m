@@ -15,6 +15,7 @@
 #import "STDPingManager.h"
 #import "NSData+KKAES.h"
 #import "GTMBase64.h"
+#import "SAMKeychain.h"
 
 @implementation UserManager
 
@@ -115,8 +116,20 @@
     return cre ? cre : @"";
 }
 
+//keyChain+UUID
 - (NSString*)getUUID {
-    return @"lajdhaksdasdfhaksdfhlkads";
+    // 读取设备号
+    NSString *localDeviceId = [SAMKeychain passwordForService:kKeychainService account:kKeychainDeviceId];
+    if (!localDeviceId) {
+        // 如果没有UUID 则保存设备号
+        CFUUIDRef deviceId = CFUUIDCreate(NULL);
+        assert(deviceId != NULL);
+        CFStringRef deviceIdStr = CFUUIDCreateString(NULL, deviceId);
+        [SAMKeychain setPassword:[NSString stringWithFormat:@"%@", deviceIdStr] forService:kKeychainService account:kKeychainDeviceId];
+        localDeviceId = [NSString stringWithFormat:@"%@", deviceIdStr];
+    }
+    SSLog(@"AAA获取到的UUID:%@",localDeviceId);
+    return localDeviceId;
 }
 
 - (NSString*)getDeviceName {

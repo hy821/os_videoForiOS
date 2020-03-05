@@ -54,4 +54,7 @@ NSString *const HOST_cl = @"HOST_cl";
 NSString *const HOST_ad = @"HOST_ad";
 NSString *const HOST_api = @"HOST_api";
 
+
+NSString *const AppBecomeActiveNoti = @"AppBecomeActiveNoti";
+
 @end

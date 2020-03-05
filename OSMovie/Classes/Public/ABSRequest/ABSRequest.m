@@ -206,7 +206,7 @@ static ABSRequest *absRequest = nil;
     
     NSDictionary *parameters = @{
         @"userId" : [USER_MANAGER getUserID],
-        @"did" : [USER_MANAGER getIDFA],
+        @"did" : [USER_MANAGER getUUID],
         @"ts" : @([Tool getCurrentTimeSecsNum])
     };
     
@@ -293,7 +293,7 @@ static ABSRequest *absRequest = nil;
         @"app_version": @"1.0.0",
         @"app_pkg": @"com.os.os",
         @"os_type": @(2), //1-安卓 2-iOS
-        @"Idfa": [USER_MANAGER getIDFA],
+        @"Idfa": [USER_MANAGER getUUID],
         @"brand": @"",
         @"model": @"",
         @"os_version": @"1.0.0",

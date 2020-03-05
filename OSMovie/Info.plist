@@ -48,5 +48,15 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+    
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>wechat</string>
+        <string>weixin</string>
+        <string>alipay</string>
+        <string>alipayshare</string>
+        <string>mqq</string>
+    </array>
+       
 </dict>
 </plist>

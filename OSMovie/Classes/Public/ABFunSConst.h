@@ -68,4 +68,6 @@ extern NSString *const HOST_cl;
 extern NSString *const HOST_ad;
 extern NSString *const HOST_api;
 
+extern NSString *const AppBecomeActiveNoti;
+
 @end

@@ -17,6 +17,10 @@
 //// Status bar height.
 //#define  StatusBarHeight     (isFullScreenX ? 44.f : 20.f)
 
+//获取设备唯一标示用
+#define kKeychainService @"ostv.OSMovie.keyChain"
+#define kKeychainDeviceId @"kKeychainDeviceIdMT"
+
 #import "AppDelegate.h"
 #define g_App               ((AppDelegate*)[[UIApplication sharedApplication] delegate])
 #define SelectVC          (OOSBaseNavViewController*)g_App.tabBarVC.selectedViewController
